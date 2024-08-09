@@ -1,15 +1,8 @@
-// 初始化sqlite
-import { Database } from "bun:sqlite";
 import {authRoutes} from "./routes/authRoutes";
 import {userRoutes} from "./routes/userRoutes";
 
-const db = new Database("app.sqlite");
-
-db.run("CREATE TABLE IF NOT EXISTS tbl_users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, password TEXT)");
-
-// server实例
 const server = Bun.serve({
-    fetch(req) {
+    async fetch(req) {
       const url = new URL(req.url);
       const method = req.method;
   
@@ -20,10 +13,20 @@ const server = Bun.serve({
   
       for (const route of routes) {
         if (route.method === method && url.pathname === route.path) {
-          if (route.middleware) {
-            return route.middleware.reduceRight((prev, mw) => mw(req, prev, () => prev), () => route.handler(req));
+          try {
+            if (route.middleware) {
+              // Apply middlewares
+              const response = await route.middleware.reduceRight(
+                (prev, mw) => mw(req, prev, () => prev),
+                () => route.handler(req)
+              );
+              return response;
+            } else {
+              return route.handler(req);
+            }
+          } catch (error) {
+            return new Response('Internal Server Error', { status: 500 });
           }
-          return route.handler(req);
         }
       }
       return new Response('Not found', { status: 404 });
