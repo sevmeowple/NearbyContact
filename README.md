@@ -1,15 +1,14 @@
 # nearbycontact
 
-To install dependencies:
+如何开始开发
 
-```bash
-bun install
+首先确保拥有bun环境[here](https://bun.sh)
+clone该项目后,在根目录运行
+```sh
+bun i
 ```
+来安装依赖
 
-To run:
+开发命令在package.json,也可以cd到client,server单独启动
 
-```bash
-bun run index.ts
-```
 
-This project was created using `bun init` in bun v1.1.22. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
