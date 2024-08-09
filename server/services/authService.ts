@@ -1,0 +1,23 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import Database from 'bun:sqlite'
+import { JWT_SECRET } from '../config';
+
+const db = new Database('app.sqlite');
+
+const selectUserByUsername = db.prepare('SELECT * FROM tbl_users WHERE username = ?');
+
+export function authenticate(username: string, password: string) {
+    const user = selectUserByUsername.get(username);
+
+    if(user && bcrypt.compareSync(password, user.password)){
+        const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET,{expiresIn: '1h'});
+        return token
+    }
+    throw new Error('Invalid credentials');
+
+}
+
+export function verifyToken(token: string) {
+    return jwt.verify(token, JWT_SECRET);
+}
