@@ -3,7 +3,9 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.6",
     "concurrently": "^8.2.2"
   },
   "peerDependencies": {
@@ -15,5 +17,8 @@
     "host:client": "bun --bun run --cwd client host",
     "dev": "concurrently \"bun run dev:client\" \"bun run dev:server\"",
     "host": "concurrently \"bun run host:client\" \"bun run dev:server\""
+  },
+  "dependencies": {
+    "nearbycontact": "file:"
   }
 }

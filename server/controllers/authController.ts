@@ -1,8 +1,8 @@
-import {Request, Response} from 'bun';
+import type { Request, Response } from 'express';
 import { authenticate } from '../services/authService';
 
 export async function login(req: Request, res: Response) {
-    const { username, password } = req.json();
+    const { username, password } = req.body;
     try{
         const token = await authenticate(username, password);
         res.json({ token });
