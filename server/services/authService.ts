@@ -17,7 +17,7 @@ const insertUser = db.prepare('INSERT INTO tbl_users (username, email, password)
 export function authenticate(username: string, password: string) {
     const user = selectUserByUsername.get(username) as User;
 
-    if(user && bcrypt.compareSync(password, user.password)){
+    if (user && bcrypt.compareSync(password, user.password)) {
         return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '1h'})
     }
     throw new Error('Invalid credentials');
@@ -37,5 +37,5 @@ export async function registerUser(username: string, email: string, password: st
     const hashedPassword = bcrypt.hashSync(password, 10);
     insertUser.run(username, email, hashedPassword);
 
-    return { username, email };
+    return {username, email};
 }
