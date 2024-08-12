@@ -3,10 +3,13 @@
   "module": "index.ts",
   "type": "module",
   "devDependencies": {
+    "@eslint/js": "^9.9.0",
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
     "@types/jsonwebtoken": "^9.0.6",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "globals": "^15.9.0",
+    "typescript-eslint": "^8.0.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -19,7 +22,7 @@
     "host": "concurrently \"bun run host:client\" \"bun run dev:server\""
   },
   "dependencies": {
-    "eslint": "^9.9.0",
+    "eslint": "9.x",
     "nearbycontact": "file:"
   }
 }
