@@ -2,9 +2,9 @@ import type {Request, Response} from 'express';
 import {closeEvent, createEvent, reOpenEvent} from '../services/eventService';
 
 export async function createEventHandler(req: Request, res: Response) {
-    const {name, date} = req.body;
+    const {name, date, description, info} = req.body;
     try {
-        const event = await createEvent(name, date);
+        const event = await createEvent(name, date, description, info);
         res.status(201).json({event});
     } catch (error: any) {
         res.status(400).json({error: error.message});

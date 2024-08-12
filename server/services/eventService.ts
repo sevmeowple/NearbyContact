@@ -6,14 +6,16 @@ type Event = {
     id: number;
     name: string;
     date: string;
+    description: string;
+    info: string[];
     status: string;
 };
 
-const insertEvent = db.prepare('INSERT INTO tbl_events (name, date, status) VALUES (?, ?, ?)');
+const insertEvent = db.prepare('INSERT INTO tbl_events (name, date, status, description, info) VALUES (?, ?, ?)');
 const updateEventStatus = db.prepare('UPDATE tbl_events SET status = ? WHERE id = ?');
 
-export async function createEvent(name: string, date: string) {
-    insertEvent.run(name, date, true);
+export async function createEvent(name: string, date: string, description: string, info: string) {
+    insertEvent.run(name, date, description, info, true);
     return {name, date, status: 'open'};
 }
 
