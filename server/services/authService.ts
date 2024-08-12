@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import Database from 'bun:sqlite'
-import { JWT_SECRET } from '../config';
+import {JWT_SECRET} from '../config';
 
 const db = new Database('app.sqlite');
 
@@ -17,8 +17,7 @@ export function authenticate(username: string, password: string) {
     const user = selectUserByUsername.get(username) as User;
 
     if(user && bcrypt.compareSync(password, user.password)){
-        const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET,{expiresIn: '1h'});
-        return token
+        return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '1h'})
     }
     throw new Error('Invalid credentials');
 

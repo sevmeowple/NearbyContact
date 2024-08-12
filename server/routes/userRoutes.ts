@@ -1,10 +1,10 @@
-import { authenticateToken } from "../middleware/authMiddleware";
-import type { Request, Response } from "express"; 
+import {Router} from 'express';
+import {authenticateToken} from '../middleware/authMiddleware';
 
-export function userRoutes(){
-    return[
-        {method: 'GET', path: '/user', handler: (req: Request, res: Response) => {
-            res.json({ user: req.body });
-          }, middleware: [authenticateToken]},
-    ];
-}
+const router = Router();
+
+router.get('/user', authenticateToken, (req, res) => {
+    res.json({ user: req.body });
+});
+
+export const userRoutes = router;

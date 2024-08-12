@@ -1,8 +1,8 @@
-import { login } from "../controllers/authController";
-import type { Request, Response } from "express"; 
+import {Router} from 'express';
+import {login} from '../controllers/authController';
 
-export function authRoutes(){
-    return[
-        {method: 'POST', path: '/login', handler: (req: Request, res: Response) => login(req, res)},
-    ];
-}
+const router = Router();
+
+router.post('/login', login);
+
+export const authRoutes = router;
