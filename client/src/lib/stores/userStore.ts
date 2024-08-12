@@ -1,15 +1,15 @@
 import { writable } from 'svelte/store';
 
 interface User {
-    username: string;
-    email: string;
-    password: string;
+    "username": string;
+    "email": string;
+    "password": string;
 }
 
 const user: User = {
-    username: '',
-    email: '',
-    password: ''
+    "username": '',
+    "email": '',
+    "password": ''
 };
 
 const { subscribe, set, update } = writable(user);

@@ -1,58 +1,68 @@
-// 把http请求的接口封装到这里
 import axios from 'axios';
 import { serverUrl } from './u';
-// 创建一个统一的axios实例
+
 const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: serverUrl,
-})
+});
 
+interface RequestBody {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any;
+}
+
+function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[]) {
+    const filteredBody: RequestBody = {};
+    expectedKeys.forEach(key => {
+        if (Object.prototype.hasOwnProperty.call(body, key)) {
+            filteredBody[key] = body[key];
+        }
+    });
+    return axiosInstance.post(endpoint, filteredBody);
+}
 
 interface LoginBody {
-    username: string;
-    password: string;
-}
-// login Post请求
-// 请求body: {username: string, password: string}
-function Login(body: LoginBody) {
-    return axiosInstance.post('/api/login', body);
+    "username": string;
+    "password": string;
 }
 
-// register Post请求
+function Login(body: LoginBody) {
+    return sendRequest('/auth/login', body, ['username', 'password']);
+}
+
 interface RegisterBody {
-    username: string;
-    password: string;
-    email: string;
+    "username": string;
+    "password": string;
+    "email": string;
 }
 
 function Register(body: RegisterBody) {
-    return axiosInstance.post('/api/register', body);
+    return sendRequest('/auth/register', body, ['username', 'password', 'email']);
 }
 
-// 创建一个失物招领的接口
 interface CreateBody {
-    name: string;
-    date: string;
+    "name": string;
+    "date": string;
 }
+
 function Create(body: CreateBody) {
-    return axiosInstance.post('/event/create', body);
+    return sendRequest('/event/create', body, ['name', 'date']);
 }
 
-// 关闭事件
 interface CloseBody {
-    eventID: number;
+    "eventID": number;
 }
+
 function Close(body: CloseBody) {
-    return axiosInstance.post('/event/close', body);
+    return sendRequest('/event/close', body, ['eventID']);
 }
-// 重新打开事件
+
 interface ReopenBody {
-    eventID: number;
+    "eventID": number;
 }
+
 function Reopen(body: ReopenBody) {
-    return axiosInstance.post('/event/reopen', body);
+    return sendRequest('/event/reopen', body, ['eventID']);
 }
-
-
 
 export { Login, Register, Create, Close, Reopen };

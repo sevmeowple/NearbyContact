@@ -6,6 +6,7 @@
 
 	import { onMount } from 'svelte';
 
+	import { goto } from '$app/navigation';
 	import * as instance from '$lib/api';
 	let userH: User = { username: '', email: '', password: '' };
 	let tabSet = 0;
@@ -13,69 +14,109 @@
 	// 初始化输入框的值
 	onMount(() => {
 		const user = $userStore;
-		userH.username = user.username;
-		userH.email = user.email;
-		userH.password = user.password;
+		userH['username'] = user['username'];
+		userH['email'] = user['email'];
+		userH['password'] = user['password'];
 	});
 
-	function Login() {
+	async function Login() {
 		userStore.set({
-			username: userH.username,
-			email: userH.email,
-			password: userH.password
+			username: userH['username'],
+			email: userH['email'],
+			password: userH['password']
 		});
-		instance.Login(userH);
+		let res = await instance.Login(userH);
+		// 检查返回状态码
+		if (res.status === 200) {
+			console.log('登录成功');
+			goto('/board');
+		}
 	}
 
-	function Register() {
+	async function Register() {
 		userStore.set({
-			username: userH.username,
-			email: userH.email,
-			password: userH.password
+			username: userH['username'],
+			email: userH['email'],
+			password: userH['password']
 		});
-		instance.Register(userH);
+		let res = await instance.Register(userH);
+		// 检查返回状态码
+		if (res.status === 201) {
+			goto('/board');
+		}
 	}
 </script>
 
 <div class="main">
+	<h1 class="h1">失物招领</h1>
 	<div class="tab">
-		<TabGroup>
+		<TabGroup
+			justify="justify-center"
+			active="border-b-2 bg-gray-200"
+			hover="black hover:bg-gray-100"
+		>
 			<Tab bind:group={tabSet} name="login" value={0}><span> 登录 </span></Tab>
 			<Tab bind:group={tabSet} name="register" value={1}><span> 注册 </span></Tab>
 			<svelte:fragment slot="panel">
 				{#if tabSet === 0}
-					<div class="login">
+					<form class="login" on:submit={Login}>
 						<label class="label">
 							<span>用户名:</span>
-							<input type="text" bind:value={userH.username} placeholder="用户名" />
-						</label>
-						<label class="label">
-							<span>密码:</span>
-							<input type="password" bind:value={userH.password} placeholder="密码" />
-						</label>
-						<button on:click={Login}>登陆</button>
-					</div>
-				{:else if tabSet === 1}
-					<div class="register">
-						<label class="label">
-							<span>用户名:</span>
-							<input type="text" bind:value={userH.username} placeholder="用户名" />
-						</label>
-						<label class="label">
-							<span>邮箱:</span>
 							<input
-								type="email"
-								bind:value={userH.email}
-								placeholder="邮箱"
-								autocomplete="email"
+								required
+								minlength="2"
+								type="text"
+								bind:value={userH.username}
+								placeholder="用户名"
 							/>
 						</label>
 						<label class="label">
 							<span>密码:</span>
-							<input type="password" bind:value={userH.password} placeholder="密码" />
+							<input
+								required
+								minlength="3"
+								type="password"
+								bind:value={userH.password}
+								placeholder="密码"
+							/>
 						</label>
-						<button on:click={Register}>注册</button>
-					</div>
+						<button type="submit">登陆</button>
+					</form>
+				{:else if tabSet === 1}
+					<form class="register" on:submit={Register}>
+						<label class="label">
+							<span>用户名:</span>
+							<input
+								required
+								minlength="2"
+								type="text"
+								bind:value={userH.username}
+								placeholder="用户名"
+							/>
+						</label>
+						<label class="label">
+							<span>邮箱:</span>
+							<input
+								required
+								type="email"
+								bind:value={userH.email}
+								placeholder="邮箱"
+								autocomplete="email"
+								minlength="3"
+							/>
+						</label>
+						<label class="label">
+							<span>密码:</span>
+							<input
+								required
+								minlength="3"
+								type="password"
+								bind:value={userH.password}
+								placeholder="密码"
+							/>
+						</label>
+						<button type="submit">注册</button>
+					</form>
 				{/if}
 			</svelte:fragment>
 		</TabGroup>
@@ -84,40 +125,82 @@
 
 <style lang="postcss">
 	.tab {
-		width: 30%;
+		width: 50%;
+		max-width: 600px;
 		border: 1px solid #ccc;
 		border-radius: 8px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+		margin: 0 auto;
+		color: #333;
+		transition: 0.3s;
+	}
+	.tab:hover {
+		box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+	}
+	.h1 {
+		position: fixed;
+		text-align: center;
+		color: #000000;
+		top: 10%;
+		left: 50%;
+		transform: translateX(-50%);
 	}
 	.main {
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		margin: 0 auto;
+		padding: 20px;
+		background-color: #ffffff;
+		height: 100%;
+		width: 100%;
+	}
+	/* button等元素居中 */
+	.login,
+	.register {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
 		padding: 20px;
 	}
 
 	label {
+		display: block;
+		width: 80%;
+		flex-direction: column;
 		margin-bottom: 10px;
 	}
 
 	input {
-		width: 100%;
+		width: 80%;
 		padding: 8px;
 		margin-top: 5px;
 		border: 1px solid #ccc;
 		border-radius: 4px;
+		transition: 0.3s;
+	}
+	input:focus {
+		outline: none;
+		border: 1px solid #000000;
+		border-radius: 6px;
 	}
 
 	button {
+		@apply btn;
+		width: 80%;
 		padding: 10px;
-		background-color: #007bff;
+		background-color: #000000;
 		color: white;
 		border: none;
 		border-radius: 4px;
 		cursor: pointer;
+		/* border-radius: 渐变 */
+		transition: 0.3s;
 	}
 
 	button:hover {
-		background-color: #0056b3;
+		background-color: #474747;
+		border-radius: 10px;
 	}
 </style>

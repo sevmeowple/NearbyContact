@@ -26,6 +26,7 @@
     "host": "concurrently \"bun run host:client\" \"bun run dev:server\""
   },
   "dependencies": {
+    "@types/cors": "^2.8.17",
     "eslint": "9.x",
     "nearbycontact": "file:"
   }
