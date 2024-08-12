@@ -1,23 +1,22 @@
 import type {Request, Response} from 'express';
-import {authenticate} from '../services/authService';
-import { registerUser } from '../services/authService';
+import {authenticate, registerUser} from '../services/authService';
 
 export async function login(req: Request, res: Response) {
-    const { username, password } = req.body;
-    try{
+    const {username, password} = req.body;
+    try {
         const token = authenticate(username, password);
-        res.json({ token });
-    }   catch(error){
-        res.status(401).json({ error: 'Invalid credentials' });
+        res.json({token});
+    } catch (error: any) {
+        res.status(401).json({error: error.message});
     }
 }
 
 export async function register(req: Request, res: Response) {
-    const { username, email, password } = req.body;
+    const {username, email, password} = req.body;
     try {
         const user = await registerUser(username, email, password);
-        res.status(201).json({ user });
-    } catch (error) {
-        res.status(400).json({ error: error });
+        res.status(201).json({user});
+    } catch (error: any) {
+        res.status(400).json({error: error.message});
     }
 }
