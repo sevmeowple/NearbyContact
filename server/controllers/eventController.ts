@@ -22,9 +22,9 @@ export async function closeEventHandler(req: Request, res: Response) {
 }
 
 export async function reOpenEventHandler(req: Request, res: Response) {
-    const {eventID} = req.body;
+    const {eventId} = req.body;
     try {
-        const event = await reOpenEvent(Number(eventID));
+        const event = await reOpenEvent(Number(eventId));
         res.status(200).json({event});
     } catch (error: any) {
         res.status(400).json({error: error.message});

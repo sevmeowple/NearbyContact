@@ -22,7 +22,7 @@ export async function closeEvent(eventId: number) {
     return {id: eventId, status: 'closed'};
 }
 
-export async function reOpenEvent(eventID: number) {
-    updateEventStatus.run(true, eventID);
-    return {id: eventID, status: 'open'};
+export async function reOpenEvent(eventId: number) {
+    updateEventStatus.run(true, eventId);
+    return {id: eventId, status: 'open'};
 }
