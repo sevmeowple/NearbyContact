@@ -12,7 +12,7 @@ export async function createEventHandler(req: Request, res: Response) {
 }
 
 export async function closeEventHandler(req: Request, res: Response) {
-    const {eventId} = req.params;
+    const {eventId} = req.body;
     try {
         const event = await closeEvent(Number(eventId));
         res.status(200).json({event});
@@ -22,7 +22,7 @@ export async function closeEventHandler(req: Request, res: Response) {
 }
 
 export async function reOpenEventHandler(req: Request, res: Response) {
-    const {eventID} = req.params;
+    const {eventID} = req.body;
     try {
         const event = await reOpenEvent(Number(eventID));
         res.status(200).json({event});
