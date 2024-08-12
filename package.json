@@ -19,6 +19,7 @@
     "host": "concurrently \"bun run host:client\" \"bun run dev:server\""
   },
   "dependencies": {
+    "eslint": "^9.9.0",
     "nearbycontact": "file:"
   }
 }
