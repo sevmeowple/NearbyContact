@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import {writable} from 'svelte/store';
 
 interface User {
     "username": string;
@@ -12,15 +12,15 @@ const user: User = {
     "password": ''
 };
 
-const { subscribe, set, update } = writable(user);
+const {subscribe, set, update} = writable(user);
 
 const userStore = {
     subscribe,
     set,
     update,
     updateUser: (newUser: User) => set(newUser),
-    modifyUser: (modifications: Partial<User>) => update(currentUser => ({ ...currentUser, ...modifications }))
+    modifyUser: (modifications: Partial<User>) => update(currentUser => ({...currentUser, ...modifications}))
 };
 
-export { userStore };
-export type { User };
+export {userStore};
+export type {User};

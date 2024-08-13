@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { authRoutes } from './routes/authRoutes';
-import { userRoutes } from './routes/userRoutes';
-import { eventRoutes } from './routes/eventRoutes.ts';
+import {authRoutes} from './routes/authRoutes';
+import {userRoutes} from './routes/userRoutes';
+import {eventRoutes} from './routes/eventRoutes.ts';
+import {defaultPORT} from './config.ts'
 
 const app = express();
 
@@ -17,7 +18,7 @@ app.use('/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/events', eventRoutes);
 
-const PORT = process.env.PORT || 8030;
+const PORT = process.env.PORT || defaultPORT;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

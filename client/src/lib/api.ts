@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { serverUrl } from './u';
+import {serverUrl} from './u';
 
 const axiosInstance = axios.create({
     withCredentials: true,
@@ -65,4 +65,4 @@ function Reopen(body: ReopenBody) {
     return sendRequest('/event/reopen', body, ['eventID']);
 }
 
-export { Login, Register, Create, Close, Reopen };
+export {Login, Register, Create, Close, Reopen};
