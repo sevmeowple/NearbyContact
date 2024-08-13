@@ -16,15 +16,16 @@ CREATE TABLE IF NOT EXISTS tbl_events (
     name TEXT NOT NULL UNIQUE,
     type TEXT NOT NULL,
     date TEXT NOT NULL,
+    status BOOLEAN NOT NULL,
     description TEXT,
-    info TEXT,
-    status BOOLEAN NOT NULL
+    info TEXT
 );
 `);
 
 export type User = {
     id: number;
     username: string;
+    role : string;
     email: string;
     password: string;
 }
@@ -39,9 +40,9 @@ export type Event = {
     name: string;
     type: string;
     date: string;
+    status: boolean;
     description: string;
     info: string;
-    status: boolean;
 };
 
 export const EventRoles = {
