@@ -43,6 +43,9 @@ function Register(body: RegisterBody) {
 interface CreateBody {
     "name": string;
     "date": string;
+    "type": string;
+    "description": string;
+    "info": string;
 }
 
 function Create(body: CreateBody) {
