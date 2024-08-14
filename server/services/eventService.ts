@@ -14,3 +14,7 @@ export async function reOpenEvent(eventId: number) {
     EventRoles.updateStatus.run(true, eventId);
     return {id: eventId, status: 'open'};
 }
+
+export async function selectAllOpenEvent() {
+    return EventRoles.selectAllOpen.all();
+}
