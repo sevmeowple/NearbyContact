@@ -45,10 +45,19 @@
 			goto('/board');
 		}
 	}
+
+	//适配移动端
+	function adapt() {
+	document.documentElement.style.fontSize = Math.min(screen.width / 20, 20) + 'px';
+	}
+
+	onMount(adapt);
+
 </script>
 
+
 <div class="main">
-	<h1 class="h1">失物招领</h1>
+	<h1 class="h1">Nearby Contanct</h1>
 	<div class="tab">
 		<TabGroup
 			justify="justify-center"
@@ -125,15 +134,16 @@
 
 <style lang="postcss">
 	.tab {
-		width: 50%;
-		max-width: 600px;
-		border: 1px solid #ccc;
-		border-radius: 8px;
-		box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-		margin: 0 auto;
-		color: #333;
-		transition: 0.3s;
+	width: 80%;
+	max-width: 600px;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	margin: 0 auto;
+	color: #333;
+	transition: 0.3s;
 	}
+
 	.tab:hover {
 		box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 	}
@@ -155,6 +165,8 @@
 		height: 100%;
 		width: 100%;
 	}
+
+
 	/* button等元素居中 */
 	.login,
 	.register {
@@ -162,19 +174,19 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: 20px;
+		padding: auto;
 	}
 
 	label {
 		display: block;
 		width: 80%;
 		flex-direction: column;
-		margin-bottom: 10px;
+		margin-bottom: 0.5rem;
 	}
 
 	input {
-		width: 80%;
-		padding: 8px;
+		width: 100%;
+		padding: 0.6rem;
 		margin-top: 5px;
 		border: 1px solid #ccc;
 		border-radius: 4px;
@@ -189,7 +201,7 @@
 	button {
 		@apply btn;
 		width: 80%;
-		padding: 10px;
+		padding: 0.5rem;
 		background-color: #000000;
 		color: white;
 		border: none;
@@ -197,6 +209,8 @@
 		cursor: pointer;
 		/* border-radius: 渐变 */
 		transition: 0.3s;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
 	}
 
 	button:hover {
