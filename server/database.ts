@@ -20,7 +20,7 @@ db.exec(`
         date        TEXT    NOT NULL,
         status      BOOLEAN NOT NULL,
         description TEXT,
-        info        TEXT
+        imagePath   TEXT
     );
 `);
 
@@ -44,11 +44,11 @@ export type Event = {
     date: string;
     status: boolean;
     description: string;
-    info: string;
+    imagePath: string;
 };
 
 export const EventRoles = {
-    insert: db.prepare('INSERT INTO tbl_events (name, type, date, status, description, info) VALUES (?, ?, ?, ?, ?, ?)'),
+    insert: db.prepare('INSERT INTO tbl_events (name, type, date, status, description, imagePath) VALUES (?, ?, ?, ?, ?, ?)'),
     updateStatus: db.prepare('UPDATE tbl_events SET status = ? WHERE id = ?'),
     selectAllOpen: db.prepare('SELECT * FROM tbl_events WHERE status = true'),
 }
