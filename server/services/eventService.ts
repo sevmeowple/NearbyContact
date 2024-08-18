@@ -1,6 +1,6 @@
 import {EventRoles} from "../database";
 
-export async function createEvent(name: string, type: string, date: string, description: string, imagePath: string) {
+export async function createEvent(name: string, type: string, date: string, description: string, imagePath: string | null ) {
     EventRoles.insert.run(name, type, date, true, description, imagePath);
     return {name, date, status: 'open'};
 }
