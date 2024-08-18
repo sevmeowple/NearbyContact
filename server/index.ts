@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import {authRoutes} from './routes/authRoutes';
 import {userRoutes} from './routes/userRoutes';
 import {eventRoutes} from './routes/eventRoutes.ts';
@@ -14,6 +15,8 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(cookieParser());
+
 app.use('/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/events', eventRoutes);
