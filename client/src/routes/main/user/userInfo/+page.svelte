@@ -22,7 +22,8 @@
 	});
 
     function Edit() {
-        //sth
+        //sth 不知道怎麽实现将两个页面的数据同步，这里仅仅是实现了页面跳转
+        window.location.href = "/main/user/userInfo/edit";
     }
 
     let activeTab = "发起"//默认显示发起的事件
@@ -41,7 +42,7 @@
 
 <div class="container" transition:slide>
     <div class="commonInfo">
-        <img src="https://via.placeholder.com/150" class="avatar">
+        <img src="https://via.placeholder.com/150" class="avatar" alt="Avatar">
 		<div class="user">
 			<span class="username">USERNAME{userH.username}</span>
 			<span class="email">example@Program.com{userH.email}</span>
@@ -79,9 +80,9 @@
     </div>
 
     <div class="footer">
-        <span>Home</span>
-        <span>Take Event</span>
-        <span>Create Event</span>
+        <span><a href="/main">Home</a></span>
+        <span><a href="/main/user/eventCreated">Event Created</a></span>
+        <span><a href="/main/user/eventTaken">Event Taken</a></span>
     </div>
 </div>
 
@@ -107,15 +108,15 @@
     }
 
 	.avatar{
-		width: 4.5rem;
-		height: 4.5rem;
+		width: 4rem;
+		height: 4rem;
 		border-radius: 50%;
 		border-width: 1px;
 		border-color: white;
 		border-style: solid;
 		
 		margin-right: 1rem;
-        margin-left: 0rem;
+        margin-left: 1.5rem;
 		box-shadow: 0 0 5px rgba(0,0,0,0.3);
 	}
 
@@ -138,8 +139,8 @@
         height: 2rem;
 		background-color: #337C6B;
 		color: white;
-        margin-left: 2rem;
-        margin-right: 1rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
 		padding: 0.4rem 0.8rem;
 		border-radius: 20px;
 		border: none;
@@ -153,6 +154,7 @@
         flex-direction:row;
         justify-content: center;background-color: #4a673a;
         padding: 1rem;
+        /* font-size: 0.8rem; */
     }
     .infoI{
         display: flex;
@@ -184,7 +186,7 @@
     }
 
     .eventTitle span{
-        font-size: 1.2rem;
+        font-size: 1rem;
         color: white;
         cursor: pointer;
         flex: 1;
@@ -208,9 +210,11 @@
     }
 
     .eventUrl{
-        margin: 1rem;
-        border-radius: 10px;
+        margin: 0.5rem;
+        border-radius: 15px;
         width: 100%;
+        height: 100%;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     }
 
     .footer {

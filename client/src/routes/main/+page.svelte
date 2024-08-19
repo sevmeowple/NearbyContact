@@ -33,8 +33,8 @@
 
 	let userInfo = [
 		{ id: 1, name: '个人信息', url: '/main/user/userInfo' },
-		{ id: 2, name: '发布的请求', url: '/user/posted' },
-		{ id: 3, name: '承接的请求', url: '/user/taken' }
+		{ id: 2, name: '我发起的事件', url: '/main/user/eventCreated' },
+		{ id: 3, name: '我承接的事件', url: '/main/user/eventTaken' },
 	];
 
 	let show = true;
@@ -81,7 +81,7 @@
 		<!-- <span>{userH.username}</span><br />
 		<span>{userH.email}</span><br />
 		<span>{userH.password}</span><br /> -->
-		<img src="https://via.placeholder.com/150" class="avatar">
+		<img src="https://via.placeholder.com/150" class="avatar" alt="Avatar">
 		<div class="header-user">
 			<span class="username">{userH.username}</span>
 			<span class="email">{userH.email}</span>
@@ -128,7 +128,7 @@
 			{#if show}
 				{#each events.slice(0, i) as event}
 					<div class="showEvent" transition:slide style="pointer: cursor;">
-						<a href="/take{event.url}">{event.name}</a>
+						<a href="/create{event.url}">{event.name}</a>
 					</div>
 				{/each}
 			{/if}
