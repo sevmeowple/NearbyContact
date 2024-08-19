@@ -4,9 +4,7 @@
 	import type { User } from '$lib/stores/userStore';
 	import { onMount, onDestroy } from 'svelte';
 	let userH: User = { username: '', email: '', password: '' };
-	import { fade } from 'svelte/transition';
 	import { slide } from 'svelte/transition';
-    import { cubicOut } from 'svelte/easing';
 	onMount(() => {
 		const user = $userStore;
 		userH.username = user.username;
