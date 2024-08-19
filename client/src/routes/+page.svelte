@@ -58,7 +58,7 @@
 
 
 <div class="main">
-    <h1 class="h1">Nearby Contanct</h1>
+    <h1 class="h1">Nearby Contact</h1>
     <div class="tab">
         <TabGroup
                 active="border-b-2 bg-gray-200"

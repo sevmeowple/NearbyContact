@@ -26,6 +26,7 @@
     "host": "concurrently \"bun run host:client\" \"bun run dev:server\""
   },
   "dependencies": {
+    "@sveltejs/adapter-auto": "^3.2.4",
     "@types/cors": "^2.8.17",
     "eslint": "^9.9.0",
     "eslint-plugin": "^1.0.1",
