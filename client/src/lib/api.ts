@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {serverUrl} from './u';
+import {appendFile} from "node:fs";
 
 const axiosInstance = axios.create({
     withCredentials: true,
@@ -33,7 +34,12 @@ function Login(body: LoginBody) {
 interface RegisterBody {
     "username": string;
     "password": string;
+    "phone_number": string;
+    "QQ": string;
+    "address": string;
+    "gender": 'M' | 'F';
     "email": string;
+    "avatar": File;
 }
 
 function Register(body: RegisterBody) {
@@ -45,7 +51,7 @@ interface CreateBody {
     "date": string;
     "type": string;
     "description": string;
-    "info": string;
+    "images": File;
 }
 
 function Create(body: CreateBody) {
