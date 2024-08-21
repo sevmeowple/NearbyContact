@@ -2,27 +2,31 @@ import Database from 'bun:sqlite';
 
 const db = new Database('app.sqlite');
 
-db.exec(`
-    CREATE TABLE IF NOT EXISTS tbl_users
-    (
-        id       INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT NOT NULL UNIQUE,
-        role     TEXT NOT NULL,
-        email    TEXT NOT NULL,
-        password TEXT NOT NULL
-    );
+async function init() {
+    db.exec(`
+        CREATE TABLE IF NOT EXISTS tbl_users
+        (
+            id       INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL UNIQUE,
+            role     TEXT NOT NULL,
+            email    TEXT NOT NULL,
+            password TEXT NOT NULL
+        );
 
-    CREATE TABLE IF NOT EXISTS tbl_events
-    (
-        id          INTEGER PRIMARY KEY AUTOINCREMENT,
-        name        TEXT    NOT NULL UNIQUE,
-        type        TEXT    NOT NULL,
-        date        TEXT    NOT NULL,
-        status      BOOLEAN NOT NULL,
-        description TEXT,
-        imagePath   TEXT
-    );
-`);
+        CREATE TABLE IF NOT EXISTS tbl_events
+        (
+            id          INTEGER PRIMARY KEY AUTOINCREMENT,
+            name        TEXT    NOT NULL UNIQUE,
+            type        TEXT    NOT NULL,
+            date        TEXT    NOT NULL,
+            status      BOOLEAN NOT NULL,
+            description TEXT,
+            imagePath   TEXT
+        );
+    `);
+}
+
+await init()
 
 export type User = {
     id: number;
