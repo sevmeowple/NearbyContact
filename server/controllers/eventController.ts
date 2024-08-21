@@ -7,10 +7,10 @@ export async function createEventHandler(req: Request, res: Response) {
         if (err) {
             return res.status(400).json({error: err.message});
         }
-        const {name, date, type, description, info} = req.body;
-        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
+        const {name, date, type, description} = req.body;
+        const imagePaths = req.file ? `/uploads/${req.file.filename}` : null;
         try {
-            const event = await createEvent(name, date, type, description, imagePath);
+            const event = await createEvent(name, date, type, description, imagePaths);
             res.status(201).json({event});
         } catch (error: any) {
             res.status(400).json({error: error.message});

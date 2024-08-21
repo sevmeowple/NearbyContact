@@ -2,57 +2,36 @@ import Database from 'bun:sqlite';
 
 const db = new Database('app.sqlite');
 
-async function init() {
-    db.exec(`
-        CREATE TABLE IF NOT EXISTS tbl_users
-        (
-            id       INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL UNIQUE,
-            role     TEXT NOT NULL,
-            email    TEXT NOT NULL,
-            password TEXT NOT NULL
-        );
-
-        CREATE TABLE IF NOT EXISTS tbl_events
-        (
-            id          INTEGER PRIMARY KEY AUTOINCREMENT,
-            name        TEXT    NOT NULL UNIQUE,
-            type        TEXT    NOT NULL,
-            date        TEXT    NOT NULL,
-            status      BOOLEAN NOT NULL,
-            description TEXT,
-            imagePath   TEXT
-        );
-    `);
-}
-
-await init()
-
 export type User = {
     id: number;
     username: string;
-    role: string;
-    email: string;
     password: string;
+    role: string;
+    phone_number: string;
+    QQ: string;
+    address: string;
+    gender: 'M' | 'F';
+    email: string;
+    avatar_path: string;
 }
 
 export const UserRoles = {
     selectByUsername: db.prepare('SELECT * FROM tbl_users WHERE username = ?'),
-    insert: db.prepare('INSERT INTO tbl_users (username, role, email, password) VALUES (?, ?, ?, ?)'),
+    insert: db.prepare('INSERT INTO tbl_users (username, password, role, phone_number, QQ, address, gender, email, avatar_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'),
 }
 
 export type Event = {
     id: number;
     name: string;
-    type: string;
     date: string;
     status: boolean;
+    type: string;
     description: string;
-    imagePath: string;
+    imagePaths: string;
 };
 
 export const EventRoles = {
-    insert: db.prepare('INSERT INTO tbl_events (name, type, date, status, description, imagePath) VALUES (?, ?, ?, ?, ?, ?)'),
+    insert: db.prepare('INSERT INTO tbl_events (name, date, status, type, description, imagePaths) VALUES (?, ?, ?, ?, ?, ?)'),
     updateStatus: db.prepare('UPDATE tbl_events SET status = ? WHERE id = ?'),
     selectAllOpen: db.prepare('SELECT * FROM tbl_events WHERE status = true'),
 }

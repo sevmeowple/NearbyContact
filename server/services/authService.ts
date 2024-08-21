@@ -11,7 +11,7 @@ export function authenticate(username: string, password: string) {
     const user = UserRoles.selectByUsername.get(username) as User;
 
     if (user && bcrypt.compareSync(password, user.password)) {
-        return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '1h'})
+        return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '12h'})
     }
     throw new Error('Invalid credentials');
 

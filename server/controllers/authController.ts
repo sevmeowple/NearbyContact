@@ -5,7 +5,7 @@ export async function login(req: Request, res: Response) {
     const {username, password} = req.body;
     try {
         const token = authenticate(username, password);
-        res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 3600000});
+        res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 43200000});
     } catch (error: any) {
         res.status(401).json({error: error.message});
     }
