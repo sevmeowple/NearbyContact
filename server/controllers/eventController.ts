@@ -8,7 +8,7 @@ export async function createEventHandler(req: Request, res: Response) {
             return res.status(400).json({error: err.message});
         }
         const {name, date, type, description} = req.body;
-        const imagePaths = req.file ? `/uploads/${req.file.filename}` : null;
+        const imagePaths = req.files ? (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => `/uploads/${file.filename}`) : [];
         try {
             const event = await createEvent(name, date, type, description, imagePaths);
             res.status(201).json({event});

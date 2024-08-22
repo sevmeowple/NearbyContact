@@ -1,9 +1,10 @@
 import multer from 'multer';
 import path from 'path';
+import {image} from "../config.ts";
 
 // Set storage engine
 const storage = multer.diskStorage({
-    destination: './uploads/',
+    destination: image.destination,
     filename: (req, file, cb) => {
         cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
     }
@@ -12,11 +13,11 @@ const storage = multer.diskStorage({
 // Initialize upload
 const upload = multer({
     storage: storage,
-    limits: {fileSize: 1000000}, // Limit file size to 1MB
+    limits: {fileSize: image.maxSize}, // Limit file size to 1MB
     fileFilter: (req, file, cb) => {
         checkFileType(file, cb);
     }
-}).single('image');
+}).array('images', image.maxNumber);
 
 // Check file type
 function checkFileType(file: Express.Multer.File, cb: multer.FileFilterCallback) {

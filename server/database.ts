@@ -27,7 +27,7 @@ export type Event = {
     status: boolean;
     type: string;
     description: string;
-    imagePaths: string;
+    imagePaths: string | string[];
 };
 
 export const EventRoles = {

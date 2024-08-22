@@ -50,7 +50,7 @@ interface CreateBody {
     "date": string;
     "type": string;
     "description": string;
-    "images": File;
+    "images": File[];
 }
 
 function Create(body: CreateBody) {
