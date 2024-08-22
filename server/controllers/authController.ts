@@ -1,5 +1,7 @@
 import type {Request, Response} from 'express';
 import {authenticate, registerUser} from '../services/authService';
+import {upload} from "../middleware/uploadMiddleware.ts";
+import {createEvent} from "../services/eventService.ts";
 
 export async function login(req: Request, res: Response) {
     const {username, password} = req.body;
@@ -12,11 +14,17 @@ export async function login(req: Request, res: Response) {
 }
 
 export async function register(req: Request, res: Response) {
-    const {username, email, password} = req.body;
-    try {
-        const user = await registerUser(username, email, password);
-        res.status(201).json({user});
-    } catch (error: any) {
-        res.status(400).json({error: error.message});
-    }
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({error: err.message});
+        }
+        const {username, password, phone_number, QQ, address, gender, email} = req.body;
+        const avatar_path = req.file ? `/uploads/${req.file.filename}` : '';
+        try {
+            const user = await registerUser(username, password, phone_number, QQ, address, gender, email, avatar_path)
+            res.status(201).json({event});
+        } catch (error: any) {
+            res.status(400).json({error: error.message});
+        }
+    });
 }

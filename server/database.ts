@@ -6,7 +6,7 @@ export type User = {
     id: number;
     username: string;
     password: string;
-    role: string;
+    role: 'user' | 'admin';
     phone_number: string;
     QQ: string;
     address: string;
