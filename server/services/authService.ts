@@ -17,14 +17,14 @@ export function authenticate(username: string, password: string) {
 
 }
 
-export async function registerUser(username: string, password: string, phone_number: string, QQ: string, address: string, gender: 'M' | 'F', email: string, avater_path: string) {
+export async function registerUser(username: string, password: string, phone_number: string, QQ: string, address: string, gender: 'M' | 'F', email: string, avatar_path: string) {
     const existingUser = UserRoles.selectByUsername.get(username) as User;
     if (existingUser) {
         throw new Error('Username already taken');
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    UserRoles.insert.run(username, hashedPassword, 'user', phone_number, QQ, address, gender, email, avater_path);
+    UserRoles.insert.run(username, hashedPassword, 'user', phone_number, QQ, address, gender, email, avatar_path);
 
     return {username, email};
 }
