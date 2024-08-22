@@ -1,5 +1,5 @@
 import type {Request, Response} from 'express';
-import {closeEvent, createEvent, reOpenEvent, selectAllOpenEvent} from '../services/eventService';
+import {closeEvent, createEvent, reOpenEvent, selectAllOpenEvent, takeEvent} from '../services/eventService';
 import {upload} from "../middleware/uploadMiddleware.ts";
 
 export async function createEventHandler(req: Request, res: Response) {
@@ -16,6 +16,16 @@ export async function createEventHandler(req: Request, res: Response) {
             res.status(400).json({error: error.message});
         }
     });
+}
+
+export async function takeEventHandler(req: Request, res: Response) {
+    const {eventId} = req.body;
+    try {
+        const event = await takeEvent(Number(eventId));
+        res.status(200).json({event});
+    } catch (error: any) {
+        res.status(400).json({error: error.message});
+    }
 }
 
 export async function closeEventHandler(req: Request, res: Response) {

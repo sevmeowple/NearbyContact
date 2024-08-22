@@ -1,7 +1,6 @@
 import type {Request, Response} from 'express';
 import {authenticate, registerUser} from '../services/authService';
 import {upload} from "../middleware/uploadMiddleware.ts";
-import {createEvent} from "../services/eventService.ts";
 
 export async function login(req: Request, res: Response) {
     const {username, password} = req.body;

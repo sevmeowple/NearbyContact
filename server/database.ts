@@ -24,7 +24,7 @@ export type Event = {
     id: number;
     name: string;
     date: string;
-    status: boolean;
+    status: 'open' | 'taken' | 'closed';
     type: string;
     description: string;
     imagePaths: string | string[];
