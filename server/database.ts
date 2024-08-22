@@ -23,7 +23,7 @@ export const UserRoles = {
 export type Event = {
     id: number;
     name: string;
-    date: string;
+    date: bigint;
     status: 'open' | 'taken' | 'closed';
     type: string;
     description: string;

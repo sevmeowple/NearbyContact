@@ -21,9 +21,8 @@ const upload = multer({
 
 // Check file type
 function checkFileType(file: Express.Multer.File, cb: multer.FileFilterCallback) {
-    const filetypes = /jpeg|jpg|png|gif/;
-    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    const mimetype = filetypes.test(file.mimetype);
+    const extname = image.types.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = image.types.test(file.mimetype);
 
     if (mimetype && extname) {
         return cb(null, true);

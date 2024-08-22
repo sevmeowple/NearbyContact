@@ -3,9 +3,8 @@ import {EventRoles} from "../database";
 
 export async function createEvent(name: string, type: string, description: string, imagePaths: string[]) {
     const imagePathsJson = JSON.stringify(imagePaths)
-    const date = new Date().toISOString();
-    EventRoles.insert.run(name, type, date, 'open', description, imagePathsJson);
-    return {name, date, status: 'open'};
+    EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson);
+    return {name: name, status: 'open'};
 }
 
 export async function takeEvent(eventId: number) {

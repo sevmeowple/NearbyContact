@@ -1,6 +1,7 @@
 import type {Request, Response} from 'express';
 import {closeEvent, createEvent, reOpenEvent, selectAllOpenEvent, takeEvent} from '../services/eventService';
 import {upload} from "../middleware/uploadMiddleware.ts";
+import {image} from "../config.ts";
 
 export async function createEventHandler(req: Request, res: Response) {
     upload(req, res, async (err) => {
@@ -8,7 +9,7 @@ export async function createEventHandler(req: Request, res: Response) {
             return res.status(400).json({error: err.message});
         }
         const {name, type, description} = req.body;
-        const imagePaths = req.files ? (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => `/uploads/${file.filename}`) : [];
+        const imagePaths = req.files ? (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => `${image.destination}${file.filename}`) : [];
         try {
             const event = await createEvent(name, type, description, imagePaths);
             res.status(201).json({event});
