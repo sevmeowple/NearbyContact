@@ -1,23 +1,25 @@
 <script lang="ts">
+    import type {User} from '$lib/stores/userStore';
     //sth
-    import { userStore } from '$lib/stores/userStore';
-	import type { User } from '$lib/stores/userStore';
-	import { onMount, onDestroy } from 'svelte';
-	let userH: User = { username: '', email: '', password: '' };
-	import { slide } from 'svelte/transition';
-	onMount(() => {
-		const user = $userStore;
-		userH.username = user.username;
-		userH.email = user.email;
-		userH.password = user.password;
-	});
-	onDestroy(() => {
-		userStore.set({
-			username: userH.username,
-			email: userH.email,
-			password: userH.password
-		});
-	});
+    import {userStore} from '$lib/stores/userStore';
+    import {onDestroy, onMount} from 'svelte';
+    import {slide} from 'svelte/transition';
+
+    let userH: User = {username: '', email: '', password: ''};
+
+    onMount(() => {
+        const user = $userStore;
+        userH.username = user.username;
+        userH.email = user.email;
+        userH.password = user.password;
+    });
+    onDestroy(() => {
+        userStore.set({
+            username: userH.username,
+            email: userH.email,
+            password: userH.password
+        });
+    });
 
     function Edit() {
         //sth 不知道怎麽实现将两个页面的数据同步，这里仅仅是实现了页面跳转
@@ -26,12 +28,12 @@
 
     let activeTab = "发起"//默认显示发起的事件
     let eventUrl = "/main/user/eventCreated"
+
     function changeTab(tab: string) {
         activeTab = tab;
-        if (activeTab == "发起"){
+        if (activeTab == "发起") {
             eventUrl = "/main/user/eventCreated"
-        }
-        else{
+        } else {
 
             eventUrl = "/main/user/eventTaken"
         }
@@ -40,12 +42,12 @@
 
 <div class="container" transition:slide>
     <div class="commonInfo">
-        <img src="https://via.placeholder.com/150" class="avatar" alt="Avatar">
-		<div class="user">
-			<span class="username">USERNAME{userH.username}</span>
-			<span class="email">example@Program.com{userH.email}</span>
-		</div>
-		<button class="editButton" on:click={Edit}>Edit</button>
+        <img alt="Avatar" class="avatar" src="https://via.placeholder.com/150">
+        <div class="user">
+            <span class="username">USERNAME{userH.username}</span>
+            <span class="email">example@Program.com{userH.email}</span>
+        </div>
+        <button class="editButton" on:click={Edit}>Edit</button>
     </div>
 
     <div class="detailInfo">
@@ -62,18 +64,18 @@
 
     <div class="event">
         <div class="eventTitle">
-            <span 
-                class:active = "{activeTab == '发起'}" on:click={() => changeTab("发起")}>
+            <span
+                    class:active="{activeTab == '发起'}" on:click={() => changeTab("发起")}>
             我发起的事件
             </span>
 
-            <span 
-                class:active = "{activeTab == '承接'}" on:click={() => changeTab("承接")}>
+            <span
+                    class:active="{activeTab == '承接'}" on:click={() => changeTab("承接")}>
                 我承接的事件
             </span>
         </div>
         <div class="eventContent">
-            <iframe src="{eventUrl}" frameborder="0" class="eventUrl">Event</iframe>
+            <iframe class="eventUrl" frameborder="0" src="{eventUrl}">Event</iframe>
         </div>
     </div>
 
@@ -93,7 +95,7 @@
         width: 100%;
         height: 100%;
         padding: 1rem;
-        background:linear-gradient(to bottom, #708862 50%, #3f5831 100%);
+        background: linear-gradient(to bottom, #708862 50%, #3f5831 100%);
     }
 
     .commonInfo {
@@ -105,20 +107,20 @@
         border-radius: 20px 20px 0px 0px;
     }
 
-	.avatar{
-		width: 4rem;
-		height: 4rem;
-		border-radius: 50%;
-		border-width: 1px;
-		border-color: white;
-		border-style: solid;
-		
-		margin-right: 1rem;
-        margin-left: 1.5rem;
-		box-shadow: 0 0 5px rgba(0,0,0,0.3);
-	}
+    .avatar {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        border-width: 1px;
+        border-color: white;
+        border-style: solid;
 
-	.user {
+        margin-right: 1rem;
+        margin-left: 1.5rem;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .user {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -126,7 +128,7 @@
         color: white;
     }
 
-    .email{
+    .email {
 
         font-size: 0.8rem;
         color: white;
@@ -135,26 +137,28 @@
     .editButton {
         width: 4rem;
         height: 2rem;
-		background-color: #337C6B;
-		color: white;
+        background-color: #337C6B;
+        color: white;
         margin-left: 1.5rem;
         margin-right: 1.5rem;
-		padding: 0.4rem 0.8rem;
-		border-radius: 20px;
-		border: none;
-		cursor: pointer;
-		font-size: 0.8rem;
-		box-shadow: 0 0 5px rgba(0,0,0,0.3);
-	}
-    
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.8rem;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    }
+
     .detailInfo {
         display: flex;
-        flex-direction:row;
-        justify-content: center;background-color: #4a673a;
+        flex-direction: row;
+        justify-content: center;
+        background-color: #4a673a;
         padding: 1rem;
         /* font-size: 0.8rem; */
     }
-    .infoI{
+
+    .infoI {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -162,7 +166,7 @@
         margin-right: 15px;
     }
 
-    .infoII{
+    .infoII {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -176,14 +180,14 @@
         /* justify-content: center; */
         background-color: #547642;
         padding: 1rem;
-    }  
-    
-    .eventTitle{
+    }
+
+    .eventTitle {
         display: flex;
         justify-content: space-around;
     }
 
-    .eventTitle span{
+    .eventTitle span {
         font-size: 1rem;
         color: white;
         cursor: pointer;
@@ -192,14 +196,14 @@
         margin: 0.5rem 1rem;
     }
 
-    .eventTitle span.active{
+    .eventTitle span.active {
         text-decoration: underline;
         text-underline-offset: 10px;
         text-decoration-color: white;
-        text-shadow: 2px 2px 1px rgba(0,0,0,0.8);
+        text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.8);
     }
 
-    .eventContent{
+    .eventContent {
         display: flex;
         justify-content: center;
         /* align-items: center; */
@@ -207,12 +211,12 @@
         width: 100%;
     }
 
-    .eventUrl{
+    .eventUrl {
         margin: 0.5rem;
         border-radius: 15px;
         width: 100%;
         height: 100%;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     }
 
     .footer {

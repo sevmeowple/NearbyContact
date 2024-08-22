@@ -3,9 +3,9 @@
     import Card from '$lib/card/Card_1.svelte';
 </script>
 
-<EventLayout title="我承接的事件" switchTo="/main/user/eventCreated">
+<EventLayout switchTo="/main/user/eventCreated" title="我承接的事件">
     <div class="cards">
-        <Card title="事件标题" description="事件描述" />
+        <Card description="事件描述" title="事件标题"/>
     </div>
 </EventLayout>
 

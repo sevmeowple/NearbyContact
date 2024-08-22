@@ -12,37 +12,37 @@
     import {slide} from "svelte/transition";
 </script>
 
-    <div class="card" transition:slide>
-        <div class="card-top">
-            <div class="card-content1">
-                <img src="{imageUrl}" alt="{title}">
-                <div class="card-title">
-                    <h2>{title}</h2>
-                </div>
-            </div>
-            
-            <div class="card-content2">
-                <div class="card-insider">
-                    <p class="card-fee">代取费:<br> {fee}</p>
-                    <p class="card-location">出发地：<br>{location}</p>
-                </div>
-                <div class="card-insider">
-                    <p class="card-distance">距离:<br> {distance}</p>
-                    <p class="card-destination">目的地: <br>{destination}</p>
-                </div>
-                <div class="card-insider">
-                    <p class="card-time">发起时间: <br>{time}</p>
-                    <p class="card-sex">性别要求:<br> {sex}</p>
-                </div>
-                
-
+<div class="card" transition:slide>
+    <div class="card-top">
+        <div class="card-content1">
+            <img alt="{title}" src="{imageUrl}">
+            <div class="card-title">
+                <h2>{title}</h2>
             </div>
         </div>
-        <div class="card-bottom">
-            <p class="card-description">具体描述：{description}</p>
-            <a href="{link}" class="card-link">接收</a>
+
+        <div class="card-content2">
+            <div class="card-insider">
+                <p class="card-fee">代取费:<br> {fee}</p>
+                <p class="card-location">出发地：<br>{location}</p>
+            </div>
+            <div class="card-insider">
+                <p class="card-distance">距离:<br> {distance}</p>
+                <p class="card-destination">目的地: <br>{destination}</p>
+            </div>
+            <div class="card-insider">
+                <p class="card-time">发起时间: <br>{time}</p>
+                <p class="card-sex">性别要求:<br> {sex}</p>
+            </div>
+
+
         </div>
     </div>
+    <div class="card-bottom">
+        <p class="card-description">具体描述：{description}</p>
+        <a class="card-link" href="{link}">接收</a>
+    </div>
+</div>
 
 <style>
     .card {
@@ -61,7 +61,7 @@
         flex-direction: row; /* 行布局 */
         width: 100%; /* 宽度占满父容器 */
     }
-    
+
     .card-bottom {
         height: 100%;
         width: 100%; /* 宽度占满父容器 */
@@ -70,7 +70,6 @@
         flex-direction: column; /* 列布局 */
     }
 
-    
 
     .card-content1 {
         height: 100%;
@@ -79,12 +78,13 @@
         border-right: #eee 0.1em solid;
         margin-bottom: 0;
     }
-    
+
     .card img {
         width: 100%; /* 图片宽度占满父容器 */
         height: auto; /* 高度自适应 */
-         
+
     }
+
     .card-title {
         width: 100%;
         display: flex;
@@ -109,14 +109,13 @@
         text-align: center; /* 文字居中 */
         backdrop-filter: blur(20px); /* 毛玻璃效果 */
     }
-    
-    
 
-    .card-insider{
+
+    .card-insider {
         display: flex;
-        flex-direction: row ; /* 列布局 */
+        flex-direction: row; /* 列布局 */
         align-items: center;
-        height:33.33%;
+        height: 33.33%;
     }
 
 
@@ -125,28 +124,26 @@
     .card-destination,
     .card-time,
     .card-sex,
-    .card-distance
-
-    {   
-        width: 50%; 
-        font-size:small;
+    .card-distance {
+        width: 50%;
+        font-size: small;
         border-radius: 8px 8px 8px 8px; /* 圆角 */
         text-align: left;
         padding: 0.4em 0.4em 0.4em 0.4em;
         margin: 0.4em 0.4em 0.4em 0.4em;
-		border-top: 1px solid #eee;
+        border-top: 1px solid #eee;
         border-bottom: 1px solid #eee;
-		background-color: #819c71;
+        background-color: #819c71;
     }
 
 
     .card-description {
         width: 100%;
-        font-size:small;
+        font-size: small;
         padding: 0.5em 0.5em 0.5em 0.5em;
         text-align: left;
-		border-top: 1px solid #eee;
-		background-color: #819c71;
+        border-top: 1px solid #eee;
+        background-color: #819c71;
     }
 
     .card-link {
@@ -157,7 +154,7 @@
         background-color: rgb(113, 169, 142);
         color: white;
         text-decoration: none;
-        
+
     }
 
     .card-link:hover {

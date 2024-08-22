@@ -1,14 +1,14 @@
 <script>
-    import { fly } from "svelte/transition";
+    import {fly} from "svelte/transition";
 </script>
 
 <footer class="navbar">
-    <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
-    <a href="/main/take/event/1" transition:fly={{ x: 1000 }} class="link">代取服务</a>
-    <a href="/main/take/create/1" transition:fly={{ x: 1000 }} class="create">+</a>
-    <a href="/main/take/event/2" transition:fly={{ x: 1000 }}  class="link">代买服务</a>
-    <a href="/main/take/event/3" transition:fly={{ x: 1000 }}  class="link">失物招领</a>
- </footer>
+    <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
+    <a class="link" href="/main/take/event/1" transition:fly={{ x: 1000 }}>代取服务</a>
+    <a class="create" href="/main/take/create/1" transition:fly={{ x: 1000 }}>+</a>
+    <a class="link" href="/main/take/event/2" transition:fly={{ x: 1000 }}>代买服务</a>
+    <a class="link" href="/main/take/event/3" transition:fly={{ x: 1000 }}>失物招领</a>
+</footer>
 
 <style>
     .navbar {
@@ -27,7 +27,7 @@
         z-index: 1000; /* 确保导航栏在其它内容之上 */
     }
 
-    .create{
+    .create {
         transition: all 0.3s ease;
         text-align: center;
         align-items: center;
@@ -38,14 +38,14 @@
         color: #708862;
         text-decoration: none;
         font-size: 2em;
-        padding-bottom:5%;
+        padding-bottom: 5%;
         padding-top: 5%;
         border: #737373 0.1em solid;
         border-radius: 100px;
     }
 
- 
-    .link{
+
+    .link {
         transition: all 0.3s ease;
         text-align: center;
         align-items: center;
@@ -56,11 +56,11 @@
         color: white;
         text-decoration: none;
         font-size: 1em;
-        padding-bottom:5%;
+        padding-bottom: 5%;
         padding-top: 5%;
     }
 
-    .link:hover{
+    .link:hover {
         background-color: #5c7055;
         cursor: pointer;
     }

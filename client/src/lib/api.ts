@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {serverUrl} from './u';
-import {appendFile} from "node:fs";
 
 const axiosInstance = axios.create({
     withCredentials: true,
