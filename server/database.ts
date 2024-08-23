@@ -17,21 +17,30 @@ export type User = {
 
 export const UserRoles = {
     selectByUsername: db.prepare('SELECT * FROM tbl_users WHERE username = ?'),
+    selectById: db.prepare('SELECT * FROM tbl_users WHERE id = ?'),
     insert: db.prepare('INSERT INTO tbl_users (username, password, role, phone_number, QQ, address, gender, email, avatar_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'),
+}
+
+export type Operation = {
+    userId: number;
+    type: 'create' | 'take' | 'close' | 'reopen';
+    timestamp: number;
 }
 
 export type Event = {
     id: number;
     name: string;
-    date: bigint;
     status: 'open' | 'taken' | 'closed';
     type: string;
     description: string;
     imagePaths: string | string[];
+    operations: string | Operation[];
 };
 
 export const EventRoles = {
-    insert: db.prepare('INSERT INTO tbl_events (name, date, status, type, description, imagePaths) VALUES (?, ?, ?, ?, ?, ?)'),
+    insert: db.prepare('INSERT INTO tbl_events (name, date, status, type, description, imagePaths, operations) VALUES (?, ?, ?, ?, ?, ?, ?)'),
     updateStatus: db.prepare('UPDATE tbl_events SET status = ? WHERE id = ?'),
-    selectAllOpen: db.prepare('SELECT * FROM tbl_events WHERE status = true'),
+    getOperations: db.prepare('SELECT operations FROM tbl_events WHERE id = ?'),
+    updateOperations: db.prepare('UPDATE tbl_events SET operations = ? WHERE id = ?'),
+    selectAllOpen: db.prepare('SELECT * FROM tbl_events WHERE status = \'open\' '),
 }

@@ -9,7 +9,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
     }
 
     try {
-        req.body = verifyToken(token);
+        req.body = verifyToken(token) as {userId: number, username: string};
         next();
     } catch (error: any) {
         res.status(403).json({error: error.message});
