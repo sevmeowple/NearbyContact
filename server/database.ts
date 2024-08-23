@@ -23,7 +23,7 @@ export const UserRoles = {
 
 export type Operation = {
     userId: number;
-    type: 'create' | 'take' | 'close' | 'reopen';
+    type: 'create' | 'take' | 'cancelTake' | 'close' | 'reopen';
     timestamp: number;
 }
 
@@ -39,8 +39,9 @@ export type Event = {
 
 export const EventRoles = {
     insert: db.prepare('INSERT INTO tbl_events (name, date, status, type, description, imagePaths, operations) VALUES (?, ?, ?, ?, ?, ?, ?)'),
-    updateStatus: db.prepare('UPDATE tbl_events SET status = ? WHERE id = ?'),
+    getStatus: db.prepare('SELECT status FROM tbl_events WHERE id = ?'),
     getOperations: db.prepare('SELECT operations FROM tbl_events WHERE id = ?'),
+    updateStatus: db.prepare('UPDATE tbl_events SET status = ? WHERE id = ?'),
     updateOperations: db.prepare('UPDATE tbl_events SET operations = ? WHERE id = ?'),
     selectAllOpen: db.prepare('SELECT * FROM tbl_events WHERE status = \'open\' '),
 }

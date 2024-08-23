@@ -23,6 +23,12 @@ export async function takeEvent(eventId: number, userId: number) {
     return {id: eventId, status: "taken"};
 }
 
+export async function cancelTakeEvent(eventId: number, userId: number) {
+    EventRoles.updateStatus.run('open', eventId);
+    await appendOperations(eventId, {userId, type: 'cancelTake', timestamp: Date.now()});
+    return {id: eventId, status: 'open'};
+}
+
 export async function closeEvent(eventId: number, userId: number) {
     EventRoles.updateStatus.run('closed', eventId);
     await appendOperations(eventId, {userId, type: 'close', timestamp: Date.now()});
