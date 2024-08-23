@@ -2,6 +2,13 @@ import type {Request, Response} from 'express';
 import {closeEvent, createEvent, reOpenEvent, selectAllOpenEvent, takeEvent} from '../services/eventService';
 import {upload} from "../middleware/uploadMiddleware.ts";
 import {image} from "../config.ts";
+import {EventRoles, type Operation} from "../database.ts";
+
+async function getCreatorId(eventId: number) {
+    const JSONOperations = EventRoles.getOperations.get(eventId) as string;
+    const operations = JSON.parse(JSONOperations) as Operation[];
+    return operations[0].userId;
+}
 
 export async function createEventHandler(req: Request, res: Response) {
     upload(req, res, async (err) => {
@@ -21,6 +28,9 @@ export async function createEventHandler(req: Request, res: Response) {
 
 export async function takeEventHandler(req: Request, res: Response) {
     const {eventId, userId} = req.body;
+    if (userId === await getCreatorId(Number(eventId))) {
+        return res.status(400).json({error: 'You cannot take your own event'});
+    }
     try {
         const event = await takeEvent(Number(eventId), userId);
         res.status(200).json({event});
@@ -31,6 +41,9 @@ export async function takeEventHandler(req: Request, res: Response) {
 
 export async function closeEventHandler(req: Request, res: Response) {
     const {eventId, userId} = req.body;
+    if (userId !== await getCreatorId(Number(eventId))) {
+        return res.status(400).json({error: 'You cannot close an event you did not create'});
+    }
     try {
         const event = await closeEvent(Number(eventId), userId);
         res.status(200).json({event});
@@ -41,6 +54,9 @@ export async function closeEventHandler(req: Request, res: Response) {
 
 export async function reOpenEventHandler(req: Request, res: Response) {
     const {eventId, userId} = req.body;
+    if (userId !== await getCreatorId(Number(eventId))) {
+        return res.status(400).json({error: 'You cannot reopen an event you did not create'});
+    }
     try {
         const event = await reOpenEvent(Number(eventId), userId);
         res.status(200).json({event});
