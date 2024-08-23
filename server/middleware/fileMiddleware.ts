@@ -1,8 +1,8 @@
 import multer from 'multer';
+import fs from 'fs';
 import path from 'path';
 import {image} from "../config.ts";
 
-// Set storage engine
 const storage = multer.diskStorage({
     destination: image.destination,
     filename: (req, file, cb) => {
@@ -10,7 +10,6 @@ const storage = multer.diskStorage({
     }
 });
 
-// Initialize upload
 const upload = multer({
     storage: storage,
     limits: {fileSize: image.maxSize}, // Limit file size to 1MB
@@ -19,7 +18,6 @@ const upload = multer({
     }
 }).array('images', image.maxNumber);
 
-// Check file type
 function checkFileType(file: Express.Multer.File, cb: multer.FileFilterCallback) {
     const extname = image.types.test(path.extname(file.originalname).toLowerCase());
     const mimetype = image.types.test(file.mimetype);
@@ -32,3 +30,13 @@ function checkFileType(file: Express.Multer.File, cb: multer.FileFilterCallback)
 }
 
 export {upload};
+
+export function deleteImage(imagePath: string) {
+    fs.unlink(imagePath, (err) => {
+        if (err) {
+            console.error(`Error deleting image: ${imagePath}`, err);
+        } else {
+            console.log(`Deleted ${imagePath}`);
+        }
+    });
+}

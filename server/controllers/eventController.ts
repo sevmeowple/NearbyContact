@@ -1,18 +1,11 @@
 import type {Request, Response} from 'express';
-import {
-    cancelTakeEvent,
-    closeEvent,
-    createEvent,
-    reOpenEvent,
-    selectAllOpenEvent,
-    takeEvent
-} from '../services/eventService';
-import {upload} from "../middleware/uploadMiddleware.ts";
+import {createEvent, EventChangeStatus, selectAllOpenEvent,} from '../services/eventService';
+import {upload} from "../middleware/fileMiddleware.ts";
 import {image} from "../config.ts";
 import {EventRoles, type Operation} from "../database.ts";
 import {getMessage} from "../message.ts";
 
-async function getOperationUser(eventId: number, step: number){
+async function getOperationUser(eventId: number, step: number) {
     const JSONOperations = EventRoles.getOperations.get(eventId) as string;
     const operations = JSON.parse(JSONOperations) as Operation[];
     const length = operations.length
@@ -37,11 +30,11 @@ export async function createEventHandler(req: Request, res: Response) {
 
 export async function takeEventHandler(req: Request, res: Response) {
     const {eventId, userId, language} = req.body;
-    if (userId === await getOperationUser(Number(eventId),0)) {
+    if (userId === await getOperationUser(Number(eventId), 0)) {
         return res.status(400).json({error: getMessage(language, 'cannotTakeOwnEvent')});
     }
     try {
-        const event = await takeEvent(Number(eventId), userId);
+        const event = await EventChangeStatus(Number(eventId), userId, 'taken');
         res.status(200).json({event});
     } catch (error: any) {
         res.status(400).json({error: error.message});
@@ -57,12 +50,12 @@ export async function cancelTakeEventHandler(req: Request, res: Response) {
         case 'closed':
             return res.status(400).json({error: getMessage(language, 'cannotCancelTakeClosedEvent')});
     }
-    const taker = await getOperationUser(Number(eventId),-1);
+    const taker = await getOperationUser(Number(eventId), -1);
     if (taker !== userId) {
         return res.status(400).json({error: getMessage(language, 'cannotCancelTakeOthersEvent')});
     }
     try {
-        const event = await cancelTakeEvent(Number(eventId), userId);
+        const event = await EventChangeStatus(Number(eventId), userId, 'open');
         res.status(200).json({event});
     } catch (error: any) {
         res.status(400).json({error: error.message});
@@ -71,11 +64,11 @@ export async function cancelTakeEventHandler(req: Request, res: Response) {
 
 export async function closeEventHandler(req: Request, res: Response) {
     const {eventId, userId, language} = req.body;
-    if (userId !== await getOperationUser(Number(eventId),0)) {
+    if (userId !== await getOperationUser(Number(eventId), 0)) {
         return res.status(400).json({error: getMessage(language, 'cannotCloseOthersEvent')});
     }
     try {
-        const event = await closeEvent(Number(eventId), userId);
+        const event = await EventChangeStatus(Number(eventId), userId, 'closed');
         res.status(200).json({event});
     } catch (error: any) {
         res.status(400).json({error: error.message});
@@ -84,11 +77,11 @@ export async function closeEventHandler(req: Request, res: Response) {
 
 export async function reOpenEventHandler(req: Request, res: Response) {
     const {eventId, userId, language} = req.body;
-    if (userId !== await getOperationUser(Number(eventId),0)) {
+    if (userId !== await getOperationUser(Number(eventId), 0)) {
         return res.status(400).json({error: getMessage(language, 'cannotReopenOthersEvent')});
     }
     try {
-        const event = await reOpenEvent(Number(eventId), userId);
+        const event = await EventChangeStatus(Number(eventId), userId, 'open');
         res.status(200).json({event});
     } catch (error: any) {
         res.status(400).json({error: error.message});

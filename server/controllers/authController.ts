@@ -1,6 +1,6 @@
 import type {Request, Response} from 'express';
 import {authenticate, registerUser} from '../services/authService';
-import {upload} from "../middleware/uploadMiddleware.ts";
+import {upload} from "../middleware/fileMiddleware.ts";
 import {image} from "../config.ts";
 import {getMessage} from "../message.ts";
 

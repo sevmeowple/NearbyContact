@@ -9,36 +9,32 @@ async function appendOperations(eventId: number, operation: Operation) {
 
 export async function createEvent(name: string, type: string, description: string, imagePaths: string[], creator: number) {
     const imagePathsJson = JSON.stringify(imagePaths)
-    EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson, JSON.stringify({
+    const operation: Operation = {
         userId: creator,
-        type: 'create',
-        timestamp: Date.now()
-    }));
+        timestamp: Date.now(),
+        value: 'create',
+        after: {name, type, description, imagePaths: imagePathsJson}
+    };
+    EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson, JSON.stringify(operation));
     return {name: name, status: 'open'};
 }
 
-export async function takeEvent(eventId: number, userId: number) {
-    EventRoles.updateStatus.run('taken', eventId);
-    await appendOperations(eventId, {userId, type: 'take', timestamp: Date.now()});
-    return {id: eventId, status: "taken"};
+export async function editEvent(eventId: number, userId: number, changes: Operation) {
+    const status = EventRoles.getStatus.get(eventId);
+    switch (status) {
+        case 'taken':
+            throw new Error('cannotEditTakenEvent');
+        case 'closed':
+            throw new Error('cannotEditClosedEvent');
+    }
+    //todo
 }
 
-export async function cancelTakeEvent(eventId: number, userId: number) {
-    EventRoles.updateStatus.run('open', eventId);
-    await appendOperations(eventId, {userId, type: 'cancelTake', timestamp: Date.now()});
-    return {id: eventId, status: 'open'};
-}
-
-export async function closeEvent(eventId: number, userId: number) {
-    EventRoles.updateStatus.run('closed', eventId);
-    await appendOperations(eventId, {userId, type: 'close', timestamp: Date.now()});
-    return {id: eventId, status: 'closed'};
-}
-
-export async function reOpenEvent(eventId: number, userId: number) {
-    EventRoles.updateStatus.run(true, eventId);
-    await appendOperations(eventId, {userId, type: 'reopen', timestamp: Date.now()});
-    return {id: eventId, status: 'open'};
+export async function EventChangeStatus(eventId: number, userId: number, status: 'open' | 'taken' | 'closed') {
+    EventRoles.updateStatus.run(status, eventId);
+    const operation: Operation = {userId, timestamp: Date.now(), value: 'status', after: status};
+    await appendOperations(eventId, operation);
+    return {id: eventId, status: status};
 }
 
 export async function selectAllOpenEvent() {
