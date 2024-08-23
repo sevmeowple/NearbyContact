@@ -1,3 +1,5 @@
+import {defaultLanguage} from "./config.ts";
+
 const messages = {
     en: {
         invalidCredentials: 'Invalid credentials',
@@ -22,5 +24,5 @@ const messages = {
 export function getMessage(
     language: 'en' | 'zh',
     key: 'invalidCredentials' | 'usernameTaken' | 'accessDenied' | 'cannotTakeOwnEvent' | 'cannotCloseOthersEvent' | 'cannotReopenOthersEvent' | 'notImage') {
-    return messages[language]?.[key] || messages['en'][key];
+    return messages[language]?.[key] || messages[defaultLanguage][key];
 }

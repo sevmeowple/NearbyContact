@@ -30,7 +30,7 @@ export async function createEventHandler(req: Request, res: Response) {
 export async function takeEventHandler(req: Request, res: Response) {
     const {eventId, userId, language} = req.body;
     if (userId === await getCreatorId(Number(eventId))) {
-        return res.status(400).json({error: getMessage(language , 'cannotTakeOwnEvent')});
+        return res.status(400).json({error: getMessage(language, 'cannotTakeOwnEvent')});
     }
     try {
         const event = await takeEvent(Number(eventId), userId);

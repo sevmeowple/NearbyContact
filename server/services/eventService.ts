@@ -9,7 +9,11 @@ async function appendOperations(eventId: number, operation: Operation) {
 
 export async function createEvent(name: string, type: string, description: string, imagePaths: string[], creator: number) {
     const imagePathsJson = JSON.stringify(imagePaths)
-    EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson, JSON.stringify({userId: creator, type: 'create', timestamp: Date.now()}));
+    EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson, JSON.stringify({
+        userId: creator,
+        type: 'create',
+        timestamp: Date.now()
+    }));
     return {name: name, status: 'open'};
 }
 

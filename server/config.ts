@@ -2,6 +2,8 @@ export const JWT_SECRET = 'qmm';
 
 export const defaultPORT = 8030
 
+export const defaultLanguage = 'zh';
+
 export const image = {
     destination: './uploads/',
     types: /jpeg|jpg|png|gif/,
