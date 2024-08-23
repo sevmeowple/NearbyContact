@@ -3,6 +3,7 @@ import {closeEvent, createEvent, reOpenEvent, selectAllOpenEvent, takeEvent} fro
 import {upload} from "../middleware/uploadMiddleware.ts";
 import {image} from "../config.ts";
 import {EventRoles, type Operation} from "../database.ts";
+import {getMessage} from "../message.ts";
 
 async function getCreatorId(eventId: number) {
     const JSONOperations = EventRoles.getOperations.get(eventId) as string;
@@ -27,9 +28,9 @@ export async function createEventHandler(req: Request, res: Response) {
 }
 
 export async function takeEventHandler(req: Request, res: Response) {
-    const {eventId, userId} = req.body;
+    const {eventId, userId, language} = req.body;
     if (userId === await getCreatorId(Number(eventId))) {
-        return res.status(400).json({error: 'You cannot take your own event'});
+        return res.status(400).json({error: getMessage(language , 'cannotTakeOwnEvent')});
     }
     try {
         const event = await takeEvent(Number(eventId), userId);
@@ -40,9 +41,9 @@ export async function takeEventHandler(req: Request, res: Response) {
 }
 
 export async function closeEventHandler(req: Request, res: Response) {
-    const {eventId, userId} = req.body;
+    const {eventId, userId, language} = req.body;
     if (userId !== await getCreatorId(Number(eventId))) {
-        return res.status(400).json({error: 'You cannot close an event you did not create'});
+        return res.status(400).json({error: getMessage(language, 'cannotCloseOthersEvent')});
     }
     try {
         const event = await closeEvent(Number(eventId), userId);
@@ -53,9 +54,9 @@ export async function closeEventHandler(req: Request, res: Response) {
 }
 
 export async function reOpenEventHandler(req: Request, res: Response) {
-    const {eventId, userId} = req.body;
+    const {eventId, userId, language} = req.body;
     if (userId !== await getCreatorId(Number(eventId))) {
-        return res.status(400).json({error: 'You cannot reopen an event you did not create'});
+        return res.status(400).json({error: getMessage(language, 'cannotReopenOthersEvent')});
     }
     try {
         const event = await reOpenEvent(Number(eventId), userId);

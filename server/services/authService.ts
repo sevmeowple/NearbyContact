@@ -13,14 +13,14 @@ export function authenticate(username: string, password: string) {
     if (user && bcrypt.compareSync(password, user.password)) {
         return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '12h'})
     }
-    throw new Error('Invalid credentials');
+    throw new Error('invalidCredentials');
 
 }
 
 export async function registerUser(username: string, password: string, phone_number: string, QQ: string, address: string, gender: 'M' | 'F', email: string, avatar_path: string) {
     const existingUser = UserRoles.selectByUsername.get(username) as User;
     if (existingUser) {
-        throw new Error('Username already taken');
+        throw new Error('usernameTaken');
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
