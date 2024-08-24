@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {type User, UserRoles} from '../database';
+import {UserRoles} from '../database';
 import {JWT_SECRET} from '../config';
+
+import type {User} from "../types.ts";
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);

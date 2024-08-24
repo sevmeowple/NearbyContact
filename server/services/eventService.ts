@@ -1,5 +1,6 @@
-import type {Event, Operation} from "../database";
 import {EventRoles} from "../database";
+
+import type {Event, Operation} from "../types.ts";
 
 async function appendOperations(eventId: number, operation: Operation) {
     const operations = EventRoles.getOperations.get(eventId) as Operation[];
@@ -24,18 +25,11 @@ export async function createEvent(name: string, type: string, description: strin
 }
 
 export async function editEvent(eventId: number, userId: number, changes: Operation) {
-    const status = EventRoles.getStatus.get(eventId);
-    switch (status) {
-        case 'taken':
-            throw new Error('cannotEditTakenEvent');
-        case 'closed':
-            throw new Error('cannotEditClosedEvent');
-    }
     EventRoles.edit.run(changes.after.name, changes.after.type, changes.after.description, JSON.stringify(changes.after.imagePaths), eventId);
     await appendOperations(eventId, changes);
 }
 
-export async function EventChangeStatus(eventId: number, userId: number, status: 'open' | 'taken' | 'closed') {
+export async function changeEventStatus(eventId: number, userId: number, status: 'open' | 'taken' | 'closed') {
     EventRoles.updateStatus.run(status, eventId);
     const operation: Operation = {
         userId: userId,
