@@ -21,7 +21,7 @@ export class EventStateMachine {
                         throw new Error('cannotSwitchToSameState');
                     case EventState.Taken:
                         if (this.event.operations[0].userId === this.operator.id) {
-                            throw new Error('cannotTakeSelfTwice');
+                            throw new Error('cannotTakeSelfEvent');
                         }
                         break;
                     case EventState.Closed:
@@ -58,7 +58,6 @@ export class EventStateMachine {
                 }
                 break;
         }
-        return;
     }
 
     public changeContents(changes: Operation) {
@@ -68,6 +67,5 @@ export class EventStateMachine {
         if (this.event.operations[0].userId !== this.operator.id) {
             throw new Error('cannotEditOthersEvent');
         }
-        return;
     }
 }

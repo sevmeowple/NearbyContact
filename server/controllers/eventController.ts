@@ -14,10 +14,10 @@ export async function createEventHandler(req: Request, res: Response) {
         }
         const imagePaths = req.files ? (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => `${image.destination}${file.filename}`) : [];
         try {
-            const event = await createEvent(name, type, description, imagePaths, userId);
-            res.status(201).json({event});
+            await createEvent(name, type, description, imagePaths, userId);
+            res.status(201);
         } catch (error: any) {
-            res.status(400).json({error: error.message});
+            res.status(400).json({error: getMessage(language, error.message)});
         }
     });
 }
@@ -41,7 +41,7 @@ export async function editEventHandler(req: Request, res: Response) {
         };
         try {
             await editEvent(Number(eventId), userId, changes);
-            res.status(200).json({event: {id: eventId, name, type, description, imagePaths}});
+            res.status(200);
         } catch (error: any) {
             res.status(400).json({error: getMessage(language, error.message)});
         }
@@ -51,8 +51,8 @@ export async function editEventHandler(req: Request, res: Response) {
 export async function changeEventStatusHandler(req: Request, res: Response) {
     const {eventId, userId, status, language} = req.body;
     try {
-        const event = await changeEventStatus(Number(eventId), userId, status);
-        res.status(200).json({event});
+        await changeEventStatus(Number(eventId), userId, status);
+        res.status(200);
     } catch (error: any) {
         res.status(400).json({error: getMessage(language, error.message)});
     }

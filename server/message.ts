@@ -2,41 +2,48 @@ import {defaultLanguage} from "./config.ts";
 
 type Language = 'en' | 'zh';
 type MessageKey =
+    | 'accessDenied'
     | 'invalidCredentials'
     | 'usernameTaken'
-    | 'accessDenied'
-    | 'cannotTakeOwnEvent'
-    | 'cannotCloseOthersEvent'
-    | 'cannotReopenOthersEvent'
     | 'notImage'
-    | 'cannotCancelTakeOpenEvent'
-    | 'cannotCancelTakeClosedEvent'
-    | 'cannotCancelTakeOthersEvent';
+    | 'cannotSwitchToSameState'
+    | 'cannotTakeSelfEvent'
+    | 'cannotCloseOthersEvent'
+    | 'cannotReleaseEventTakenByOther'
+    | 'cannotCloseTakenEvent'
+    | 'cannotReopenOthersEvent'
+    | 'cannotTakeClosedEvent'
+    | 'cannotEditOthersEvent'
+;
 
 const messages = {
     en: {
-        invalidCredentials: 'Invalid credentials',
-        usernameTaken: 'Username already taken',
-        accessDenied: 'Access denied',
-        cannotTakeOwnEvent: 'Cannot take your own event',
-        cannotCloseOthersEvent: 'Cannot close an event you did not create',
-        cannotReopenOthersEvent: 'Cannot reopen an event you did not create',
-        notImage: 'Uploaded file is not an image',
-        cannotCancelTakeOpenEvent: 'Cannot cancel taking an open event',
-        cannotCancelTakeClosedEvent: 'Cannot cancel taking a closed event',
-        cannotCancelTakeOthersEvent: 'Cannot cancel taking a event taken by others'
+        'accessDenied': 'Access denied',
+        'invalidCredentials': 'Invalid credentials',
+        'usernameTaken': 'Username is already taken',
+        'notImage': 'The uploaded file is not an image',
+        'cannotSwitchToSameState': 'Cannot switch to the same state',
+        'cannotTakeSelfEvent': 'Cannot take your own event',
+        'cannotCloseOthersEvent': 'Cannot close an event created by another user',
+        'cannotReleaseEventTakenByOther': 'Cannot release an event taken by another user',
+        'cannotCloseTakenEvent': 'Cannot close an event that is currently taken',
+        'cannotReopenOthersEvent': 'Cannot reopen an event created by another user',
+        'cannotTakeClosedEvent': 'Cannot take a closed event',
+        'cannotEditOthersEvent': 'Cannot edit an event created by another user',
     },
     zh: {
-        invalidCredentials: '无效的凭据',
-        usernameTaken: '用户名已被占用',
-        accessDenied: '拒绝访问',
-        cannotTakeOwnEvent: '无法承接自己的事件',
-        cannotCloseOthersEvent: '无法关闭他人创建的事件',
-        cannotReopenOthersEvent: '无法重新打开他人创建的事件',
-        notImage: '上传的文件并非图片',
-        cannotCancelTakeOpenEvent: '无法取消承接一个并未被承接的事件',
-        cannotCancelTakeClosedEvent: '无法取消承接一个已被关闭的事件',
-        cannotCancelTakeOthersEvent: '无法取消承接被他人承接的事件'
+        'accessDenied': '访问被拒绝',
+        'invalidCredentials': '无效的凭据',
+        'usernameTaken': '用户名已被占用',
+        'notImage': '上传的文件不是图片',
+        'cannotSwitchToSameState': '不能切换到相同的状态',
+        'cannotTakeSelfEvent': '不能接取自己的事件',
+        'cannotCloseOthersEvent': '不能关闭他人创建的事件',
+        'cannotReleaseEventTakenByOther': '不能释放他人接取的事件',
+        'cannotCloseTakenEvent': '不能关闭正在进行的事件',
+        'cannotReopenOthersEvent': '不能重新打开他人创建的事件',
+        'cannotTakeClosedEvent': '不能接取已关闭的事件',
+        'cannotEditOthersEvent': '不能编辑他人创建的事件',
     }
 }
 

@@ -22,8 +22,8 @@ export async function register(req: Request, res: Response) {
         }
         const avatar_path = req.file ? `${image.destination}${req.file.filename}` : '';
         try {
-            const user = await registerUser(username, password, phone_number, QQ, address, gender, email, avatar_path)
-            res.status(201).json({user});
+            await registerUser(username, password, phone_number, QQ, address, gender, email, avatar_path)
+            res.status(201);
         } catch (error: any) {
             res.status(400).json({error: getMessage(language, error.message)});
         }
