@@ -16,3 +16,22 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
         res.status(403).json({error: error.message});
     }
 }
+
+export function authenticateAdminToken(req: Request, res: Response, next: NextFunction) {
+    const token = req.cookies.token;
+    const {language} = req.body;
+    if (!token) {
+        return res.status(401).json({error: getMessage(language, 'accessDenied')});
+    }
+
+    try {
+        const user = verifyToken(token) as { userId: number, username: string, role: string };
+        if (user.role !== 'admin') {
+            return res.status(403).json({error: getMessage(language, 'accessDenied')});
+        }
+        req.body = user;
+        next();
+    } catch (error: any) {
+        res.status(403).json({error: error.message});
+    }
+}
