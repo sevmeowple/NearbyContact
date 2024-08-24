@@ -1,6 +1,7 @@
 import {EventRoles} from "../database";
 
-import type {Event, Operation} from "../types.ts";
+import {eventFromJSON, type EventJSON, EventState, type Operation} from "../types.ts";
+import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 
 async function appendOperations(eventId: number, operation: Operation) {
     const operations = EventRoles.getOperations.get(eventId) as Operation[];
@@ -21,15 +22,18 @@ export async function createEvent(name: string, type: string, description: strin
         }
     };
     EventRoles.insert.run(name, type, 'open', description, imagePathsJson, JSON.stringify(operation));
-    return {name: name, status: 'open'};
 }
 
-export async function editEvent(eventId: number, userId: number, changes: Operation) {
-    EventRoles.edit.run(changes.after.name, changes.after.type, changes.after.description, JSON.stringify(changes.after.imagePaths), eventId);
-    await appendOperations(eventId, changes);
+export async function editEvent(eventId: number, userId: number, change: Operation) {
+    const eventStateMachine = new EventStateMachine(eventId, userId);
+    eventStateMachine.changeContents(change);
+    EventRoles.edit.run(change.after.name, change.after.type, change.after.description, JSON.stringify(change.after.imagePaths), eventId);
+    await appendOperations(eventId, change);
 }
 
-export async function changeEventStatus(eventId: number, userId: number, status: 'open' | 'taken' | 'closed') {
+export async function changeEventStatus(eventId: number, userId: number, status: EventState) {
+    const eventStateMachine = new EventStateMachine(eventId, userId);
+    eventStateMachine.changeStatus(status);
     EventRoles.updateStatus.run(status, eventId);
     const operation: Operation = {
         userId: userId,
@@ -39,13 +43,9 @@ export async function changeEventStatus(eventId: number, userId: number, status:
         }
     };
     await appendOperations(eventId, operation);
-    return {id: eventId, status: status};
 }
 
 export async function selectAllOpenEvent() {
-    const events = EventRoles.selectAllOpen.all() as Event[];
-    events.forEach(event => {
-        event.imagePaths = JSON.parse(<string>event.imagePaths)
-    });
-    return events;
+    const events = EventRoles.selectAllOpen.all() as EventJSON[];
+    return events.forEach(event => eventFromJSON(event));
 }

@@ -1,41 +1,73 @@
-import {EventRoles} from "../../database.ts";
-import {EventState, type Operation, type User} from "../../types.ts";
-
-async function getOperation(eventId: number, step: number) {
-    const JSONOperations = EventRoles.getOperations.get(eventId) as string;
-    const operations = JSON.parse(JSONOperations) as Operation[];
-    const length = operations.length
-    return operations[(step % length + length) % length];
-}
+import {type Event, eventFromJSON, type EventJSON, EventState, type Operation, type User} from "../../types.ts";
+import {EventRoles, UserRoles} from "../../database.ts";
 
 export class EventStateMachine {
-    private currentState: EventState;
-    private readonly historyOperations: Operation[];
+    private readonly event: Event;
     private readonly operator: User;
 
-    constructor(initialState: EventState, historyOperations: Operation[], operator: User) {
-        this.currentState = initialState;
-        this.historyOperations = historyOperations;
-        this.operator = operator;
+    constructor(eventId: number, userId: number) {
+        this.event = eventFromJSON(EventRoles.selectById.get(eventId) as EventJSON);
+        this.operator = UserRoles.selectById.get(userId) as User;
     }
 
-    public getState(): EventState {
-        return this.currentState;
-    }
-
-    public transitionTo(targetState: EventState): void {
-        if (targetState === this.currentState) {
-            throw new Error('cannotSwitchToSameState');
+    public changeStatus(targetState: EventState) {
+        if (this.operator.role === 'admin') {
+            return;
         }
-        switch (this.currentState) {
+        switch (this.event.status) {
             case EventState.Open:
+                switch (targetState) {
+                    case EventState.Open:
+                        throw new Error('cannotSwitchToSameState');
+                    case EventState.Taken:
+                        if (this.event.operations[0].userId === this.operator.id) {
+                            throw new Error('cannotTakeSelfTwice');
+                        }
+                        break;
+                    case EventState.Closed:
+                        if (this.event.operations[0].userId !== this.operator.id) {
+                            throw new Error('cannotCloseOthersEvent');
+                        }
+                        break;
+                }
                 break;
             case EventState.Taken:
+                switch (targetState) {
+                    case EventState.Open:
+                        if (this.event.operations[length - 1].userId !== this.operator.id) {
+                            throw new Error('cannotReleaseEventTakenByOther');
+                        }
+                        break;
+                    case EventState.Taken:
+                        throw new Error('cannotSwitchToSameState');
+                    case EventState.Closed:
+                        throw new Error('cannotCloseTakenEvent');
+                }
                 break;
             case EventState.Closed:
-                break;
-            case EventState.Hidden:
+                switch (targetState) {
+                    case EventState.Open:
+                        if (this.event.operations[0].userId !== this.operator.id) {
+                            throw new Error('cannotReopenOthersEvent');
+                        }
+                        break;
+                    case EventState.Taken:
+                        throw new Error('cannotTakeClosedEvent');
+                    case EventState.Closed:
+                        throw new Error('cannotSwitchToSameState');
+                }
                 break;
         }
+        return;
+    }
+
+    public changeContents(changes: Operation) {
+        if (this.operator.role === 'admin') {
+            return;
+        }
+        if (this.event.operations[0].userId !== this.operator.id) {
+            throw new Error('cannotEditOthersEvent');
+        }
+        return;
     }
 }

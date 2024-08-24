@@ -15,7 +15,6 @@ export enum EventState {
     Open = 'open',
     Taken = 'taken',
     Closed = 'closed',
-    Hidden = 'hidden'
 }
 
 export type Operation = {
@@ -27,9 +26,43 @@ export type Operation = {
 export type Event = {
     id: number;
     name: string;
-    status: 'open' | 'taken' | 'closed';
+    status: EventState;
     type: string;
     description: string;
-    imagePaths: string | string[];
-    operations: string | Operation[];
+    imagePaths: string[];
+    operations: Operation[];
 };
+
+export type EventJSON = {
+    id: number;
+    name: string;
+    status: string;
+    type: string;
+    description: string;
+    imagePaths: string;
+    operations: string;
+};
+
+export function eventToJSON(event: Event): EventJSON {
+    return {
+        id: event.id,
+        name: event.name,
+        status: JSON.stringify(event.status),
+        type: event.type,
+        description: event.description,
+        imagePaths: JSON.stringify(event.imagePaths),
+        operations: JSON.stringify(event.operations)
+    }
+}
+
+export function eventFromJSON(event: EventJSON): Event {
+    return {
+        id: event.id,
+        name: event.name,
+        status: JSON.parse(event.status),
+        type: event.type,
+        description: event.description,
+        imagePaths: JSON.parse(event.imagePaths),
+        operations: JSON.parse(event.operations)
+    }
+}
