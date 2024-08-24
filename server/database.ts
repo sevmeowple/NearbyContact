@@ -24,7 +24,7 @@ export const UserRoles = {
 export type Operation = {
     userId: number;
     timestamp: number;
-    value: string;
+    key: string | string[];
     after: any;
 }
 

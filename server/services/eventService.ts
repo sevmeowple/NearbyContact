@@ -12,7 +12,7 @@ export async function createEvent(name: string, type: string, description: strin
     const operation: Operation = {
         userId: creator,
         timestamp: Date.now(),
-        value: 'create',
+        key: 'create',
         after: {name, type, description, imagePaths: imagePathsJson}
     };
     EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson, JSON.stringify(operation));
@@ -32,7 +32,7 @@ export async function editEvent(eventId: number, userId: number, changes: Operat
 
 export async function EventChangeStatus(eventId: number, userId: number, status: 'open' | 'taken' | 'closed') {
     EventRoles.updateStatus.run(status, eventId);
-    const operation: Operation = {userId, timestamp: Date.now(), value: 'status', after: status};
+    const operation: Operation = {userId, timestamp: Date.now(), key: 'status', after: status};
     await appendOperations(eventId, operation);
     return {id: eventId, status: status};
 }
