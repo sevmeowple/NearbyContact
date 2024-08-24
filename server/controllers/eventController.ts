@@ -1,5 +1,5 @@
 import type {Request, Response} from 'express';
-import {createEvent, EventChangeStatus, selectAllOpenEvent,} from '../services/eventService';
+import {createEvent, editEvent, EventChangeStatus, selectAllOpenEvent,} from '../services/eventService';
 import {upload} from "../middleware/fileMiddleware.ts";
 import {image} from "../config.ts";
 import {EventRoles, type Operation} from "../database.ts";
@@ -22,6 +22,32 @@ export async function createEventHandler(req: Request, res: Response) {
         try {
             const event = await createEvent(name, type, description, imagePaths, userId);
             res.status(201).json({event});
+        } catch (error: any) {
+            res.status(400).json({error: error.message});
+        }
+    });
+}
+
+export async function editEventHandler(req: Request, res: Response) {
+    upload(req, res, async (err) => {
+        if (err) {
+            return res.status(400).json({error: err.message});
+        }
+        const {eventId, userId, name, type, description, language} = req.body;
+        const imagePaths = req.files ? (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => `${image.destination}${file.filename}`) : [];
+        const changes: Operation = {
+            userId: userId,
+            timestamp: Date.now(),
+            after: {
+                name: name,
+                type: type,
+                description: description,
+                imagePaths: imagePaths
+            }
+        };
+        try {
+            await editEvent(Number(eventId), userId, changes);
+            res.status(200).json({event: {id: eventId, name, type, description, imagePaths}});
         } catch (error: any) {
             res.status(400).json({error: error.message});
         }

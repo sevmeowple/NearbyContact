@@ -12,10 +12,14 @@ export async function createEvent(name: string, type: string, description: strin
     const operation: Operation = {
         userId: creator,
         timestamp: Date.now(),
-        key: 'create',
-        after: {name, type, description, imagePaths: imagePathsJson}
+        after: {
+            name: name,
+            type: type,
+            description: description,
+            imagePaths: imagePathsJson
+        }
     };
-    EventRoles.insert.run(name, type, Date.now(), 'open', description, imagePathsJson, JSON.stringify(operation));
+    EventRoles.insert.run(name, type, 'open', description, imagePathsJson, JSON.stringify(operation));
     return {name: name, status: 'open'};
 }
 
@@ -27,12 +31,19 @@ export async function editEvent(eventId: number, userId: number, changes: Operat
         case 'closed':
             throw new Error('cannotEditClosedEvent');
     }
-    //todo
+    EventRoles.edit.run(changes.after.name, changes.after.type, changes.after.description, JSON.stringify(changes.after.imagePaths), eventId);
+    await appendOperations(eventId, changes);
 }
 
 export async function EventChangeStatus(eventId: number, userId: number, status: 'open' | 'taken' | 'closed') {
     EventRoles.updateStatus.run(status, eventId);
-    const operation: Operation = {userId, timestamp: Date.now(), key: 'status', after: status};
+    const operation: Operation = {
+        userId: userId,
+        timestamp: Date.now(),
+        after: {
+            status: status
+        }
+    };
     await appendOperations(eventId, operation);
     return {id: eventId, status: status};
 }
