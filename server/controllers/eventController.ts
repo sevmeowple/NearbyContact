@@ -1,9 +1,9 @@
 import type {Request, Response} from 'express';
 import {createEvent, editEvent, EventChangeStatus, selectAllOpenEvent,} from '../services/eventService';
-import {upload} from "../middleware/fileMiddleware.ts";
 import {image} from "../config.ts";
 import {EventRoles, type Operation} from "../database.ts";
 import {getMessage} from "../message.ts";
+import {uploadFiles} from "../services/fileService.ts";
 
 async function getOperationUser(eventId: number, step: number) {
     const JSONOperations = EventRoles.getOperations.get(eventId) as string;
@@ -13,7 +13,7 @@ async function getOperationUser(eventId: number, step: number) {
 }
 
 export async function createEventHandler(req: Request, res: Response) {
-    upload(req, res, async (err) => {
+    await uploadFiles(req, res, async (err) => {
         if (err) {
             return res.status(400).json({error: err.message});
         }
@@ -29,7 +29,7 @@ export async function createEventHandler(req: Request, res: Response) {
 }
 
 export async function editEventHandler(req: Request, res: Response) {
-    upload(req, res, async (err) => {
+    await uploadFiles(req, res, async (err) => {
         if (err) {
             return res.status(400).json({error: err.message});
         }

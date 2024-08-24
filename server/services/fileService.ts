@@ -1,7 +1,9 @@
+// `server/services/fileService.ts`
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
-import {image} from "../config.ts";
+import {image} from '../config';
+import type {Request, Response} from 'express';
 
 const storage = multer.diskStorage({
     destination: image.destination,
@@ -12,7 +14,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage: storage,
-    limits: {fileSize: image.maxSize}, // Limit file size to 1MB
+    limits: {fileSize: image.maxSize},
     fileFilter: (req, file, cb) => {
         checkFileType(file, cb);
     }
@@ -29,14 +31,16 @@ function checkFileType(file: Express.Multer.File, cb: multer.FileFilterCallback)
     }
 }
 
-export {upload};
+export async function uploadFiles(req: Request, res: Response, callback: (err: any) => void) {
+    upload(req, res, callback);
+}
 
-export function deleteImage(imagePath: string) {
-    fs.unlink(imagePath, (err) => {
+export async function deleteFile(filePath: string) {
+    fs.unlink(filePath, (err) => {
         if (err) {
-            console.error(`Error deleting image: ${imagePath}`, err);
+            console.error(`Error deleting file: ${filePath}`, err);
         } else {
-            console.log(`Deleted ${imagePath}`);
+            console.log(`Successfully deleted file: ${filePath}`);
         }
     });
 }

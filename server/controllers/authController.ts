@@ -1,8 +1,8 @@
 import type {Request, Response} from 'express';
 import {authenticate, registerUser} from '../services/authService';
-import {upload} from "../middleware/fileMiddleware.ts";
 import {image} from "../config.ts";
 import {getMessage} from "../message.ts";
+import {uploadFiles} from "../services/fileService.ts";
 
 export async function login(req: Request, res: Response) {
     const {username, password, language} = req.body;
@@ -15,7 +15,7 @@ export async function login(req: Request, res: Response) {
 }
 
 export async function register(req: Request, res: Response) {
-    upload(req, res, async (err) => {
+    await uploadFiles(req, res, async (err) => {
         const {username, password, phone_number, QQ, address, gender, email, language} = req.body;
         if (err) {
             return res.status(400).json({error: getMessage(language, err.message)});
