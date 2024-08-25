@@ -14,14 +14,14 @@ export function authenticate(username: string, password: string) {
     if (user && bcrypt.compareSync(password, user.password)) {
         return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '12h'})
     }
-    throw new Error('invalidCredentials');
+    throw Object.assign(new Error('invalidCredentials'), { statusCode: 401 });
 
 }
 
 export async function registerUser(username: string, password: string, phone_number: string, QQ: string, address: string, gender: 'M' | 'F', email: string, avatar_path: string) {
     const existingUser = UserRoles.selectByUsername.get(username) as User;
     if (existingUser) {
-        throw new Error('usernameTaken');
+        throw Object.assign(new Error('usernameTaken'), { statusCode: 400 });
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);

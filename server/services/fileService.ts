@@ -27,7 +27,7 @@ function checkFileType(file: Express.Multer.File, cb: multer.FileFilterCallback)
     if (mimetype && extname) {
         return cb(null, true);
     } else {
-        cb(new Error('notImage'));
+        cb(Object.assign(new Error('notImage'), {statusCode: 415}));
     }
 }
 

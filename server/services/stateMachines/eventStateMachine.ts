@@ -18,15 +18,15 @@ export class EventStateMachine {
             case EventState.Open:
                 switch (targetState) {
                     case EventState.Open:
-                        throw new Error('cannotSwitchToSameState');
+                        throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                     case EventState.Taken:
                         if (this.event.operations[0].userId === this.operator.id) {
-                            throw new Error('cannotTakeSelfEvent');
+                            throw Object.assign(new Error('cannotTakeSelfEvent'), {statusCode: 400});
                         }
                         break;
                     case EventState.Closed:
                         if (this.event.operations[0].userId !== this.operator.id) {
-                            throw new Error('cannotCloseOthersEvent');
+                            throw Object.assign(new Error('cannotCloseOthersEvent'), {statusCode: 400});
                         }
                         break;
                 }
@@ -35,26 +35,26 @@ export class EventStateMachine {
                 switch (targetState) {
                     case EventState.Open:
                         if (this.event.operations[length - 1].userId !== this.operator.id) {
-                            throw new Error('cannotReleaseEventTakenByOther');
+                            throw Object.assign(new Error('cannotReleaseEventTakenByOther'), {statusCode: 400});
                         }
                         break;
                     case EventState.Taken:
-                        throw new Error('cannotSwitchToSameState');
+                        throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                     case EventState.Closed:
-                        throw new Error('cannotCloseTakenEvent');
+                        throw Object.assign(new Error('cannotCloseTakenEvent'), {statusCode: 400});
                 }
                 break;
             case EventState.Closed:
                 switch (targetState) {
                     case EventState.Open:
                         if (this.event.operations[0].userId !== this.operator.id) {
-                            throw new Error('cannotReopenOthersEvent');
+                            throw Object.assign(new Error('cannotReopenOthersEvent'), {statusCode: 400});
                         }
                         break;
                     case EventState.Taken:
-                        throw new Error('cannotTakeClosedEvent');
+                        throw Object.assign(new Error('cannotTakeClosedEvent'), {statusCode: 400});
                     case EventState.Closed:
-                        throw new Error('cannotSwitchToSameState');
+                        throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                 }
                 break;
         }
@@ -65,7 +65,7 @@ export class EventStateMachine {
             return;
         }
         if (this.event.operations[0].userId !== this.operator.id) {
-            throw new Error('cannotEditOthersEvent');
+            throw Object.assign(new Error('cannotEditOthersEvent'), {statusCode: 400});
         }
     }
 }
