@@ -5,6 +5,7 @@ import {uploadFiles} from "../services/fileService.ts";
 
 import type {Operation} from "../types.ts";
 import i18n from "../i18n.ts";
+import {handleWorker} from "../workers/workerHandler.ts";
 
 export async function createEventHandler(req: Request, res: Response) {
     await uploadFiles(req, res, async (error) => {
@@ -13,12 +14,10 @@ export async function createEventHandler(req: Request, res: Response) {
             return res.status(400).json({error: i18n.t(error.message, {lng: language})});
         }
         const imagePaths = req.files ? (req.files as Express.Multer.File[]).map((file: Express.Multer.File) => `${image.destination}${file.filename}`) : [];
-        try {
-            await createEvent(name, type, description, imagePaths, userId);
-            res.status(201);
-        } catch (error: any) {
-            res.status(400).json({error: i18n.t(error.message, {lng: language})});
-        }
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: createEvent,
+            args: [name, type, description, imagePaths, userId]
+        }, language, res);
     });
 }
 
@@ -39,21 +38,17 @@ export async function editEventHandler(req: Request, res: Response) {
                 imagePaths: imagePaths
             }
         };
-        try {
-            await editEvent(Number(eventId), userId, changes);
-            res.status(200);
-        } catch (error: any) {
-            res.status(400).json({error: i18n.t(error.message, {lng: language})});
-        }
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: editEvent,
+            args: [eventId, userId, changes]
+        }, language, res);
     });
 }
 
 export async function changeEventStatusHandler(req: Request, res: Response) {
     const {eventId, userId, status, language} = req.body;
-    try {
-        await changeEventStatus(Number(eventId), userId, status);
-        res.status(200);
-    } catch (error: any) {
-        res.status(400).json({error: i18n.t(error.message, {lng: language})});
-    }
+    handleWorker('../workers/genericWorker.ts', {
+        workerFunction: changeEventStatus,
+        args: [eventId, userId, status]
+    }, language, res);
 }

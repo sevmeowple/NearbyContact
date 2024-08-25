@@ -27,7 +27,7 @@ interface LoginBody {
 }
 
 function Login(body: LoginBody) {
-    return sendRequest('/auth/login', body, ['username', 'password']);
+    return sendRequest('/auth/loginHandler', body, ['username', 'password']);
 }
 
 interface RegisterBody {
@@ -42,7 +42,7 @@ interface RegisterBody {
 }
 
 function Register(body: RegisterBody) {
-    return sendRequest('/auth/register', body, ['username', 'password', 'email']);
+    return sendRequest('/auth/registerHandler', body, ['username', 'password', 'email']);
 }
 
 interface CreateBody {

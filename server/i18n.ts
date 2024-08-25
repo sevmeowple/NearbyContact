@@ -8,11 +8,10 @@ i18n
     .use(middleware.LanguageDetector)
     .init({
         backend: {
-            loadPath: path.join(__dirname, 'locales/{{lng}}/{{ns}}.json')
+            loadPath: path.join(__dirname, 'locales/{{lng}}.json')
         },
         fallbackLng: 'en',
-        preload: ['en', 'es'], // Add more languages as needed
-        ns: ['translation'],
+        preload: ['en', 'zh'],
         defaultNS: 'translation',
         detection: {
             order: ['querystring', 'cookie'],

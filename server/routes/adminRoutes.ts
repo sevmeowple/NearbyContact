@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import {authenticateAdminToken, authenticateToken} from "../middleware/authMiddleware.ts";
+import {authenticateAdminToken} from "../middleware/authMiddleware.ts";
 import {getSystemInformation} from "../controllers/systemInformationController.ts";
 
 const router = Router();
