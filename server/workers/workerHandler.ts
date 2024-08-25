@@ -19,7 +19,7 @@ export function handleWorker(workerPath: string, data: any, language: string, re
 
     worker.on('exit', (code) => {
         if (code !== 0) {
-            res.status(500).json({error: i18n.t('Worker stopped with exit code ' + code, {lng: language})});
+            res.status(500).json({error: i18n.t('internalError' + code, {lng: language})});
         }
     });
 

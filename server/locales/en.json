@@ -1,4 +1,5 @@
 {
+  "internalError": "Internal error",
   "accessDenied": "Access denied",
   "cannotSwitchToSameState": "Cannot switch to the same state",
   "cannotTakeSelfEvent": "Cannot take your own event",
