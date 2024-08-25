@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import i18n from './i18n';
+import middleware from "i18next-http-middleware";
 import cookieParser from 'cookie-parser';
 import {authRoutes} from './routes/authRoutes';
 import {userRoutes} from './routes/userRoutes';
@@ -7,6 +9,8 @@ import {eventRoutes} from './routes/eventRoutes.ts';
 import {defaultPORT} from './config.ts'
 
 const app = express();
+
+app.use(middleware.handle(i18n));
 
 // 允许所有来源的跨域请求（仅在开发环境中使用）
 app.use(cors({

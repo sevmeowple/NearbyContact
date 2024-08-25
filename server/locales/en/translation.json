@@ -1,0 +1,11 @@
+{
+  "accessDenied": "Access denied",
+  "cannotSwitchToSameState": "Cannot switch to the same state",
+  "cannotTakeSelfEvent": "Cannot take your own event",
+  "cannotCloseOthersEvent": "Cannot close others' event",
+  "cannotReleaseEventTakenByOther": "Cannot release event taken by another user",
+  "cannotCloseTakenEvent": "Cannot close a taken event",
+  "cannotReopenOthersEvent": "Cannot reopen others' event",
+  "cannotTakeClosedEvent": "Cannot take a closed event",
+  "cannotEditOthersEvent": "Cannot edit others' event"
+}

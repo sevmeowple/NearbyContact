@@ -1,6 +1,6 @@
 import type {Request, Response} from 'express';
 import si from 'systeminformation';
-import {getMessage} from "../message.ts";
+import i18n from "../i18n.ts";
 
 export async function getSystemInformation(req: Request, res: Response) {
     const {language} = req.body;
@@ -17,6 +17,6 @@ export async function getSystemInformation(req: Request, res: Response) {
             networkStats
         })
     } catch (error: any) {
-        res.status(500).json({ error: getMessage(language, error.message) });
+        res.status(500).json({ error: i18n.t(error.message, {lng: language}) });
     }
 }
