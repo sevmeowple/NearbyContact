@@ -18,9 +18,9 @@ export async function getSystemInformation(req: Request, res: Response) {
                 networkStats
             })
         } catch (error: any) {
-            res.status(500).json({ error: i18n.t(error.message, {lng: language}) });
+            res.status(500).json({error: i18n.t(error.message, {lng: language})});
         }
     } catch (error: any) {
-        res.status(418).json({ error: "I'm a teapot." });
+        res.status(418).json({error: "I'm a teapot."});
     }
 }

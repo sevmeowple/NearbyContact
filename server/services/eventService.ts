@@ -1,4 +1,4 @@
-import {EventRoles} from "../mongodb/database.ts";
+import {EventRoles} from "../mongodb/mongod.ts";
 import {EventState, type Operation} from "../types.ts";
 
 async function appendOperations(eventId: number, operation: Operation) {
@@ -19,11 +19,16 @@ export async function createEvent(name: string, type: string, description: strin
             imagePaths: imagePathsJson
         }
     };
-    await EventRoles.insert({ name, type, status: 'open', description, images: imagePathsJson, operations: [operation] });
+    await EventRoles.insert({name, type, status: 'open', description, images: imagePathsJson, operations: [operation]});
 }
 
 export async function editEvent(eventId: number, userId: number, change: Operation) {
-    await EventRoles.edit(eventId.toString(), { name: change.after.name, type: change.after.type, description: change.after.description, images: JSON.stringify(change.after.imagePaths) });
+    await EventRoles.edit(eventId.toString(), {
+        name: change.after.name,
+        type: change.after.type,
+        description: change.after.description,
+        images: JSON.stringify(change.after.imagePaths)
+    });
     await appendOperations(eventId, change);
 }
 

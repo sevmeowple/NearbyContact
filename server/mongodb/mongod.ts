@@ -2,7 +2,7 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import mongoose from 'mongoose';
 
-const configFile = fs.readFileSync('server/mongodb/mongod.conf', 'utf8');
+const configFile = fs.readFileSync('mongod.conf', 'utf8');
 const config = yaml.load(configFile);
 
 const mongoUri = `mongodb://${config.net.bindIp}:${config.net.port}/${MONGO_DB_NAME}`;
@@ -16,32 +16,32 @@ db.once('open', () => {
 });
 
 const userSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    role: { type: String, required: true },
-    phone_number: { type: String },
-    QQ: { type: String },
-    address: { type: String },
-    gender: { type: String },
-    email: { type: String, required: true, unique: true },
-    avatar: { type: Buffer },
+    username: {type: String, required: true, unique: true},
+    password: {type: String, required: true},
+    role: {type: String, required: true},
+    phone_number: {type: String},
+    QQ: {type: String},
+    address: {type: String},
+    gender: {type: String},
+    email: {type: String, required: true, unique: true},
+    avatar: {type: Buffer},
 });
 
 const eventSchema = new mongoose.Schema({
-    name: { type: String, required: true },
-    date: { type: Date, required: true },
-    status: { type: String, required: true },
-    type: { type: String },
-    description: { type: String },
-    images: { type: [Buffer] },
-    operations: { type: [Object] },
+    name: {type: String, required: true},
+    date: {type: Date, required: true},
+    status: {type: String, required: true},
+    type: {type: String},
+    description: {type: String},
+    images: {type: [Buffer]},
+    operations: {type: [Object]},
 });
 
 export const User = mongoose.model('User', userSchema);
 export const Event = mongoose.model('Event', eventSchema);
 
 export const UserRoles = {
-    selectByUsername: async (username: string) => await User.findOne({ username }),
+    selectByUsername: async (username: string) => await User.findOne({username}),
     selectById: async (id: string) => await User.findById(id),
     insert: async (userData: any) => {
         const user = new User(userData);
@@ -54,7 +54,7 @@ export const EventRoles = {
         const event = new Event(eventData);
         return await event.save();
     },
-    edit: async (id: string, eventData: any) => await Event.findByIdAndUpdate(id, eventData, { new: true }),
+    edit: async (id: string, eventData: any) => await Event.findByIdAndUpdate(id, eventData, {new: true}),
     selectById: async (id: string) => await Event.findById(id),
     getStatus: async (id: string) => {
         const event = await Event.findById(id);
@@ -64,7 +64,7 @@ export const EventRoles = {
         const event = await Event.findById(id);
         return event ? event.operations : null;
     },
-    updateStatus: async (id: string, status: string) => await Event.findByIdAndUpdate(id, { status }, { new: true }),
-    updateOperations: async (id: string, operations: any) => await Event.findByIdAndUpdate(id, { operations }, { new: true }),
-    selectAllOpen: async () => await Event.find({ status: 'open' }),
+    updateStatus: async (id: string, status: string) => await Event.findByIdAndUpdate(id, {status}, {new: true}),
+    updateOperations: async (id: string, operations: any) => await Event.findByIdAndUpdate(id, {operations}, {new: true}),
+    selectAllOpen: async () => await Event.find({status: 'open'}),
 };

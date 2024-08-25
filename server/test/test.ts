@@ -1,4 +1,4 @@
-import {EventRoles, UserRoles} from "../mongodb/database.ts";
+import {EventRoles, UserRoles} from "../mongodb/mongod.ts";
 
 function insertSampleData() {
     // Insert sample users

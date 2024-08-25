@@ -1,12 +1,13 @@
-import { type Event, EventState, type User } from "../../types.ts";
+import {type Event, EventState, type User} from "../../types.ts";
+import {EventRoles, UserRoles} from "../../mongodb/mongod.ts";
 
 export class EventStateMachine {
     private readonly event: Event;
     private readonly operator: User;
 
-    private constructor(event: Event, operator: User) {
-        this.event = event;
-        this.operator = operator;
+    constructor(eventId: number, userId: number) {
+        this.event = EventRoles.selectById(eventId.toString());
+        this.operator = UserRoles.selectById(userId.toString());
     }
 
     public changeStatus(targetState: EventState) {
@@ -17,15 +18,15 @@ export class EventStateMachine {
             case EventState.Open:
                 switch (targetState) {
                     case EventState.Open:
-                        throw Object.assign(new Error('cannotSwitchToSameState'), { statusCode: 400 });
+                        throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                     case EventState.Taken:
                         if (this.event.operations[0].userId === this.operator.id) {
-                            throw Object.assign(new Error('cannotTakeSelfEvent'), { statusCode: 400 });
+                            throw Object.assign(new Error('cannotTakeSelfEvent'), {statusCode: 400});
                         }
                         break;
                     case EventState.Closed:
                         if (this.event.operations[0].userId !== this.operator.id) {
-                            throw Object.assign(new Error('cannotCloseOthersEvent'), { statusCode: 400 });
+                            throw Object.assign(new Error('cannotCloseOthersEvent'), {statusCode: 400});
                         }
                         break;
                 }
@@ -34,26 +35,26 @@ export class EventStateMachine {
                 switch (targetState) {
                     case EventState.Open:
                         if (this.event.operations[length - 1].userId !== this.operator.id) {
-                            throw Object.assign(new Error('cannotReleaseEventTakenByOther'), { statusCode: 400 });
+                            throw Object.assign(new Error('cannotReleaseEventTakenByOther'), {statusCode: 400});
                         }
                         break;
                     case EventState.Taken:
-                        throw Object.assign(new Error('cannotSwitchToSameState'), { statusCode: 400 });
+                        throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                     case EventState.Closed:
-                        throw Object.assign(new Error('cannotCloseTakenEvent'), { statusCode: 400 });
+                        throw Object.assign(new Error('cannotCloseTakenEvent'), {statusCode: 400});
                 }
                 break;
             case EventState.Closed:
                 switch (targetState) {
                     case EventState.Open:
                         if (this.event.operations[0].userId !== this.operator.id) {
-                            throw Object.assign(new Error('cannotReopenOthersEvent'), { statusCode: 400 });
+                            throw Object.assign(new Error('cannotReopenOthersEvent'), {statusCode: 400});
                         }
                         break;
                     case EventState.Taken:
-                        throw Object.assign(new Error('cannotTakeClosedEvent'), { statusCode: 400 });
+                        throw Object.assign(new Error('cannotTakeClosedEvent'), {statusCode: 400});
                     case EventState.Closed:
-                        throw Object.assign(new Error('cannotSwitchToSameState'), { statusCode: 400 });
+                        throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                 }
                 break;
         }
@@ -64,7 +65,7 @@ export class EventStateMachine {
             return;
         }
         if (this.event.operations[0].userId !== this.operator.id) {
-            throw Object.assign(new Error('cannotEditOthersEvent'), { statusCode: 400 });
+            throw Object.assign(new Error('cannotEditOthersEvent'), {statusCode: 400});
         }
     }
 }
