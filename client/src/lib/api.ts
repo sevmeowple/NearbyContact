@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {serverUrl} from './u';
+import { serverUrl } from './u';
 
 const axiosInstance = axios.create({
     withCredentials: true,
@@ -10,8 +10,13 @@ interface RequestBody {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }
+// 返回一个对象里面所有的key为[]方便填充filteredBody
+function fliter(body: RequestBody): string[] {
+    return Object.keys(body);
+}
 
-function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[]) {
+// 默认发送所有的key，如果不需要发送所有的key，可以传入expectedKeys
+function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[] = fliter(body)) {
     const filteredBody: RequestBody = {};
     expectedKeys.forEach(key => {
         if (Object.prototype.hasOwnProperty.call(body, key)) {
@@ -27,7 +32,7 @@ interface LoginBody {
 }
 
 function Login(body: LoginBody) {
-    return sendRequest('/auth/loginHandler', body, ['username', 'password']);
+    return sendRequest('/auth/loginHandler', body);
 }
 
 interface RegisterBody {
@@ -41,8 +46,9 @@ interface RegisterBody {
     "avatar": File;
 }
 
+
 function Register(body: RegisterBody) {
-    return sendRequest('/auth/registerHandler', body, ['username', 'password', 'email']);
+    return sendRequest('/auth/register', body);
 }
 
 interface CreateBody {
@@ -54,7 +60,7 @@ interface CreateBody {
 }
 
 function Create(body: CreateBody) {
-    return sendRequest('/event/create', body, ['name', 'date']);
+    return sendRequest('/event/create', body);
 }
 
 interface CloseBody {
@@ -62,7 +68,7 @@ interface CloseBody {
 }
 
 function Close(body: CloseBody) {
-    return sendRequest('/event/close', body, ['eventID']);
+    return sendRequest('/event/close', body);
 }
 
 interface ReopenBody {
@@ -70,7 +76,7 @@ interface ReopenBody {
 }
 
 function Reopen(body: ReopenBody) {
-    return sendRequest('/event/reopen', body, ['eventID']);
+    return sendRequest('/event/reopen', body);
 }
 
-export {Login, Register, Create, Close, Reopen};
+export { Login, Register, Create, Close, Reopen };
