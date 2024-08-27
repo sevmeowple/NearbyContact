@@ -1,13 +1,6 @@
-import fs from 'fs';
-import yaml from 'js-yaml';
-import mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
-const configFile = fs.readFileSync('mongod.conf', 'utf8');
-const config = yaml.load(configFile);
-
-const mongoUri = `mongodb://${config.net.bindIp}:${config.net.port}/${MONGO_DB_NAME}`;
-
-mongoose.connect(mongoUri);
+mongoose.connect("mongodb://127.0.0.1:27017");
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
