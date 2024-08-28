@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {FileRoles, UserRoles} from '../mongodb/mongo.ts';
 import {JWT_SECRET} from '../config';
+import {UserStateMachine} from './stateMachines/userStateMachine';
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);
@@ -34,4 +35,10 @@ export async function registerUser(username: string, password: string, phone_num
         avatar: avatarId
     });
     return {username, email};
+}
+
+export async function editProfile(userId: number, operatorId: number, changes: any) {
+    const stateMachine = new UserStateMachine(userId, operatorId);
+    stateMachine.editProfile();
+    await UserRoles.editProfile(userId.toString(), changes);
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { serverUrl } from './u';
+import {serverUrl} from './u';
 
 const axiosInstance = axios.create({
     withCredentials: true,
@@ -10,6 +10,7 @@ interface RequestBody {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }
+
 // 返回一个对象里面所有的key为[]方便填充filteredBody
 function fliter(body: RequestBody): string[] {
     return Object.keys(body);
@@ -79,4 +80,4 @@ function Reopen(body: ReopenBody) {
     return sendRequest('/event/reopen', body);
 }
 
-export { Login, Register, Create, Close, Reopen };
+export {Login, Register, Create, Close, Reopen};

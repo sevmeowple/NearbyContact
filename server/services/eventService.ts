@@ -4,7 +4,7 @@ import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 
 export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: number) {
     let imageIds: number[] = [];
-    for (let image of images){
+    for (let image of images) {
         const imageId = await FileRoles.insert(image);
         if (!imageId) {
             throw Object.assign(new Error('fileNotFound'), {statusCode: 404});

@@ -37,7 +37,7 @@ const eventSchema = new mongoose.Schema({
     operations: {type: [Object]},
 });
 
-export const File = mongoose.model('file',fileSchema)
+export const File = mongoose.model('file', fileSchema)
 export const User = mongoose.model('User', userSchema);
 export const Event = mongoose.model('Event', eventSchema);
 
@@ -53,12 +53,13 @@ export const FileRoles = {
 
 
 export const UserRoles = {
-    selectByUsername: async (username: string) => await User.findOne({username}),
-    selectById: async (id: string) => await User.findById(id),
     insert: async (userData: any) => {
         const user = new User(userData);
         return await user.save();
     },
+    selectByUsername: async (username: string) => await User.findOne({username}),
+    selectById: async (id: string) => await User.findById(id),
+    editProfile: async (id: string, userData: any) => await User.findByIdAndUpdate(id, userData, {new: true}),
 };
 
 export const EventRoles = {
