@@ -47,6 +47,7 @@ export const FileRoles = {
         const file = new File({thumbnail, original});
         return (await file.save()).id;
     },
+    delete: async (id: string) => await File.findByIdAndDelete(id),
     selectThumbnailById: async (thumbnail: Buffer) => await File.findOne({thumbnail}),
     selectOriginalById: async (original: Buffer) => await File.findOne({original}),
 };

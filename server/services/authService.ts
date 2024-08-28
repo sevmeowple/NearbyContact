@@ -37,8 +37,12 @@ export async function registerUser(username: string, password: string, phone_num
     return {username, email};
 }
 
-export async function editProfile(userId: number, operatorId: number, changes: any) {
+export async function editProfile(userId: number, operatorId: number, changes: any, avatar: Buffer) {
     const stateMachine = new UserStateMachine(userId, operatorId);
     stateMachine.editProfile();
+    if (avatar) {
+        await FileRoles.delete(((await UserRoles.selectById(userId.toString()))?.avatar as unknown as string).toString());
+        changes.avatar= await FileRoles.insert(avatar);
+    }
     await UserRoles.editProfile(userId.toString(), changes);
 }

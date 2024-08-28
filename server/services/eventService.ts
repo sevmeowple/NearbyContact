@@ -24,13 +24,29 @@ export async function createEvent(name: string, type: string, description: strin
     await EventRoles.insert({name, type, status: 'open', description, images: imageIds, operations: [operation]});
 }
 
-export async function editEvent(eventId: number, userId: number, changes: Operation) {
+export async function editEvent(eventId: number, userId: number, changes: Operation, images: Buffer[], imagesToBeDelete: number[]) {
     const event = await EventRoles.selectById(eventId.toString()) as unknown as Event;
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeContents();
-    event.operations.push(changes);
+    if (images) {
+        for (let image of images) {
+            const fileId = await FileRoles.insert(image);
+            if (!fileId) {
+                throw Object.assign(new Error('fileNotFound'), {statusCode: 400});
+            }
+            changes.after.imageIds.push(fileId);
+        }
+    }
+    if (imagesToBeDelete) {
+        for (let imageId of imagesToBeDelete) {
+            await FileRoles.delete(imageId.toString());
+            changes.after.imageIds = changes.after.imageIds.filter((id: number) => id !== imageId);
+        }
+    }
     await EventRoles.edit(eventId.toString(), {operations: event.operations});
+    event.operations.push(changes);
     await EventRoles.updateOperations(eventId.toString(), event.operations);
+
 }
 
 export async function changeEventStatus(eventId: number, userId: number, status: EventState) {
