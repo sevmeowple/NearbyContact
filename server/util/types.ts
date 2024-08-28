@@ -8,7 +8,7 @@ export type User = {
     address: string;
     gender: 'M' | 'F';
     email: string;
-    avatar_path: string;
+    avatarId: number;
 }
 
 export enum EventState {
@@ -29,6 +29,6 @@ export type Event = {
     status: EventState;
     type: string;
     description: string;
-    imagePaths: string[];
+    imageIds: number[];
     operations: Operation[];
 };

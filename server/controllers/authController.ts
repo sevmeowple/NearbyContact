@@ -20,7 +20,7 @@ export async function registerHandler(req: Request, res: Response) {
         const {username, password, phone_number, QQ, address, gender, email, language} = req.body;
         handleWorker('../workers/genericWorker.ts', {
             workerFunction: registerUser,
-            args: [username, password, phone_number, QQ, address, gender, email, req.files]
+            args: [username, password, phone_number, QQ, address, gender, email, req.file]
         }, language, res);
     } catch (error: any) {
         res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});

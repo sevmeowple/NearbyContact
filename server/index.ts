@@ -8,6 +8,7 @@ import {userRoutes} from './routes/userRoutes';
 import {eventRoutes} from './routes/eventRoutes.ts';
 import {defaultPORT} from './config.ts'
 import {fileRoutes} from "./routes/fileRoutes.ts";
+import {log} from "./util/log.ts";
 
 const app = express();
 
@@ -29,5 +30,5 @@ app.use('/files', fileRoutes);
 
 const PORT = process.env.PORT || defaultPORT;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    log('INFO',`Server is running on port ${PORT}`);
 });
