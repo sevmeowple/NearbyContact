@@ -4,23 +4,18 @@ import i18n from "../i18n.ts";
 
 export async function getSystemInformation(req: Request, res: Response) {
     try {
-        const {language} = req.body;
-        try {
-            const cpu = await si.cpu();
-            const mem = await si.mem();
-            const disksIO = await si.disksIO();
-            const networkStats = await si.networkStats();
+        const cpu = await si.cpu();
+        const mem = await si.mem();
+        const disksIO = await si.disksIO();
+        const networkStats = await si.networkStats();
 
-            res.status(200).json({
-                cpu,
-                mem,
-                disksIO,
-                networkStats
-            })
-        } catch (error: any) {
-            res.status(500).json({error: i18n.t(error.message, {lng: language})});
-        }
+        res.status(200).json({
+            cpu,
+            mem,
+            disksIO,
+            networkStats
+        })
     } catch (error: any) {
-        res.status(418).json({error: "I'm a teapot."});
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
 }

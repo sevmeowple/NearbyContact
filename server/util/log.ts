@@ -1,3 +1,5 @@
+import * as fs from "node:fs";
+
 const colors = {
     'INFO': '\x1b[32m',
     'WARN': '\x1b[33m',
@@ -7,5 +9,6 @@ const colors = {
 
 export function log(level: 'INFO' | 'WARN' | 'ERROR', message: string): void {
     const timestamp = new Date().toISOString();
-    console.log(`[${colors[level]}${timestamp}] [${level}] ${message}`);
+    console.log(`[${timestamp}] [${colors[level]}${level}${colors['RESET']}] ${message}`);
+    fs.appendFileSync('server.log', `[${timestamp}] [${level}] ${message}\n`);
 }

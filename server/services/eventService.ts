@@ -1,9 +1,9 @@
-import {EventRoles} from "../mongodb/mongod.ts";
+import {EventRoles} from "../mongodb/mongo.ts";
 import {EventState, type Operation} from "../types.ts";
 
 async function appendOperations(eventId: number, operation: Operation) {
     const operations = await EventRoles.getOperations(eventId.toString());
-    operations.push(operation);
+    operations?.push(operation);
     await EventRoles.updateOperations(eventId.toString(), JSON.stringify(operations));
 }
 
