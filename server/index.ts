@@ -1,12 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import i18n from './i18n';
+import i18n from './util/i18n.ts';
 import middleware from "i18next-http-middleware";
 import cookieParser from 'cookie-parser';
 import {authRoutes} from './routes/authRoutes';
 import {userRoutes} from './routes/userRoutes';
 import {eventRoutes} from './routes/eventRoutes.ts';
 import {defaultPORT} from './config.ts'
+import {fileRoutes} from "./routes/fileRoutes.ts";
 
 const app = express();
 
@@ -20,11 +21,11 @@ app.use(cors({
 
 app.use(express.json());
 app.use(cookieParser());
-app.use('/uploads', express.static('uploads'));
 
 app.use('/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/events', eventRoutes);
+app.use('/files', fileRoutes);
 
 const PORT = process.env.PORT || defaultPORT;
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@ import type {Request, Response} from 'express';
 import {authenticate, registerUser} from '../services/authService';
 import {image} from "../config.ts";
 import {handleWorker} from "../workers/workerHandler.ts";
-import i18n from "../i18n.ts";
+import i18n from "../util/i18n.ts";
 
 export async function loginHandler(req: Request, res: Response) {
     try {

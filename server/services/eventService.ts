@@ -1,14 +1,16 @@
-import {EventRoles} from "../mongodb/mongo.ts";
-import {EventState, type Operation} from "../types.ts";
+import {EventRoles, FileRoles} from "../mongodb/mongo.ts";
+import {type Event, EventState, type Operation} from "../util/types.ts";
+import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 
-async function appendOperations(eventId: number, operation: Operation) {
-    const operations = await EventRoles.getOperations(eventId.toString());
-    operations?.push(operation);
-    await EventRoles.updateOperations(eventId.toString(), JSON.stringify(operations));
-}
-
-export async function createEvent(name: string, type: string, description: string, imagePaths: string[], creator: number) {
-    const imagePathsJson = JSON.stringify(imagePaths);
+export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: number) {
+    let imageIds: number[] = [];
+    for (let image of images){
+        const imageId = await FileRoles.insert(image);
+        if (!imageId) {
+            throw Object.assign(new Error('fileNotFound'), {statusCode: 404});
+        }
+        imageIds.push(imageId);
+    }
     const operation: Operation = {
         userId: creator,
         timestamp: Date.now(),
@@ -16,34 +18,24 @@ export async function createEvent(name: string, type: string, description: strin
             name: name,
             type: type,
             description: description,
-            imagePaths: imagePathsJson
+            imageIds: imageIds
         }
     };
-    await EventRoles.insert({name, type, status: 'open', description, images: imagePathsJson, operations: [operation]});
+    await EventRoles.insert({name, type, status: 'open', description, images: imageIds, operations: [operation]});
 }
 
-export async function editEvent(eventId: number, userId: number, change: Operation) {
-    await EventRoles.edit(eventId.toString(), {
-        name: change.after.name,
-        type: change.after.type,
-        description: change.after.description,
-        images: JSON.stringify(change.after.imagePaths)
-    });
-    await appendOperations(eventId, change);
+export async function editEvent(eventId: number, userId: number, changes: Operation) {
+    const event = await EventRoles.selectById(eventId.toString()) as unknown as Event;
+    const stateMachine = new EventStateMachine(eventId, userId);
+    stateMachine.changeContents();
+    event.operations.push(changes);
+    await EventRoles.edit(eventId.toString(), {operations: event.operations});
+    await EventRoles.updateOperations(eventId.toString(), event.operations);
 }
 
 export async function changeEventStatus(eventId: number, userId: number, status: EventState) {
+    const event = await EventRoles.selectById(eventId.toString()) as unknown as Event;
+    const stateMachine = new EventStateMachine(eventId, userId);
+    stateMachine.changeStatus(status);
     await EventRoles.updateStatus(eventId.toString(), status);
-    const operation: Operation = {
-        userId: userId,
-        timestamp: Date.now(),
-        after: {
-            status: status
-        }
-    };
-    await appendOperations(eventId, operation);
-}
-
-export async function selectAllOpenEvent() {
-    return await EventRoles.selectAllOpen();
 }

@@ -1,8 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {UserRoles} from '../mongodb/mongo.ts';
+import {FileRoles, UserRoles} from '../mongodb/mongo.ts';
 import {JWT_SECRET} from '../config';
-import * as buffer from "node:buffer";
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);
@@ -16,12 +15,13 @@ export async function authenticate(username: string, password: string) {
     throw Object.assign(new Error('invalidCredentials'), {statusCode: 401});
 }
 
-export async function registerUser(username: string, password: string, phone_number: string, QQ: string, address: string, gender: 'M' | 'F', email: string, avatar: buffer.Buffer) {
+export async function registerUser(username: string, password: string, phone_number: string, QQ: string, address: string, gender: 'M' | 'F', email: string, avatar: Buffer) {
     const existingUser = await UserRoles.selectByUsername(username);
     if (existingUser) {
         throw Object.assign(new Error('usernameTaken'), {statusCode: 400});
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
+    const avatarId = await FileRoles.insert(avatar);
     await UserRoles.insert({
         username: username,
         password: hashedPassword,
@@ -31,7 +31,7 @@ export async function registerUser(username: string, password: string, phone_num
         address: address,
         gender: gender,
         email: email,
-        avatar: avatar
+        avatar: avatarId
     });
     return {username, email};
 }

@@ -1,5 +1,6 @@
 import * as mongoose from "mongoose";
 import {log} from "../util/log.ts";
+import {generateThumbnail} from "../util/thumbnail.ts";
 
 mongoose.connect("mongodb://127.0.0.1:27017");
 
@@ -7,6 +8,11 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
     log('INFO', 'Connected to MongoDB');
+});
+
+const fileSchema = new mongoose.Schema({
+    thumbnail: {type: Buffer, required: true},
+    original: {type: Buffer, required: true},
 });
 
 const userSchema = new mongoose.Schema({
@@ -18,7 +24,7 @@ const userSchema = new mongoose.Schema({
     address: {type: String},
     gender: {type: String},
     email: {type: String, required: true, unique: true},
-    avatar: {type: Buffer},
+    avatar: {type: Number},
 });
 
 const eventSchema = new mongoose.Schema({
@@ -27,12 +33,24 @@ const eventSchema = new mongoose.Schema({
     status: {type: String, required: true},
     type: {type: String},
     description: {type: String},
-    images: {type: [Buffer]},
+    images: {type: [Number]},
     operations: {type: [Object]},
 });
 
+export const File = mongoose.model('file',fileSchema)
 export const User = mongoose.model('User', userSchema);
 export const Event = mongoose.model('Event', eventSchema);
+
+export const FileRoles = {
+    insert: async (original: Buffer) => {
+        const thumbnail = await generateThumbnail(original);
+        const file = new File({thumbnail, original});
+        return (await file.save()).id;
+    },
+    selectThumbnailById: async (thumbnail: Buffer) => await File.findOne({thumbnail}),
+    selectOriginalById: async (original: Buffer) => await File.findOne({original}),
+};
+
 
 export const UserRoles = {
     selectByUsername: async (username: string) => await User.findOne({username}),

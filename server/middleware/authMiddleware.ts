@@ -1,6 +1,6 @@
 import type {NextFunction, Request, Response} from 'express';
 import {verifyToken} from '../services/authService';
-import i18n from "../i18n.ts";
+import i18n from "../util/i18n.ts";
 
 export function authenticateToken(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.token;

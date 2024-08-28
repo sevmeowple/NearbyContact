@@ -1,4 +1,4 @@
-import {type Event, EventState, type User} from "../../types.ts";
+import {type Event, EventState, type User} from "../../util/types.ts";
 import {EventRoles, UserRoles} from "../../mongodb/mongo.ts";
 
 export class EventStateMachine {
