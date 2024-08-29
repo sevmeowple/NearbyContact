@@ -1,6 +1,7 @@
-import type {Request,Response} from "express";
+import type {Request, Response} from "express";
 import {handleWorker} from "../workers/workerHandler.ts";
 import i18n from "../util/i18n.ts";
+import {getImage} from "../services/fileService.ts";
 
 export async function getImageHandler(req: Request, res: Response, type: 'original' | 'thumbnail') {
     try {
@@ -9,8 +10,8 @@ export async function getImageHandler(req: Request, res: Response, type: 'origin
             workerFunction: getImage,
             args: [imageId, type]
         }, req.body.language, res);
-        } catch (error: any) {
-            res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
-        }
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
-    }
+}
+

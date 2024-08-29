@@ -30,5 +30,5 @@ app.use('/files', fileRoutes);
 
 const PORT = process.env.PORT || defaultPORT;
 app.listen(PORT, () => {
-    log('INFO',`Server is running on port ${PORT}`);
+    log('INFO', `Server is running on port ${PORT}`);
 });

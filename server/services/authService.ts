@@ -43,7 +43,7 @@ export async function editProfile(userId: ObjectId, operatorId: ObjectId, change
     stateMachine.editProfile();
     if (avatar) {
         await FileRoles.delete(((await UserRoles.selectById(userId))?.avatar as unknown as ObjectId));
-        changes.avatar= await FileRoles.insert(avatar);
+        changes.avatar = await FileRoles.insert(avatar);
     }
     await UserRoles.editProfile(userId, changes);
 }
