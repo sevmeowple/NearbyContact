@@ -50,8 +50,11 @@ export async function editEvent(eventId: number, userId: number, changes: Operat
 }
 
 export async function changeEventStatus(eventId: number, userId: number, status: EventState) {
-    const event = await EventRoles.selectById(eventId.toString()) as unknown as Event;
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeStatus(status);
     await EventRoles.updateStatus(eventId.toString(), status);
+}
+
+export async function getAllOpenEvents() {
+    return await EventRoles.selectAllOpen();
 }

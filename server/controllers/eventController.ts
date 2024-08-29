@@ -1,5 +1,5 @@
 import type {Request, Response} from 'express';
-import {changeEventStatus, createEvent, editEvent} from '../services/eventService';
+import {changeEventStatus, createEvent, editEvent, getAllOpenEvents} from '../services/eventService';
 import type {Operation} from "../util/types.ts";
 import i18n from "../util/i18n.ts";
 import {handleWorker} from "../workers/workerHandler.ts";
@@ -49,6 +49,18 @@ export async function changeEventStatusHandler(req: Request, res: Response) {
         handleWorker('../workers/genericWorker.ts', {
             workerFunction: changeEventStatus,
             args: [eventId, userId, status]
+        }, language, res);
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function getAllOpenEventHandler(req: Request, res: Response) {
+    try {
+        const {language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: getAllOpenEvents,
+            args: []
         }, language, res);
     } catch (error: any) {
         res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
