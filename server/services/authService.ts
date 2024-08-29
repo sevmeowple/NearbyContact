@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import {FileRoles, UserRoles} from '../mongodb/mongo.ts';
 import {JWT_SECRET} from '../config';
 import {UserStateMachine} from './stateMachines/userStateMachine';
+import type {ObjectId} from "mongoose";
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);
@@ -37,12 +38,12 @@ export async function registerUser(username: string, password: string, phone_num
     return {username, email};
 }
 
-export async function editProfile(userId: number, operatorId: number, changes: any, avatar: Buffer) {
+export async function editProfile(userId: ObjectId, operatorId: ObjectId, changes: any, avatar: Buffer) {
     const stateMachine = new UserStateMachine(userId, operatorId);
     stateMachine.editProfile();
     if (avatar) {
-        await FileRoles.delete(((await UserRoles.selectById(userId.toString()))?.avatar as unknown as string).toString());
+        await FileRoles.delete(((await UserRoles.selectById(userId))?.avatar as unknown as ObjectId));
         changes.avatar= await FileRoles.insert(avatar);
     }
-    await UserRoles.editProfile(userId.toString(), changes);
+    await UserRoles.editProfile(userId, changes);
 }

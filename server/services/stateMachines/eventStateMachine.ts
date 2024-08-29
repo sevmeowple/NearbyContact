@@ -1,13 +1,14 @@
 import {type Event, EventState, type User} from "../../util/types.ts";
 import {EventRoles, UserRoles} from "../../mongodb/mongo.ts";
+import type {ObjectId} from "mongoose";
 
 export class EventStateMachine {
     private readonly event: Event;
     private readonly operator: User;
 
-    constructor(eventId: number, userId: number) {
-        this.event = EventRoles.selectById(eventId.toString()) as unknown as Event;
-        this.operator = UserRoles.selectById(userId.toString()) as unknown as User;
+    constructor(eventId: ObjectId, userId: ObjectId) {
+        this.event = EventRoles.selectById(eventId) as unknown as Event;
+        this.operator = UserRoles.selectById(userId) as unknown as User;
     }
 
     public changeStatus(targetState: EventState) {
