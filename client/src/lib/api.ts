@@ -36,7 +36,7 @@ function Login(body: LoginBody) {
     return sendRequest('/auth/loginHandler', body);
 }
 
-interface RegisterBody {
+interface ProfileBody {
     "username": string;
     "password": string;
     "phone_number": string;
@@ -48,11 +48,15 @@ interface RegisterBody {
 }
 
 
-function Register(body: RegisterBody) {
+function Register(body: ProfileBody) {
     return sendRequest('/auth/register', body);
 }
 
-interface CreateBody {
+function editProfile(body: ProfileBody) {
+    return sendRequest('/auth/editProfile', body);
+}
+
+interface EventBody {
     "name": string;
     "date": string;
     "type": string;
@@ -60,24 +64,28 @@ interface CreateBody {
     "images": File[];
 }
 
-function Create(body: CreateBody) {
+function Create(body: EventBody) {
     return sendRequest('/event/create', body);
 }
 
-interface CloseBody {
-    "eventID": number;
+interface EventIdBody {
+    "eventID": string;
 }
 
-function Close(body: CloseBody) {
+function Close(body: EventIdBody) {
     return sendRequest('/event/close', body);
 }
 
-interface ReopenBody {
-    "eventID": number;
+function Reopen(body: EventIdBody) {
+    return sendRequest('/event/reopen', body);
 }
 
-function Reopen(body: ReopenBody) {
-    return sendRequest('/event/reopen', body);
+function Edit(body: EventIdBody & EventBody) {
+    return sendRequest('/event/edit', body);
+}
+
+function getAllOpen() {
+    return axiosInstance.post('/event/getAllOpen');
 }
 
 export {Login, Register, Create, Close, Reopen};
