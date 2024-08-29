@@ -5,11 +5,12 @@ import i18n from '../util/i18n.ts';
 export function handleWorker(workerPath: string, data: any, language: string, res: any) {
     const worker = new Worker(path.resolve(__dirname, workerPath));
 
-    worker.on('message', (message) => {
-        if (message.error) {
-            res.status(message.statusCode || 400).json({error: i18n.t(message.error, {lng: language})});
+    worker.on('message', (result) => {
+        if (result.error) {
+            res.status(result.statusCode || 400).json({error: i18n.t(result.error, {lng: language})});
         } else {
-            res.status(message.statusCode || 200).json(message);
+            res.status(result.statusCode || 200);
+            res.body = result;
         }
     });
 

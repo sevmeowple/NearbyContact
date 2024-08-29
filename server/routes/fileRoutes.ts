@@ -1,15 +1,9 @@
 import {Router} from "express";
+import {getImageHandler} from "../controllers/fileController.ts";
 
 const router = Router();
 
-router.get('/thumbnail/:filename', async (req, res) => {
-    const {filename} = req.params;
-    res.sendFile(`${process.cwd()}/uploads/thumbnails/${filename}`);
-});
-
-router.get('/image/:filename', async (req, res) => {
-    const {filename} = req.params;
-    res.sendFile(`${process.cwd()}/uploads/images/${filename}`);
-});
+router.post('/original', (req, res) => getImageHandler(req, res, 'original'));
+router.post('/thumbnail', (req, res) => getImageHandler(req, res, 'thumbnail'));
 
 export const fileRoutes = router;
