@@ -12,12 +12,12 @@ interface RequestBody {
 }
 
 // 返回一个对象里面所有的key为[]方便填充filteredBody
-function fliter(body: RequestBody): string[] {
+function filter(body: RequestBody): string[] {
     return Object.keys(body);
 }
 
 // 默认发送所有的key，如果不需要发送所有的key，可以传入expectedKeys
-function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[] = fliter(body)) {
+function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[] = filter(body)) {
     const filteredBody: RequestBody = {};
     expectedKeys.forEach(key => {
         if (Object.prototype.hasOwnProperty.call(body, key)) {
