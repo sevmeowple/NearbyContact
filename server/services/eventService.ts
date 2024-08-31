@@ -59,3 +59,7 @@ export async function changeEventStatus(eventId: ObjectId, userId: ObjectId, sta
 export async function getAllOpenEvents() {
     return await EventRoles.selectAllOpen();
 }
+
+export async function getSpecificEvent(eventId: ObjectId) {
+    return await EventRoles.selectById(eventId);
+}

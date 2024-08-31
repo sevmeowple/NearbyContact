@@ -30,7 +30,7 @@ const userSchema = new mongoose.Schema({
 
 const eventSchema = new mongoose.Schema({
     name: {type: String, required: true},
-    date: {type: Date, required: true},
+    timestamp: {type: Number, required: true},
     status: {type: String, required: true},
     type: {type: String},
     description: {type: String},
@@ -71,15 +71,7 @@ export const EventRoles = {
     },
     edit: async (id: ObjectId, eventData: any) => await Event.findByIdAndUpdate(id, eventData, {new: true}),
     selectById: async (id: ObjectId) => await Event.findById(id),
-    getStatus: async (id: ObjectId) => {
-        const event = await Event.findById(id);
-        return event ? event.status : null;
-    },
-    getOperations: async (id: ObjectId) => {
-        const event = await Event.findById(id);
-        return event ? event.operations : null;
-    },
     updateStatus: async (id: ObjectId, status: string) => await Event.findByIdAndUpdate(id, {status}, {new: true}),
     updateOperations: async (id: ObjectId, operations: any) => await Event.findByIdAndUpdate(id, {operations}, {new: true}),
-    selectAllOpen: async () => await Event.find({status: 'open'}),
+    selectAllOpen: async () => await Event.find({status: 'open'}, 'name type timestamp'),
 };
