@@ -1,6 +1,6 @@
 import type {Request, Response} from 'express';
 import {changeEventStatus, createEvent, editEvent, getAllOpenEvents} from '../services/eventService';
-import type {Operation} from "../util/types.ts";
+import type {IOperation} from "../util/types.ts";
 import i18n from "../util/i18n.ts";
 import {handleWorker} from "../workers/workerHandler.ts";
 import {EventStateMachine} from "../services/stateMachines/eventStateMachine.ts";
@@ -22,7 +22,7 @@ export async function editEventHandler(req: Request, res: Response) {
         const {eventId, userId, name, type, description, language} = req.body;
         const stateMachine = new EventStateMachine(eventId, userId);
         stateMachine.changeContents();
-        const changes: Operation = {
+        const changes: IOperation = {
             userId: userId,
             timestamp: Date.now(),
             after: {

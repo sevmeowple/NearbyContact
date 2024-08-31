@@ -1,14 +1,14 @@
-import type {User} from "../../util/types.ts";
+import type {IUser} from "../../util/types.ts";
 import {UserRoles} from "../../mongodb/mongo.ts";
 import type {ObjectId} from "mongoose";
 
 export class UserStateMachine {
-    private readonly user: User;
-    private readonly operator: User;
+    private readonly user: IUser;
+    private readonly operator: IUser;
 
-    constructor(userId: ObjectId, operateorId: ObjectId) {
-        this.user = UserRoles.selectById(userId) as unknown as User;
-        this.operator = UserRoles.selectById(operateorId) as unknown as User;
+    constructor(userId: ObjectId, operatorId: ObjectId) {
+        this.user = UserRoles.selectById(userId) as unknown as IUser;
+        this.operator = UserRoles.selectById(operatorId) as unknown as IUser;
     }
 
     public editProfile() {

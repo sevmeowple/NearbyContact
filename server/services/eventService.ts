@@ -1,5 +1,5 @@
 import {EventRoles, FileRoles} from "../mongodb/mongo.ts";
-import {type Event, EventState, type Operation} from "../util/types.ts";
+import type {IEvent, EventState, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 import type {ObjectId} from "mongoose";
 
@@ -12,7 +12,7 @@ export async function createEvent(name: string, type: string, description: strin
         }
         imageIds.push(imageId);
     }
-    const operation: Operation = {
+    const operation: IOperation = {
         userId: creator,
         timestamp: Date.now(),
         after: {
@@ -25,8 +25,8 @@ export async function createEvent(name: string, type: string, description: strin
     await EventRoles.insert({name, type, status: 'open', description, images: imageIds, operations: [operation]});
 }
 
-export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: Operation, images: Buffer[], imagesToBeDelete: ObjectId[]) {
-    const event = await EventRoles.selectById(eventId) as unknown as Event;
+export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: IOperation, images: Buffer[], imagesToBeDelete: ObjectId[]) {
+    const event = await EventRoles.selectById(eventId) as unknown as IEvent;
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeContents();
     if (images) {

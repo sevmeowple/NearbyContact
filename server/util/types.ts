@@ -1,4 +1,4 @@
-export type User = {
+export interface IUser {
     id: number;
     username: string;
     password: string;
@@ -11,24 +11,23 @@ export type User = {
     avatarId: number;
 }
 
-export enum EventState {
-    Open = 'open',
-    Taken = 'taken',
-    Closed = 'closed',
-}
+export type EventState =
+    | 'open'
+    | 'taken'
+    | 'closed'
 
-export type Operation = {
+export interface IOperation {
     userId: number;
     timestamp: number;
     after: any;
 }
 
-export type Event = {
+export interface IEvent {
     id: number;
     name: string;
     status: EventState;
     type: string;
     description: string;
     imageIds: number[];
-    operations: Operation[];
+    operations: IOperation[];
 };
