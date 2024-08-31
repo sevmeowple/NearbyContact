@@ -47,3 +47,7 @@ export async function editProfile(userId: ObjectId, operatorId: ObjectId, change
     }
     await UserRoles.editProfile(userId, changes);
 }
+
+export async function getSpecificProfile(userId: ObjectId) {
+    return await UserRoles.selectById(userId);
+}

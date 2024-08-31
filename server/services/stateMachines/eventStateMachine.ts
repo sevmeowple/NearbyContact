@@ -1,4 +1,4 @@
-import type {IEvent, EventState, IUser} from "../../util/types.ts";
+import type {EventState, IEvent, IUser} from "../../util/types.ts";
 import {EventRoles, UserRoles} from "../../mongodb/mongo.ts";
 import type {ObjectId} from "mongoose";
 

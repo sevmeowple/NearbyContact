@@ -3,7 +3,8 @@ import {
     changeEventStatusHandler,
     createEventHandler,
     editEventHandler,
-    getAllOpenEventHandler, getSpecificEventHandler,
+    getAllOpenEventHandler,
+    getSpecificEventHandler,
 } from '../controllers/eventController';
 import {authenticateToken} from "../middleware/authMiddleware.ts";
 
