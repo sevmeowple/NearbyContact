@@ -18,7 +18,7 @@
           date: eventDate,
           type: eventType,
           description: eventDescription,
-          info: eventInfo
+          images: [],
         });
         if (response.data) {
           successMessage = 'Event created successfully!';

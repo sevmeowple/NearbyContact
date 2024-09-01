@@ -6,11 +6,7 @@
 
     const cardData = [
         {
-<<<<<<< HEAD:client/src/routes/main/take/event/buy/+page.svelte
             eventType:1,
-=======
-            id: 1,
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae:client/src/routes/main/take/event/2/+page.svelte
             title: "卫生巾",
             price: "10",
             fee: "免费",
@@ -49,15 +45,7 @@
 <Navbar/>
 
 <style>
-<<<<<<< HEAD:client/src/routes/main/take/event/buy/+page.svelte
  
-=======
-
-    .page {
-        width: 100%;
-        overflow-x: hidden;
-    }
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae:client/src/routes/main/take/event/2/+page.svelte
 
     .container {
         min-height: 100vh;

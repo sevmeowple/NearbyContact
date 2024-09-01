@@ -1,5 +1,4 @@
 <script lang="ts">
-<<<<<<< HEAD
 	import { userStore } from '$lib/stores/userStore';
 	import type { User } from '$lib/stores/userStore';
 	import { onMount, onDestroy } from 'svelte';
@@ -25,47 +24,14 @@
 	function Logout() {
 		//logout logic here
 	}
-	// let events = ["代取服务","代买服务","失物招领","二手交易"];
 	let events = [
 		{ id: 1, name: '代取服务', url: '/event/fetch' },
 		{ id: 2, name: '代买服务', url: '/event/buy' },
 		{ id: 3, name: '失物招领', url: '/event/lost' },
 		{ id: 4, name: '二手交易', url: '/event/trade' }
 	];
-=======
-    import type {User} from '$lib/stores/userStore';
-    import {userStore} from '$lib/stores/userStore';
-    import {onDestroy, onMount} from 'svelte';
-    import {slide} from 'svelte/transition';
 
-    let userH: User = {username: '', email: '', password: ''};
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
 
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
-
-    function Logout() {
-        //logout logic here
-    }
-
-    // let events = ["代取服务","代买服务","失物招领","二手交易"];
-    let events = [
-        {id: 1, name: '代取服务', url: '/event/1'},
-        {id: 2, name: '代买服务', url: '/event/2'},
-        {id: 3, name: '失物招领', url: '/event/3'},
-        {id: 4, name: '二手交易', url: '/event/4'}
-    ];
 
     let userInfo = [
         {id: 1, name: '个人信息', url: '/main/user/userInfo'},
@@ -89,23 +55,9 @@
         }
     }
 
-<<<<<<< HEAD
 	function showEventOfCreate() {
-
-		goto('/main/create/event');
+        goto('/main/create/event');
 	}
-=======
-    function showEventOfCreate() {
-        j == 0 ? (j = 4) : (j = 0);
-        if (i == 4) {
-            i = 0;
-        }
-
-        if (p == 3) {
-            p = 0;
-        }
-    }
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
 
     function showUserInfo() {
         p == 0 ? (p = 3) : (p = 0);
@@ -147,7 +99,7 @@
         <div style="text-align: center;">
             {#if show}
                 {#each events.slice(0, j) as event}
-                    <div class="showEvent" transition:slide style="pointer: cursor;">
+                    <div class="showEvent" transition:slide style="cursor:pointer;">
                         <a href="/main/create{event.url}">{event.name}</a>
                     </div>
                 {/each}

@@ -6,11 +6,7 @@
 
     const cardData = [
         {
-<<<<<<< HEAD:client/src/routes/main/take/event/trade/+page.svelte
             id:4,
-=======
-            id: 1,
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae:client/src/routes/main/take/event/4/+page.svelte
             title: "卫生巾",
             price: "10",
             fee: "免费",
@@ -25,11 +21,7 @@
             contact: "13812345678"
         },
         {
-<<<<<<< HEAD:client/src/routes/main/take/event/trade/+page.svelte
             id:4,
-=======
-            id: 1,
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae:client/src/routes/main/take/event/4/+page.svelte
             title: "黑神话礼盒",
             price: "15",
             fee: "免费",
@@ -40,12 +32,8 @@
             sex: "女",
             description: "不急不急",
             imageUrl: "https://via.placeholder.com/150",
-<<<<<<< HEAD:client/src/routes/main/take/event/trade/+page.svelte
             link: "https://example.com/2",
             contact: "13812345678"
-=======
-            link: "https://example.com/2"
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae:client/src/routes/main/take/event/4/+page.svelte
         }
     ];
 </script>
