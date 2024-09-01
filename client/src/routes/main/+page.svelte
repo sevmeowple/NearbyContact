@@ -1,4 +1,5 @@
 <script lang="ts">
+<<<<<<< HEAD
     <<<<<<< HEAD
     import type {User} from '$lib/stores/userStore';
     import {userStore} from '$lib/stores/userStore';
@@ -40,32 +41,41 @@
     >>>>>>>
     6
     dfbe78be80c720ee8a285192883a888c682c4ae
+=======
+	import { userStore } from '$lib/stores/userStore';
+	import type { User } from '$lib/stores/userStore';
+	import { onMount, onDestroy } from 'svelte';
+	let userH: User = { username: '', email: '', password: '' };
+	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
+    import { cubicOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
+	onMount(() => {
+		const user = $userStore;
+		userH.username = user.username;
+		userH.email = user.email;
+		userH.password = user.password;
+	});
+	onDestroy(() => {
+		userStore.set({
+			username: userH.username,
+			email: userH.email,
+			password: userH.password
+		});
+	});
 
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
+	function Logout() {
+		//logout logic here
+	}
+	let events = [
+		{ id: 1, name: '代取服务', url: '/event/fetch' },
+		{ id: 2, name: '代买服务', url: '/event/buy' },
+		{ id: 3, name: '失物招领', url: '/event/lost' },
+		{ id: 4, name: '二手交易', url: '/event/trade' }
+	];
 
-    function Logout() {
-        //logout logic here
-    }
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
 
-    // let events = ["代取服务","代买服务","失物招领","二手交易"];
-    let events = [
-        {id: 1, name: '代取服务', url: '/event/1'},
-        {id: 2, name: '代买服务', url: '/event/2'},
-        {id: 3, name: '失物招领', url: '/event/3'},
-        {id: 4, name: '二手交易', url: '/event/4'}
-    ];
 
     let userInfo = [
         {id: 1, name: '个人信息', url: '/main/user/userInfo'},
@@ -89,6 +99,7 @@
         }
     }
 
+<<<<<<< HEAD
     <<<<<<< HEAD
         function showEventOfCreate() {
 
@@ -107,6 +118,11 @@
         }
         >>> >>> > 6
     dfbe78be80c720ee8a285192883a888c682c4ae
+=======
+	function showEventOfCreate() {
+        goto('/main/create/event');
+	}
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
 
     function showUserInfo() {
         p == 0 ? (p = 3) : (p = 0);
@@ -148,7 +164,7 @@
         <div style="text-align: center;">
             {#if show}
                 {#each events.slice(0, j) as event}
-                    <div class="showEvent" transition:slide style="pointer: cursor;">
+                    <div class="showEvent" transition:slide style="cursor:pointer;">
                         <a href="/main/create{event.url}">{event.name}</a>
                     </div>
                 {/each}

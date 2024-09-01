@@ -3,6 +3,7 @@
 </script>
 
 <footer class="navbar">
+<<<<<<< HEAD
     <<<<<<< HEAD
     <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
     <a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>承接事件</a>
@@ -15,6 +16,12 @@
 <a class="link" href="/main/take/event/3" transition:fly={{ x: 1000 }}>失物招领</a>
 </footer>
 >>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
+=======
+    <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
+    <a href="/main/take/event/fetch" transition:fly={{ x: 1000 }} class="link">承接事件</a>
+    <a href="/main/user/userInfo" transition:fly={{ x: 1000 }}  class="link">个人信息</a>
+ </footer>
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
 
 <style>
     .navbar {
@@ -32,6 +39,7 @@
         overflow: hidden;
         z-index: 1000; /* 确保导航栏在其它内容之上 */
     }
+<<<<<<< HEAD
 
     <
     <
@@ -44,6 +52,11 @@
     .link {
     = = = = = = = . link {
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae transition: all 0.3 s ease;
+=======
+ 
+    .link{
+        transition: all 0.3s ease;
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
         text-align: center;
         align-items: center;
         width: 25%;

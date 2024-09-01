@@ -3,6 +3,7 @@
 </script>
 
 <footer class="navbar">
+<<<<<<< HEAD
     <<<<<<< HEAD
     <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
     <a class="link" href="/main/take/event/buy" transition:fly={{ x: 1000 }}>代买服务</a>
@@ -18,6 +19,14 @@
 <a class="link" href="/main/take/event/4" transition:fly={{ x: 1000 }}>二手交易</a>
 </footer>
 >>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
+=======
+    <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
+    <a href="/main/take/event/buy" transition:fly={{ x: 1000 }} class="link">代买服务</a>
+    <a href="/main/create/event" transition:fly={{ x: 1000 }} class="create">+</a>
+    <a href="/main/take/event/lost" transition:fly={{ x: 1000 }} class="link">失物招领</a>
+    <a href="/main/take/event/trade" transition:fly={{ x: 1000 }} class="link">二手交易</a>
+ </footer>
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
 
 <style>
     .navbar {
@@ -46,11 +55,17 @@
         background-color: #fdfffc;
         color: #708862;
         text-decoration: none;
+<<<<<<< HEAD
     < < < < < < < HEAD font-size: 1.8 em;
         padding-bottom: 6%;
     = = = = = = = font-size: 2 em;
         padding-bottom: 6%;
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae padding-top: 5 %;
+=======
+        font-size: 1.8em;
+        padding-bottom:6%;
+        padding-top: 5%;
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
         border: #737373 0.1em solid;
         border-radius: 100px;
     }

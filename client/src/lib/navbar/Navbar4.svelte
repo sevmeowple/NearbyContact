@@ -3,6 +3,7 @@
 </script>
 
 <footer class="navbar">
+<<<<<<< HEAD
     <<<<<<< HEAD
     <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
     <a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>代取服务</a>
@@ -18,6 +19,14 @@
 <a class="link" href="/main/take/event/3" transition:fly={{ x: 1000 }}>失物招领</a>
 </footer>
 >>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
+=======
+    <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
+    <a href="/main/take/event/fetch" transition:fly={{ x: 1000 }} class="link">代取服务</a>
+    <a href="/main/create/event" transition:fly={{ x: 1000 }} class="create">+</a>
+    <a href="/main/take/event/buy" transition:fly={{ x: 1000 }}  class="link">代买服务</a>
+    <a href="/main/take/event/lost" transition:fly={{ x: 1000 }}  class="link">失物招领</a>
+ </footer>
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
 
 <style>
     .navbar {
@@ -35,6 +44,7 @@
         overflow: hidden;
         z-index: 1000; /* 确保导航栏在其它内容之上 */
     }
+<<<<<<< HEAD
 
     <
     <
@@ -47,6 +57,10 @@
     .create {
     = = = = = = = . create {
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae transition: all 0.3 s ease;
+=======
+    .create{
+        transition: all 0.3s ease;
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
         text-align: center;
         align-items: center;
         width: 15%;
@@ -56,6 +70,7 @@
         color: #708862;
         text-decoration: none;
         font-size: 2em;
+<<<<<<< HEAD
     < < < < < < < HEAD padding-bottom: 6 %;
     = = = = = = = padding-bottom: 5 %;
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae padding-top: 5 %;
@@ -64,6 +79,16 @@
     } < < < < < < < HEAD . link {
     = = = = = = = . link {
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae transition: all 0.3 s ease;
+=======
+        padding-bottom:6%;
+        padding-top: 5%;
+        border: #737373 0.1em solid;
+        border-radius: 100px;
+    }
+
+    .link{
+        transition: all 0.3s ease;
+>>>>>>> f31195d437448e77c9e180944177c5c594b89084
         text-align: center;
         align-items: center;
         width: 20%;
