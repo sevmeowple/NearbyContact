@@ -4,9 +4,8 @@
 
 <footer class="navbar">
     <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
-    <a href="/main/take/event/1" transition:fly={{ x: 1000 }} class="link">代取服务</a>
-    <a href="/main/take/event/2" transition:fly={{ x: 1000 }}  class="link">代买服务</a>
-    <a href="/main/take/event/3" transition:fly={{ x: 1000 }}  class="link">失物招领</a>
+    <a href="/main/take/event/fetch" transition:fly={{ x: 1000 }} class="link">承接事件</a>
+    <a href="/main/user/userInfo" transition:fly={{ x: 1000 }}  class="link">个人信息</a>
  </footer>
 
 <style>
@@ -25,7 +24,6 @@
         overflow: hidden;
         z-index: 1000; /* 确保导航栏在其它内容之上 */
     }
-
  
     .link{
         transition: all 0.3s ease;
@@ -40,7 +38,6 @@
         font-size: 1em;
         padding-bottom:5%;
         padding-top: 5%;
-        border-left: #737373 0.1em solid;
 
     }
 

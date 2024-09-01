@@ -6,6 +6,7 @@
 	import { fade } from 'svelte/transition';
 	import { slide } from 'svelte/transition';
     import { cubicOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
 	onMount(() => {
 		const user = $userStore;
 		userH.username = user.username;
@@ -25,10 +26,10 @@
 	}
 	// let events = ["代取服务","代买服务","失物招领","二手交易"];
 	let events = [
-		{ id: 1, name: '代取服务', url: '/event/1' },
-		{ id: 2, name: '代买服务', url: '/event/2' },
-		{ id: 3, name: '失物招领', url: '/event/3' },
-		{ id: 4, name: '二手交易', url: '/event/4' }
+		{ id: 1, name: '代取服务', url: '/event/fetch' },
+		{ id: 2, name: '代买服务', url: '/event/buy' },
+		{ id: 3, name: '失物招领', url: '/event/lost' },
+		{ id: 4, name: '二手交易', url: '/event/trade' }
 	];
 
 	let userInfo = [
@@ -54,14 +55,8 @@
 	}
 
 	function showEventOfCreate() {
-		j == 0 ? (j = 4) : (j = 0);
-        if(i==4){
-            i = 0;
-        }
 
-        if(p==3){
-            p = 0;
-        }
+		goto('/main/create/event');
 	}
 
 	function showUserInfo() {

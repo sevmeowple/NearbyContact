@@ -1,12 +1,12 @@
 <script lang="ts">
-    import Card from '$lib/card/Card_1.svelte';
-    import Navbar from "$lib/navbar/Navbar1.svelte";
-    import Nav from "$lib/nav/Nav1.svelte";
+    import Card from '$lib/card/Card_3.svelte';
+    import Navbar from "$lib/navbar/Navbar3.svelte";
+    import Nav from "$lib/nav/Nav3.svelte";
     // 本地数据
 
     const cardData = [
         {
-            id:1,
+            id:3,
             title: "卫生巾",
             price: "10",
             fee:"免费",
@@ -17,10 +17,11 @@
             sex: "男",
             description: "急急急急",
             imageUrl: "https://via.placeholder.com/150",
-            link: "https://example.com/1"
+            link: "https://example.com/1",
+            contact: "13812345678"
         },
         {
-            id:1,
+            id:3,
             title: "黑神话礼盒",
             price: "15",
             fee:"免费",
@@ -31,48 +32,23 @@
             sex: "女",
             description: "不急不急",
             imageUrl: "https://via.placeholder.com/150",
-            link: "https://example.com/2"
-        },
-        {
-            id:1,
-            title: "黑神话礼盒",
-            price: "15",
-            fee:"免费",
-            location: "七号楼近邻宝",
-            destination: "七号楼520",
-            distance: "3.5km",
-            time: "08-18 11:00",
-            sex: "女",
-            description: "不急不急",
-            imageUrl: "https://via.placeholder.com/150",
-            link: "https://example.com/2"
-    },{
-            id:1,
-            title: "黑神话礼盒",
-            price: "15",
-            fee:"免费",
-            location: "七号楼近邻宝",
-            destination: "七号楼520",
-            distance: "3.5km",
-            time: "08-18 11:00",
-            sex: "女",
-            description: "不急不急",
-            imageUrl: "https://via.placeholder.com/150",
-            link: "https://example.com/2"
-    }
+            link: "https://example.com/2",
+            contact: "13812345678"
+        }
     ];
  </script>
 
-<Nav />
+<Nav/>
 <div class="container">
     {#each cardData as card}
-        <Card {...card}  />
+        <Card {...card} />
     {/each}
 </div>
 <Navbar />
 
 
- <style >
+<style>
+
     .page {
         width: 100%;
         overflow-x: hidden;
@@ -91,6 +67,6 @@
     padding-bottom: 20%;
     }
 
- </style>
- 
+
+</style>
 

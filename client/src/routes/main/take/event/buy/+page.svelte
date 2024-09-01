@@ -1,12 +1,12 @@
 <script lang="ts">
-    import Card from '$lib/card/Card_4.svelte';
-    import Navbar from "$lib/navbar/Navbar4.svelte";
-    import Nav from "$lib/nav/Nav4.svelte";
+    import Card from '$lib/card/Card_2.svelte';
+    import Navbar from "$lib/navbar/Navbar2.svelte";
+    import Nav from "$lib/nav/Nav2.svelte";
     // 本地数据
 
     const cardData = [
         {
-            id:1,
+            eventType:1,
             title: "卫生巾",
             price: "10",
             fee:"免费",
@@ -37,7 +37,7 @@
  </script>
 
 <Nav />
-<div class="container">
+<div class="container" >
     {#each cardData as card}
         <Card {...card} />
     {/each}
@@ -46,10 +46,7 @@
 
 <style>
  
-    .page {
-        width: 100%;
-        overflow-x: hidden;
-    }
+
     .container {
     min-height: 100vh;
     display: flex;
@@ -64,6 +61,6 @@
     padding-bottom: 20%;
     }
 
-</style>
 
+</style>
 

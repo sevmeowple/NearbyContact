@@ -1,12 +1,12 @@
 <script lang="ts">
-    import Card from '$lib/card/Card_3.svelte';
-    import Navbar from "$lib/navbar/Navbar3.svelte";
-    import Nav from "$lib/nav/Nav3.svelte";
+    import Card from '$lib/card/Card_4.svelte';
+    import Navbar from "$lib/navbar/Navbar4.svelte";
+    import Nav from "$lib/nav/Nav4.svelte";
     // 本地数据
 
     const cardData = [
         {
-            id:1,
+            id:4,
             title: "卫生巾",
             price: "10",
             fee:"免费",
@@ -17,10 +17,11 @@
             sex: "男",
             description: "急急急急",
             imageUrl: "https://via.placeholder.com/150",
-            link: "https://example.com/1"
+            link: "https://example.com/1",
+            contact: "13812345678"
         },
         {
-            id:1,
+            id:4,
             title: "黑神话礼盒",
             price: "15",
             fee:"免费",
@@ -31,12 +32,13 @@
             sex: "女",
             description: "不急不急",
             imageUrl: "https://via.placeholder.com/150",
-            link: "https://example.com/2"
-    }
+            link: "https://example.com/2",
+            contact: "13812345678"
+        }
     ];
  </script>
 
-<Nav/>
+<Nav />
 <div class="container">
     {#each cardData as card}
         <Card {...card} />
@@ -44,9 +46,8 @@
 </div>
 <Navbar />
 
-
 <style>
-
+ 
     .page {
         width: 100%;
         overflow-x: hidden;
@@ -65,6 +66,6 @@
     padding-bottom: 20%;
     }
 
-
 </style>
+
 

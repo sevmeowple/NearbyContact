@@ -30,7 +30,7 @@
         // 检查返回状态码
         if (res.status === 200) {
             console.log('登录成功');
-            goto('/board');
+            goto('/main');
         }
     }
 
@@ -150,18 +150,17 @@
     }
 
     .h1 {
-        position: fixed;
+        display: flex;
         text-align: center;
         color: #000000;
-        top: 10%;
-        left: 50%;
-        transform: translateX(-50%);
+        margin-bottom: 20%;
     }
 
     .main {
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         margin: 0 auto;
         padding: 20px;
         background-color: #ffffff;

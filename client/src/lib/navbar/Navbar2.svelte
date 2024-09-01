@@ -4,15 +4,15 @@
 
 <footer class="navbar">
     <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
-    <a href="/main/take/event/3" transition:fly={{ x: 1000 }} class="link">失物招领</a>
-    <a href="/main/take/create/1" transition:fly={{ x: 1000 }} class="create">+</a>
-    <a href="/main/take/event/4" transition:fly={{ x: 1000 }} class="link">二手交易</a>
-    <a href="/main/take/event/1" transition:fly={{ x: 1000 }} class="link">代取服务</a>
+    <a href="/main/take/event/lost" transition:fly={{ x: 1000 }} class="link">失物招领</a>
+    <a href="/main/create/event" transition:fly={{ x: 1000 }} class="create">+</a>
+    <a href="/main/take/event/trade" transition:fly={{ x: 1000 }} class="link">二手交易</a>
+    <a href="/main/take/event/fetch" transition:fly={{ x: 1000 }} class="link">代取服务</a>
  </footer>
 
 
 <style>
-    .navbar {
+   .navbar {
         position: fixed;
         bottom: 0;
         left: 0;
@@ -38,18 +38,17 @@
         color: #708862;
         text-decoration: none;
         font-size: 2em;
-        padding-bottom:5%;
+        padding-bottom:6%;
         padding-top: 5%;
         border: #737373 0.1em solid;
         border-radius: 100px;
     }
 
- 
     .link{
         transition: all 0.3s ease;
         text-align: center;
         align-items: center;
-        width: 25%;
+        width: 20%;
         display: inline-block;
         padding: 0.5em 0.5em 0.5em 0.5em;
         background-color: #708862;
@@ -58,12 +57,12 @@
         font-size: 1em;
         padding-bottom:5%;
         padding-top: 5%;
-
+        font-size: small;
     }
+
 
     .link:hover{
-        background-color: #5c7055;
-        cursor: pointer;
+        background-color: #fdfffc;
+        color: #708862;
     }
- 
 </style>
