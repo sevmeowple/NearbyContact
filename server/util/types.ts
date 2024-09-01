@@ -30,4 +30,4 @@ export interface IEvent {
     description: string;
     imageIds: number[];
     operations: IOperation[];
-};
+}

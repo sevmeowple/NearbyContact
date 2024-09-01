@@ -2,7 +2,7 @@
     import * as instance from '$lib/api';
     import Nav1 from '$lib/nav/Nav1.svelte';
     import Navbarcreate from '$lib/navbar/Navbarcreate.svelte';
-  
+
     let eventName = '';
     let eventDate = '';
     let eventType = '';
@@ -10,45 +10,45 @@
     let eventInfo = '';
     let errorMessage = '';
     let successMessage = '';
-  
+
     async function createEvent() {
-      try {
-        const response = await instance.Create({
-          name: eventName,
-          date: eventDate,
-          type: eventType,
-          description: eventDescription,
-          info: eventInfo
-        });
-        if (response.data) {
-          successMessage = 'Event created successfully!';
-          errorMessage = '';
+        try {
+            const response = await instance.Create({
+                name: eventName,
+                date: eventDate,
+                type: eventType,
+                description: eventDescription,
+                info: eventInfo
+            });
+            if (response.data) {
+                successMessage = 'Event created successfully!';
+                errorMessage = '';
+            }
+        } catch (error) {
+            errorMessage = 'Failed to create event. Please try again.';
+            successMessage = '';
         }
-      } catch (error) {
-        errorMessage = 'Failed to create event. Please try again.';
-        successMessage = '';
-      }
     }
 </script>
 
-<Nav1 />
-<Navbarcreate />
+<Nav1/>
+<Navbarcreate/>
 <div class="container">
     {#if errorMessage}
-      <p style="color: red;">{errorMessage}</p>
+        <p style="color: red;">{errorMessage}</p>
     {/if}
     {#if successMessage}
-      <p style="color: green;">{successMessage}</p>
+        <p style="color: green;">{successMessage}</p>
     {/if}
     <form on:submit|preventDefault={createEvent}>
         <label for="eventName">
             <span>名称</span>
-            <input type="text" id="eventName" name="eventName" required minlength="2" />
+            <input id="eventName" minlength="2" name="eventName" required type="text"/>
         </label>
 
         <label for="eventDate">
             <span>日期</span>
-            <input type="date" id="eventDate" name="eventDate" required />
+            <input id="eventDate" name="eventDate" required type="date"/>
         </label>
 
         <label for="eventType">
@@ -64,18 +64,18 @@
 
         <label for="eventDescription">
             <span>具体描述</span>
-            <textarea id="eventDescription" name="eventDescription" required minlength="0"></textarea>
+            <textarea id="eventDescription" minlength="0" name="eventDescription" required></textarea>
         </label>
 
         <label for="eventInfo">
             <span>其他信息</span>
-            <textarea id="eventInfo" name="eventInfo" required minlength="10"></textarea>
+            <textarea id="eventInfo" minlength="10" name="eventInfo" required></textarea>
         </label>
 
-        <button type="submit" class="btn">Create Event</button>
-      </form>
-  </div>
-  
+        <button class="btn" type="submit">Create Event</button>
+    </form>
+</div>
+
 <style>
     .container {
         min-height: 100vh;

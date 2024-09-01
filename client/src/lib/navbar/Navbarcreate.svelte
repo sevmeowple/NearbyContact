@@ -3,16 +3,16 @@
 </script>
 
 <footer class="navbar">
-<<<<<<< HEAD
-    <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
-    <a href="/main/take/event/fetch" transition:fly={{ x: 1000 }} class="link">承接事件</a>
-    <a href="/main/user/userInfo" transition:fly={{ x: 1000 }}  class="link">个人信息</a>
- </footer>
-=======
+    <<<<<<< HEAD
     <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
-    <a class="link" href="/main/take/event/1" transition:fly={{ x: 1000 }}>代取服务</a>
-    <a class="link" href="/main/take/event/2" transition:fly={{ x: 1000 }}>代买服务</a>
-    <a class="link" href="/main/take/event/3" transition:fly={{ x: 1000 }}>失物招领</a>
+    <a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>承接事件</a>
+    <a class="link" href="/main/user/userInfo" transition:fly={{ x: 1000 }}>个人信息</a>
+</footer>
+=======
+<a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
+<a class="link" href="/main/take/event/1" transition:fly={{ x: 1000 }}>代取服务</a>
+<a class="link" href="/main/take/event/2" transition:fly={{ x: 1000 }}>代买服务</a>
+<a class="link" href="/main/take/event/3" transition:fly={{ x: 1000 }}>失物招领</a>
 </footer>
 >>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
 
@@ -32,15 +32,18 @@
         overflow: hidden;
         z-index: 1000; /* 确保导航栏在其它内容之上 */
     }
-<<<<<<< HEAD
- 
-    .link{
-=======
 
-
+    <
+    <
+    <
+    <
+    <
+    <
+    <
+    HEAD
     .link {
->>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
-        transition: all 0.3s ease;
+    = = = = = = = . link {
+    >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae transition: all 0.3 s ease;
         text-align: center;
         align-items: center;
         width: 25%;
@@ -55,8 +58,8 @@
 
     }
 
-    .link:hover {
-        background-color: #5c7055;
-        cursor: pointer;
-    }
+        .link:hover {
+            background-color: #5c7055;
+            cursor: pointer;
+        }
 </style>
