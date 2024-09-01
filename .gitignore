@@ -178,5 +178,6 @@ dist
 # Finder (MacOS) folder config
 .DS_Store
 
-# Database
-server/app.sqlite
+
+/server/mongodb/data/
+/server/log/

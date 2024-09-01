@@ -1,4 +1,3 @@
-
 <div class="container">
     <header>
         <div>编辑用户信息</div>
@@ -11,7 +10,7 @@
     <footer>
         <button type="submit">保存</button>
     </footer>
-    
+
 </div>
 
 <style>
@@ -23,30 +22,30 @@
         align-items: center;
         justify-content: center;
         padding: 1rem;
-        background:linear-gradient(to bottom, #708862 50%, #3f5831 100%);
+        background: linear-gradient(to bottom, #708862 50%, #3f5831 100%);
     }
 
-    header{
+    header {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 10%;
-        background-color:#3f5831;
+        background-color: #3f5831;
         border-radius: 20px 20px 0px 0px;
     }
 
-    footer{
+    footer {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 10%;
-        background-color:#3f5831;
-        border-radius: 0 0 20px 20px ;
+        background-color: #3f5831;
+        border-radius: 0 0 20px 20px;
     }
 
-    main{
+    main {
         display: flex;
         width: 100%;
         height: 70%;

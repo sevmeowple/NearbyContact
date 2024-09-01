@@ -1,0 +1,15 @@
+{
+  "internalError": "内部错误",
+  "accessDenied": "访问被拒绝",
+  "invalidCredentials": "无效的凭据",
+  "usernameTaken": "用户名已被占用",
+  "notImage": "上传的文件不是图片",
+  "cannotSwitchToSameState": "不能切换到相同的状态",
+  "cannotTakeSelfEvent": "不能接取自己的事件",
+  "cannotCloseOthersEvent": "不能关闭他人创建的事件",
+  "cannotReleaseEventTakenByOther": "不能释放他人接取的事件",
+  "cannotCloseTakenEvent": "不能关闭正在进行的事件",
+  "cannotReopenOthersEvent": "不能重新打开他人创建的事件",
+  "cannotTakeClosedEvent": "不能接取已关闭的事件",
+  "cannotEditOthersEvent": "不能编辑他人创建的事件"
+}

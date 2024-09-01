@@ -1,48 +1,81 @@
 import type {Request, Response} from 'express';
-import {closeEvent, createEvent, reOpenEvent, selectAllOpenEvent} from '../services/eventService';
-import {upload} from "../middleware/uploadMiddleware.ts";
+import {changeEventStatus, createEvent, editEvent, getAllOpenEvents, getSpecificEvent} from '../services/eventService';
+import type {IOperation} from "../util/types.ts";
+import i18n from "../util/i18n.ts";
+import {handleWorker} from "../workers/workerHandler.ts";
+import {EventStateMachine} from "../services/stateMachines/eventStateMachine.ts";
 
 export async function createEventHandler(req: Request, res: Response) {
-    upload(req, res, async (err) => {
-        if (err) {
-            return res.status(400).json({error: err.message});
-        }
-        const {name, date, type, description, info} = req.body;
-        const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
-        try {
-            const event = await createEvent(name, date, type, description, imagePath);
-            res.status(201).json({event});
-        } catch (error: any) {
-            res.status(400).json({error: error.message});
-        }
-    });
-}
-
-export async function closeEventHandler(req: Request, res: Response) {
-    const {eventId} = req.body;
     try {
-        const event = await closeEvent(Number(eventId));
-        res.status(200).json({event});
+        const {name, type, description, userId, language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: createEvent,
+            args: [name, type, description, req.files, userId]
+        }, language, res);
     } catch (error: any) {
-        res.status(400).json({error: error.message});
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
 }
 
-export async function reOpenEventHandler(req: Request, res: Response) {
-    const {eventId} = req.body;
+export async function editEventHandler(req: Request, res: Response) {
     try {
-        const event = await reOpenEvent(Number(eventId));
-        res.status(200).json({event});
+        const {eventId, userId, name, type, description, language} = req.body;
+        const stateMachine = new EventStateMachine(eventId, userId);
+        stateMachine.changeContents();
+        const changes: IOperation = {
+            userId: userId,
+            timestamp: Date.now(),
+            after: {
+                name: name,
+                type: type,
+                description: description,
+                images: req.files
+            }
+        }
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: editEvent,
+            args: [eventId, userId, changes]
+        }, language, res);
     } catch (error: any) {
-        res.status(400).json({error: error.message});
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
 }
 
-export async function selectAllOpenEventHandler(req: Request, res: Response) {
+export async function changeEventStatusHandler(req: Request, res: Response) {
     try {
-        const events = await selectAllOpenEvent();
-        res.status(200).json({events});
+        const {eventId, userId, status, language} = req.body;
+        const stateMachine = new EventStateMachine(eventId, userId);
+        stateMachine.changeStatus(status);
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: changeEventStatus,
+            args: [eventId, userId, status]
+        }, language, res);
     } catch (error: any) {
-        res.status(400).json({error: error.message});
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function getAllOpenEventHandler(req: Request, res: Response) {
+    try {
+        const {language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: getAllOpenEvents,
+            args: []
+        }, language, res);
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function getSpecificEventHandler(req: Request, res: Response) {
+    try {
+        const {eventId} = req.params;
+        const {language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: getSpecificEvent,
+            args: [eventId]
+        }, language, res)
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
 }

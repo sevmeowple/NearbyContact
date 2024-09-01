@@ -15,7 +15,8 @@
     </header>
 
     <main>
-        <slot></slot>//显示具体的内容
+        <slot></slot>
+        //显示具体的内容
     </main>
     <footer>
         <p>©2024 NearbyContact</p>
@@ -23,8 +24,8 @@
 </div>
 
 <style>
-   .Layout {
-        display:flex;
+    .Layout {
+        display: flex;
         flex-direction: column;
         align-items: center;
         box-sizing: border-box;
@@ -34,22 +35,26 @@
         background-color: #547642;
     }
 
-    header, footer{
+    header, footer {
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         background-color: #333;
-        color:white;
+        color: white;
         padding: 1rem;
         z-index: 1;
     }
 
+<<<<<<< HEAD
     header{
         display: flex;
+=======
+    header {
+>>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
         height: 10%;
         border-radius: 20px 20px 0 0;
-        position:absolute;
+        position: absolute;
         top: 0;
         left: 0;
         background-color: #5e8449
@@ -71,9 +76,13 @@
     
 
 
+<<<<<<< HEAD
     footer{
         display: flex;
         flex-direction: column;
+=======
+    footer {
+>>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
         height: 10%;
         border-radius: 0 0 20px 20px;
         position: absolute;
@@ -82,6 +91,7 @@
         background-color: #5e8449;
     }
 
+<<<<<<< HEAD
     .footer{
         display: flex;
         justify-content: space-around;
@@ -91,6 +101,9 @@
     }
 
     main{
+=======
+    main {
+>>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
         flex: 1;
         width: 100%;
         overflow-y: auto;

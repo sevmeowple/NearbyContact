@@ -1,22 +1,52 @@
 import type {Request, Response} from 'express';
-import {authenticate, registerUser} from '../services/authService';
+import {authenticate, editProfile, getSpecificProfile, registerUser} from '../services/authService';
+import {handleWorker} from "../workers/workerHandler.ts";
+import i18n from "../util/i18n.ts";
 
-export async function login(req: Request, res: Response) {
-    const {username, password} = req.body;
+export async function loginHandler(req: Request, res: Response) {
     try {
-        const token = authenticate(username, password);
-        res.cookie('token', token, {httpOnly: true, secure: true, maxAge: 3600000});
+        const {username, password, language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: authenticate,
+            args: [username, password]
+        }, language, res);
     } catch (error: any) {
-        res.status(401).json({error: error.message});
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
 }
 
-export async function register(req: Request, res: Response) {
-    const {username, email, password} = req.body;
+export async function registerHandler(req: Request, res: Response) {
     try {
-        const user = await registerUser(username, email, password);
-        res.status(201).json({user});
+        const {username, password, phone_number, QQ, address, gender, email, language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: registerUser,
+            args: [username, password, phone_number, QQ, address, gender, email, req.file]
+        }, language, res);
     } catch (error: any) {
-        res.status(400).json({error: error.message});
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function editProfileHandler(req: Request, res: Response) {
+    try {
+        const {userId, operatorId, changes, language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: editProfile,
+            args: [userId, operatorId, changes]
+        }, language, res);
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function getSpecificProfileHandler(req: Request, res: Response) {
+    try {
+        const {userId, language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: getSpecificProfile,
+            args: [userId]
+        }, language, res);
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
 }

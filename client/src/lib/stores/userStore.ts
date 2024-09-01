@@ -1,9 +1,15 @@
 import {writable} from 'svelte/store';
 
+// 复制之前apits的register的body
 interface User {
     "username": string;
-    "email": string;
     "password": string;
+    "email": string;
+    "phone_number"?: string;
+    "QQ"?: string;
+    "address"?: string;
+    "gender"?: 'M' | 'F';
+    "avatar"?: File;
 }
 
 const user: User = {
@@ -11,6 +17,7 @@ const user: User = {
     "email": '',
     "password": ''
 };
+
 
 const {subscribe, set, update} = writable(user);
 

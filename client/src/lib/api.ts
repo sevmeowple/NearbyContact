@@ -11,7 +11,13 @@ interface RequestBody {
     [key: string]: any;
 }
 
-function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[]) {
+// 返回一个对象里面所有的key为[]方便填充filteredBody
+function filter(body: RequestBody): string[] {
+    return Object.keys(body);
+}
+
+// 默认发送所有的key，如果不需要发送所有的key，可以传入expectedKeys
+function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[] = filter(body)) {
     const filteredBody: RequestBody = {};
     expectedKeys.forEach(key => {
         if (Object.prototype.hasOwnProperty.call(body, key)) {
@@ -27,45 +33,59 @@ interface LoginBody {
 }
 
 function Login(body: LoginBody) {
-    return sendRequest('/auth/login', body, ['username', 'password']);
+    return sendRequest('/auth/loginHandler', body);
 }
 
-interface RegisterBody {
+interface ProfileBody {
     "username": string;
     "password": string;
+    "phone_number": string;
+    "QQ": string;
+    "address": string;
+    "gender": 'M' | 'F';
     "email": string;
+    "avatar": File;
 }
 
-function Register(body: RegisterBody) {
-    return sendRequest('/auth/register', body, ['username', 'password', 'email']);
+
+function Register(body: ProfileBody) {
+    return sendRequest('/auth/register', body);
 }
 
-interface CreateBody {
+function editProfile(body: ProfileBody) {
+    return sendRequest('/auth/editProfile', body);
+}
+
+interface EventBody {
     "name": string;
     "date": string;
     "type": string;
     "description": string;
-    "info": string;
+    "images": File[];
 }
 
-function Create(body: CreateBody) {
-    return sendRequest('/event/create', body, ['name', 'date']);
+function Create(body: EventBody) {
+    return sendRequest('/event/create', body);
 }
 
-interface CloseBody {
-    "eventID": number;
+interface EventIdBody {
+    "eventID": string;
 }
 
-function Close(body: CloseBody) {
-    return sendRequest('/event/close', body, ['eventID']);
+function Close(body: EventIdBody) {
+    return sendRequest('/event/close', body);
 }
 
-interface ReopenBody {
-    "eventID": number;
+function Reopen(body: EventIdBody) {
+    return sendRequest('/event/reopen', body);
 }
 
-function Reopen(body: ReopenBody) {
-    return sendRequest('/event/reopen', body, ['eventID']);
+function Edit(body: EventIdBody & EventBody) {
+    return sendRequest('/event/edit', body);
+}
+
+function getAllOpen() {
+    return axiosInstance.post('/event/getAllOpen');
 }
 
 export {Login, Register, Create, Close, Reopen};
