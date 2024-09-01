@@ -19,19 +19,9 @@ export async function createEventHandler(req: Request, res: Response) {
 
 export async function editEventHandler(req: Request, res: Response) {
     try {
-        const {eventId, userId, name, type, description, language} = req.body;
+        const {eventId, userId, changes, language} = req.body;
         const stateMachine = new EventStateMachine(eventId, userId);
         stateMachine.changeContents();
-        const changes: IOperation = {
-            userId: userId,
-            timestamp: Date.now(),
-            after: {
-                name: name,
-                type: type,
-                description: description,
-                images: req.files
-            }
-        }
         handleWorker('../workers/genericWorker.ts', {
             workerFunction: editEvent,
             args: [eventId, userId, changes]

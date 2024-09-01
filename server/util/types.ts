@@ -1,3 +1,5 @@
+import type {ObjectId} from "mongoose";
+
 export interface IUser {
     id: number;
     username: string;
@@ -8,7 +10,7 @@ export interface IUser {
     address: string;
     gender: 'M' | 'F';
     email: string;
-    avatarId: number;
+    avatarId: ObjectId;
 }
 
 export type EventState =
@@ -28,6 +30,6 @@ export interface IEvent {
     status: EventState;
     type: string;
     description: string;
-    imageIds: number[];
+    imageIds: ObjectId[];
     operations: IOperation[];
 }
