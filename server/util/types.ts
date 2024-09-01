@@ -19,7 +19,7 @@ export type EventState =
     | 'closed'
 
 export interface IOperation {
-    userId: number;
+    userId: ObjectId;
     timestamp: number;
     after: any;
 }

@@ -3,7 +3,7 @@ import type {EventState, IEvent, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 import type {ObjectId} from "mongoose";
 
-export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: number) {
+export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: ObjectId) {
     let imageIds: ObjectId[] = [];
     for (let image of images) {
         const imageId = await FileRoles.insert(image);
@@ -44,7 +44,12 @@ export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: an
         changes.imageIds = imageIds;
     }
     await EventRoles.edit(eventId, changes);
-    event.operations.push(changes);
+    const operation: IOperation = {
+        userId: userId,
+        timestamp: Date.now(),
+        after: changes
+    }
+    event.operations.push(operation);
     await EventRoles.updateOperations(eventId, event.operations);
 }
 
