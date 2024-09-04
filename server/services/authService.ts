@@ -24,7 +24,7 @@ export async function registerUser(username: string, password: string, phone_num
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
     const avatarId = await FileRoles.insert(avatar);
-    await UserRoles.insert({
+    const user = {
         username: username,
         password: hashedPassword,
         role: 'user',
@@ -33,9 +33,10 @@ export async function registerUser(username: string, password: string, phone_num
         address: address,
         gender: gender,
         email: email,
-        avatar: avatarId
-    });
-    return {username, email};
+        avatarId: avatarId
+    }
+    await UserRoles.insert(user);
+    return user;
 }
 
 export async function editProfile(userId: ObjectId, operatorId: ObjectId, changes: any, avatar: Buffer) {

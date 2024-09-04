@@ -1,7 +1,7 @@
 import type {ObjectId} from "mongoose";
 
 export interface IUser {
-    id: number;
+    id: ObjectId;
     username: string;
     password: string;
     role: 'user' | 'admin';
@@ -25,7 +25,7 @@ export interface IOperation {
 }
 
 export interface IEvent {
-    id: number;
+    id: ObjectId;
     name: string;
     status: EventState;
     type: string;

@@ -22,7 +22,16 @@ export async function createEvent(name: string, type: string, description: strin
             imageIds: imageIds
         }
     };
-    await EventRoles.insert({name, type, status: 'open', description, images: imageIds, operations: [operation]});
+    const event = {
+        name: name,
+        type: type,
+        status: 'open',
+        description: description,
+        imageIds: imageIds,
+        operations: [operation]
+    }
+    await EventRoles.insert(event);
+    return event;
 }
 
 export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: any, images: Buffer[]) {

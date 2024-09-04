@@ -3,7 +3,7 @@
 </script>
 
 <footer class="navbar">
-<<<<<<< HEAD
+    <<<<<<< HEAD
     <<<<<<< HEAD
     <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
     <a class="link" href="/main/take/event/lost" transition:fly={{ x: 1000 }}>失物招领</a>
@@ -20,12 +20,12 @@
 </footer>
 >>>>>>> 6dfbe78be80c720ee8a285192883a888c682c4ae
 =======
-    <a href="/main" transition:fly={{ x: 1000 }} class="link">首页</a>
-    <a href="/main/take/event/lost" transition:fly={{ x: 1000 }} class="link">失物招领</a>
-    <a href="/main/create/event" transition:fly={{ x: 1000 }} class="create">+</a>
-    <a href="/main/take/event/trade" transition:fly={{ x: 1000 }} class="link">二手交易</a>
-    <a href="/main/take/event/fetch" transition:fly={{ x: 1000 }} class="link">代取服务</a>
- </footer>
+<a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
+<a class="link" href="/main/take/event/lost" transition:fly={{ x: 1000 }}>失物招领</a>
+<a class="create" href="/main/create/event" transition:fly={{ x: 1000 }}>+</a>
+<a class="link" href="/main/take/event/trade" transition:fly={{ x: 1000 }}>二手交易</a>
+<a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>代取服务</a>
+</footer>
 >>>>>>> f31195d437448e77c9e180944177c5c594b89084
 
 
@@ -57,19 +57,24 @@
         color: #708862;
         text-decoration: none;
         font-size: 2em;
-<<<<<<< HEAD
-    < < < < < < < HEAD padding-bottom: 6 %;
+    < < < < < < < HEAD < < < < < < < HEAD padding-bottom: 6 %;
     = = = = = = = padding-bottom: 5 %;
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae padding-top: 5 %;
-=======
-        padding-bottom:6%;
+    = = = = = = = padding-bottom: 6 %;
         padding-top: 5%;
->>>>>>> f31195d437448e77c9e180944177c5c594b89084
-        border: #737373 0.1em solid;
+    >>> >>> > f31195d437448e77c9e180944177c5c594b89084 border: #737373 0.1 em solid;
         border-radius: 100px;
     }
 
-<<<<<<< HEAD
+    <
+    <
+    <
+    <
+    <
+    <
+    <
+    HEAD
+
     <
     <
     <
@@ -81,11 +86,9 @@
     .link {
     = = = = = = = . link {
     >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae transition: all 0.3 s ease;
-=======
-    .link{
+    = = = = = = = . link {
         transition: all 0.3s ease;
->>>>>>> f31195d437448e77c9e180944177c5c594b89084
-        text-align: center;
+    >>> >>> > f31195d437448e77c9e180944177c5c594b89084 text-align: center;
         align-items: center;
         width: 20%;
         display: inline-block;
@@ -97,21 +100,21 @@
         padding-bottom: 5%;
         padding-top: 5%;
         font-size: small;
-<<<<<<< HEAD
+    < < < < < < < HEAD
     } < < < < < < < HEAD . link: hover {
         background-color: #fdfffc;
         color: #708862;
     } = = = = = = = . link: hover {
         background-color: #5c7055;
         cursor: pointer;
-    } >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae
-=======
+    } >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae = = = = = = =
     }
 
 
-    .link:hover{
-        background-color: #fdfffc;
-        color: #708862;
-    }
->>>>>>> f31195d437448e77c9e180944177c5c594b89084
+        .link:hover {
+            background-color: #fdfffc;
+            color: #708862;
+        }
+
+    >>> >>> > f31195d437448e77c9e180944177c5c594b89084
 </style>

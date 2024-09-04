@@ -12,7 +12,7 @@
     let successMessage = '';
 
     async function createEvent() {
-<<<<<<< HEAD
+        <<<<<<< HEAD
         try {
             const response = await instance.Create({
                 name: eventName,
@@ -28,21 +28,23 @@
         } catch (error) {
             errorMessage = 'Failed to create event. Please try again.';
             successMessage = '';
-=======
-      try {
-        const response = await instance.Create({
-          name: eventName,
-          date: eventDate,
-          type: eventType,
-          description: eventDescription,
-          images: [],
-        });
-        if (response.data) {
-          successMessage = 'Event created successfully!';
-          errorMessage = '';
->>>>>>> f31195d437448e77c9e180944177c5c594b89084
-        }
-    }
+        ======
+            =
+            try {
+                const response = await instance.Create({
+                    name: eventName,
+                    date: eventDate,
+                    type: eventType,
+                    description: eventDescription,
+                    images: [],
+                });
+                if (response.data) {
+                    successMessage = 'Event created successfully!';
+                    errorMessage = '';
+                >>>>>>>
+                    f31195d437448e77c9e180944177c5c594b89084
+                }
+            }
 </script>
 
 <Nav1/>

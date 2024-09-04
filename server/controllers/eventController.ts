@@ -1,6 +1,5 @@
 import type {Request, Response} from 'express';
 import {changeEventStatus, createEvent, editEvent, getAllOpenEvents, getSpecificEvent} from '../services/eventService';
-import type {IOperation} from "../util/types.ts";
 import i18n from "../util/i18n.ts";
 import {handleWorker} from "../workers/workerHandler.ts";
 import {EventStateMachine} from "../services/stateMachines/eventStateMachine.ts";
