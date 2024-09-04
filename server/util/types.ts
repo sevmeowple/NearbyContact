@@ -1,5 +1,7 @@
+import type {ObjectId} from "mongoose";
+
 export interface IUser {
-    id: number;
+    id: ObjectId;
     username: string;
     password: string;
     role: 'user' | 'admin';
@@ -8,7 +10,7 @@ export interface IUser {
     address: string;
     gender: 'M' | 'F';
     email: string;
-    avatarId: number;
+    avatarId: ObjectId;
 }
 
 export type EventState =
@@ -17,17 +19,17 @@ export type EventState =
     | 'closed'
 
 export interface IOperation {
-    userId: number;
+    userId: ObjectId;
     timestamp: number;
     after: any;
 }
 
 export interface IEvent {
-    id: number;
+    id: ObjectId;
     name: string;
     status: EventState;
     type: string;
     description: string;
-    imageIds: number[];
+    imageIds: ObjectId[];
     operations: IOperation[];
-};
+}

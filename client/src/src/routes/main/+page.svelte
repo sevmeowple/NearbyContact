@@ -1,78 +1,36 @@
 <script lang="ts">
-    <<<<<<< HEAD
-    << <<<<< HEAD
-    import type {User} from '$lib/stores/userStore';
-    import {userStore} from '$lib/stores/userStore';
-    import {onDestroy, onMount} from 'svelte';
-    import {slide} from 'svelte/transition';
-    import {goto} from '$app/navigation';
+	import { userStore } from '$lib/stores/userStore';
+	import type { User } from '$lib/stores/userStore';
+	import { onMount, onDestroy } from 'svelte';
+	let userH: User = { username: '', email: '', password: '' };
+	import { fade } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
+    import { cubicOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
+	onMount(() => {
+		const user = $userStore;
+		userH.username = user.username;
+		userH.email = user.email;
+		userH.password = user.password;
+	});
+	onDestroy(() => {
+		userStore.set({
+			username: userH.username,
+			email: userH.email,
+			password: userH.password
+		});
+	});
 
-    let userH: User = {username: '', email: '', password: ''};
+	function Logout() {
+		//logout logic here
+	}
+	let events = [
+		{ id: 1, name: '代取服务', url: '/event/fetch' },
+		{ id: 2, name: '代买服务', url: '/event/buy' },
+		{ id: 3, name: '失物招领', url: '/event/lost' },
+		{ id: 4, name: '二手交易', url: '/event/trade' }
+	];
 
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
-
-    function Logout() {
-        //logout logic here
-    }
-
-    // let events = ["代取服务","代买服务","失物招领","二手交易"];
-    let events = [
-        {id: 1, name: '代取服务', url: '/event/fetch'},
-        {id: 2, name: '代买服务', url: '/event/buy'},
-        {id: 3, name: '失物招领', url: '/event/lost'},
-        {id: 4, name: '二手交易', url: '/event/trade'}
-    ];
-    ======
-    =
-
-        let
-    userH: User = {username: '', email: '', password: ''};
-    >>>>>>>
-    6
-    dfbe78be80c720ee8a285192883a888c682c4ae
-    === === =
-
-    let userH: User = {username: '', email: '', password: ''};
-
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
-
-    function Logout() {
-        //logout logic here
-    }
-
-    let events = [
-        {id: 1, name: '代取服务', url: '/event/fetch'},
-        {id: 2, name: '代买服务', url: '/event/buy'},
-        {id: 3, name: '失物招领', url: '/event/lost'},
-        {id: 4, name: '二手交易', url: '/event/trade'}
-    ];
-
-    >>>>>>>
-    f31195d437448e77c9e180944177c5c594b89084
 
 
     let userInfo = [
@@ -97,30 +55,9 @@
         }
     }
 
-    <<<<<<< HEAD
-    << <<<<< HEAD
-        function showEventOfCreate() {
-
-            goto('/main/create/event');
-        }
-    === === =
-        function showEventOfCreate() {
-            j == 0 ? (j = 4) : (j = 0);
-            if (i == 4) {
-                i = 0;
-            }
-
-            if (p == 3) {
-                p = 0;
-            }
-        }
-        >>> >>> > 6
-    dfbe78be80c720ee8a285192883a888c682c4ae
-    === === =
-        function showEventOfCreate() {
-            goto('/main/create/event');
-        }
-        >>> >>> > f31195d437448e77c9e180944177c5c594b89084
+	function showEventOfCreate() {
+        goto('/main/create/event');
+	}
 
     function showUserInfo() {
         p == 0 ? (p = 3) : (p = 0);

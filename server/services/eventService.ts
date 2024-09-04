@@ -3,7 +3,7 @@ import type {EventState, IEvent, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 import type {ObjectId} from "mongoose";
 
-export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: number) {
+export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: ObjectId) {
     let imageIds: ObjectId[] = [];
     for (let image of images) {
         const imageId = await FileRoles.insert(image);
@@ -22,32 +22,44 @@ export async function createEvent(name: string, type: string, description: strin
             imageIds: imageIds
         }
     };
-    await EventRoles.insert({name, type, status: 'open', description, images: imageIds, operations: [operation]});
+    const event = {
+        name: name,
+        type: type,
+        status: 'open',
+        description: description,
+        imageIds: imageIds,
+        operations: [operation]
+    }
+    await EventRoles.insert(event);
+    return event;
 }
 
-export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: IOperation, images: Buffer[], imagesToBeDelete: ObjectId[]) {
+export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: any, images: Buffer[]) {
     const event = await EventRoles.selectById(eventId) as unknown as IEvent;
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeContents();
     if (images) {
-        for (let image of images) {
-            const fileId: ObjectId = await FileRoles.insert(image);
-            if (!fileId) {
-                throw Object.assign(new Error('fileNotFound'), {statusCode: 400});
-            }
-            changes.after.imageIds.push(fileId);
-        }
-    }
-    if (imagesToBeDelete) {
-        for (let imageId of imagesToBeDelete) {
+        let imageIds: ObjectId[] = [];
+        for (let imageId of event.imageIds) {
             await FileRoles.delete(imageId);
-            changes.after.imageIds = changes.after.imageIds.filter((id: ObjectId) => id !== imageId);
         }
+        for (let image of images) {
+            const imageId = await FileRoles.insert(image);
+            if (!imageId) {
+                throw Object.assign(new Error('fileNotFound'), {statusCode: 404});
+            }
+            imageIds.push(imageId);
+        }
+        changes.imageIds = imageIds;
     }
-    await EventRoles.edit(eventId, {operations: event.operations});
-    event.operations.push(changes);
+    await EventRoles.edit(eventId, changes);
+    const operation: IOperation = {
+        userId: userId,
+        timestamp: Date.now(),
+        after: changes
+    }
+    event.operations.push(operation);
     await EventRoles.updateOperations(eventId, event.operations);
-
 }
 
 export async function changeEventStatus(eventId: ObjectId, userId: ObjectId, status: EventState) {
