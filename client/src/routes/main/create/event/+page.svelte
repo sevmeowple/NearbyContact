@@ -7,36 +7,55 @@
   import * as instance from '$lib/api';
   import Nav1 from '$lib/nav/Navcreate.svelte';
   import Navbarcreate from '$lib/navbar/Navbarcreate.svelte';
-  import type {Event} from '$lib/api';
-  let eventCreate:{
-    name: '';  //名称
-    date: '';  //日期
-    type: '';  //类型
-    fee: 0;   //代取费
-    location: ''; //代取点
-    destination: '';//送达点
-    distance: 0;   //距离
-    time: '';       //截止时间
-    info: '';       //其他信息
-    eventimages: null; //图片
+
+  type EventCreate = {
+    name: string;  //名称
+    date: string;  //日期
+    type: string;  //类型
+    description: string; //描述
+    images: FileList; //图片
+    fee: number;  //代取费
+    location: string;  //代取点
+    destination: string;  //送达点
+    distance: number;  //距离
+    time: string;    //截止时间
+    info: string;    //其他信息
+};
+
+  let eventCreate:EventCreate = {
+    name: '',  //名称
+    date: '',  //日期
+    type: '',  //类型
+    description: '', //描述
+    images:[] as unknown as FileList, //图片
+    fee: 0, //代取费
+    location: '',  //;  //代取点
+    destination: '',    //送达点
+    distance: 0,  //距离
+    time: '',    //截止时间
+    info: '',    //其他信息
   };
+
+
   let errorMessage = '';
   let successMessage = '';
-  let description = '';
 
-  function generateDescription(event:Event) {
-  return `
-    代取费: ${event.fee}
-    代取点: ${event.location}
-    送达点: ${event.destination}
-    距离: ${event.distance}
-    截止时间: ${event.time}
-    其他信息: ${event.info}
-  `;
-}
-  async function createEvent() {
+  function generateDescription(eventCreate:EventCreate) {
+    if(eventCreate.type === '代取服务') {
+      return `
+          代取费: ${eventCreate.fee}
+          代取点: ${eventCreate.location}
+          送达点: ${eventCreate.destination}
+          距离: ${eventCreate.distance}
+          截止时间: ${eventCreate.time}
+          其他信息: ${eventCreate.info}
+        `;
+    }
+  }
+  async function createEvent(eventCreate:EventCreate) {
+    let description:string;
     try {
-      description = generateDescription(eventCreate)
+      description = generateDescription(eventCreate);
       const response = await instance.Create({
         name: eventCreate.name,
         date: eventCreate.date,
@@ -66,7 +85,9 @@
       <p style="color: green;">{successMessage}</p>
     {/if}
     
-    <form on:submit|preventDefault={createEvent}>
+    <form on:submit|preventDefault={async (event) => {
+      await createEvent(eventCreate);
+    }}>
           <label for="eventName">
             <span>名称</span>
             <input 
@@ -182,7 +203,7 @@
               type="file" 
               id="eventImages" 
               multiple 
-              bind:files={eventCreate.eventimages}
+              bind:files={eventCreate.images}
               accept="image/*"
             />
           </label>
