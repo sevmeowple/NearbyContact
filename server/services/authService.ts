@@ -4,6 +4,10 @@ import {FileRoles, UserRoles} from '../mongodb/mongo.ts';
 import {JWT_SECRET} from '../config';
 import {UserStateMachine} from './stateMachines/userStateMachine';
 import type {ObjectId} from "mongoose";
+import {generateOneTimeToken, verifyOneTimeToken} from "../util/GenerateOneTimeToken.ts";
+import {sendVerificationEmail} from "./emailService.ts";
+import type {IUser} from "../util/types.ts";
+import {getGlobalVariable, setGlobalVariableWithExpiry} from "../util/globalVariables.ts";
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);
@@ -12,7 +16,7 @@ export function verifyToken(token: string) {
 export async function authenticate(username: string, password: string) {
     const user = await UserRoles.selectByUsername(username);
     if (user && bcrypt.compareSync(password, user.password)) {
-        return jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '12h'});
+        return {token: jwt.sign({id: user.id, username: user.username}, JWT_SECRET, {expiresIn: '12h'})};
     }
     throw Object.assign(new Error('invalidCredentials'), {statusCode: 401});
 }
@@ -28,6 +32,7 @@ export async function registerUser(username: string, password: string, phone_num
         username: username,
         password: hashedPassword,
         role: 'user',
+        status: 'unverified',
         phone_number: phone_number,
         QQ: QQ,
         address: address,
@@ -37,6 +42,26 @@ export async function registerUser(username: string, password: string, phone_num
     }
     await UserRoles.insert(user);
     return user;
+}
+
+export async function sendVerifyEmail(userId: ObjectId) {
+    const user = await UserRoles.selectById(userId) as unknown as IUser;
+    const {originalToken, token} = generateOneTimeToken(user.email);
+    await sendVerificationEmail(user.email, token);
+    await setGlobalVariableWithExpiry(token, originalToken, 86400);
+}
+
+export async function verifyEmail(userId: ObjectId, token: string) {
+    const user = await UserRoles.selectById(userId) as unknown as IUser;
+    const originalToken = await getGlobalVariable(token);
+    if (!originalToken) {
+        throw Object.assign(new Error('invalidToken'), {statusCode: 400});
+    }
+    if (verifyOneTimeToken(token, user.email, originalToken)) {
+        await UserRoles.updateStatus(userId, 'active');
+    } else {
+        throw Object.assign(new Error('invalidToken'), {statusCode: 400});
+    }
 }
 
 export async function editProfile(userId: ObjectId, operatorId: ObjectId, changes: any, avatar: Buffer) {

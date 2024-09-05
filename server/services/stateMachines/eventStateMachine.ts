@@ -1,4 +1,4 @@
-import type {EventState, IEvent, IUser} from "../../util/types.ts";
+import type {IEvent, IUser} from "../../util/types.ts";
 import {EventRoles, UserRoles} from "../../mongodb/mongo.ts";
 import type {ObjectId} from "mongoose";
 
@@ -11,7 +11,7 @@ export class EventStateMachine {
         this.operator = UserRoles.selectById(userId) as unknown as IUser;
     }
 
-    public changeStatus(targetState: EventState) {
+    public changeStatus(targetState: 'open' | 'taken' | 'closed') {
         if (this.operator.role === 'admin') {
             return;
         }

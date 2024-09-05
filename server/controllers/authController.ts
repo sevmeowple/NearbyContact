@@ -1,5 +1,12 @@
 import type {Request, Response} from 'express';
-import {authenticate, editProfile, getSpecificProfile, registerUser} from '../services/authService';
+import {
+    authenticate,
+    editProfile,
+    getSpecificProfile,
+    registerUser,
+    sendVerifyEmail,
+    verifyEmail
+} from '../services/authService';
 import {handleWorker} from "../workers/workerHandler.ts";
 import i18n from "../util/i18n.ts";
 
@@ -46,6 +53,33 @@ export async function getSpecificProfileHandler(req: Request, res: Response) {
             workerFunction: getSpecificProfile,
             args: [userId]
         }, language, res);
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function sendverifyEmailHandler(req: Request, res: Response) {
+    try {
+        const {userId, language} = req.body;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: sendVerifyEmail,
+            args: [userId]
+        }, language, res);
+        res.status(200).json({message: i18n.t('verificationEmailSent', {lng: req.body.language})});
+    } catch (error: any) {
+        res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
+    }
+}
+
+export async function verifyEmailHandler(req: Request, res: Response) {
+    try {
+        const {userId, language} = req.body;
+        const token = req.params;
+        handleWorker('../workers/genericWorker.ts', {
+            workerFunction: verifyEmail,
+            args: [userId, token]
+        }, language, res);
+        res.status(200).json({message: i18n.t('emailVerified', {lng: req.body.language})});
     } catch (error: any) {
         res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }

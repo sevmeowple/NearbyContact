@@ -5,6 +5,7 @@ export interface IUser {
     username: string;
     password: string;
     role: 'user' | 'admin';
+    status: 'active' | 'unverified' | 'banned';
     phone_number: string;
     QQ: string;
     address: string;
@@ -12,11 +13,6 @@ export interface IUser {
     email: string;
     avatarId: ObjectId;
 }
-
-export type EventState =
-    | 'open'
-    | 'taken'
-    | 'closed'
 
 export interface IOperation {
     userId: ObjectId;
@@ -27,7 +23,7 @@ export interface IOperation {
 export interface IEvent {
     id: ObjectId;
     name: string;
-    status: EventState;
+    status: 'open' | 'taken' | 'closed';
     type: string;
     description: string;
     imageIds: ObjectId[];

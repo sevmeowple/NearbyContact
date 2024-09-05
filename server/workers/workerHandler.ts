@@ -10,7 +10,11 @@ export function handleWorker(workerPath: string, data: any, language: string, re
             res.status(result.statusCode || 400).json({error: i18n.t(result.error, {lng: language})});
         } else {
             res.status(result.statusCode || 200);
-            res.body = result;
+            if (result.token) {
+                res.cookies = result.token;
+            } else {
+                res.body = result;
+            }
         }
     });
 

@@ -8,7 +8,7 @@
       "bun --bun run smtpServer.ts",
       "bun --bun run index.ts"
     ]
-},
+  },
   "devDependencies": {
     "@types/bun": "latest",
     "@types/cookie-parser": "^1.4.7",

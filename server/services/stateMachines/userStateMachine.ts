@@ -18,5 +18,13 @@ export class UserStateMachine {
         if (this.user.id !== this.operator.id) {
             throw Object.assign(new Error('cannotEditOthersProfile'), {statusCode: 400});
         }
+        switch (this.operator.status) {
+            case "active":
+                break;
+            case "unverified":
+                throw Object.assign(new Error('unverifiedUser'), {statusCode: 400});
+            case "banned":
+                throw Object.assign(new Error('bannedUser'), {statusCode: 400});
+        }
     }
 }

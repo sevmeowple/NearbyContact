@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
     username: {type: String, required: true, unique: true},
     password: {type: String, required: true},
     role: {type: String, required: true},
+    status: {type: String, required: true},
     phone_number: {type: String},
     QQ: {type: String},
     address: {type: String},
@@ -61,6 +62,7 @@ export const UserRoles = {
     },
     selectByUsername: async (username: string) => await User.findOne({username}),
     selectById: async (id: ObjectId) => await User.findById(id),
+    updateStatus: async (id: ObjectId, status: 'active' | 'unverified' | 'banned') => await User.findByIdAndUpdate(id, {status: status}, {new: true}),
     editProfile: async (id: ObjectId, userData: any) => await User.findByIdAndUpdate(id, userData, {new: true}),
 };
 
