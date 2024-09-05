@@ -4,18 +4,18 @@ import {writable} from 'svelte/store';
 interface User {
     "username": string;
     "password": string;
-    "email": string;
     "phone_number"?: string;
     "QQ"?: string;
     "address"?: string;
     "gender"?: 'M' | 'F';
+    "email": string;
     "avatar"?: File;
 }
 
 const user: User = {
     "username": '',
-    "email": '',
-    "password": ''
+    "password": '',
+    "email": ''
 };
 
 
