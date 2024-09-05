@@ -1,11 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {FileRoles, UserRoles} from '../mongodb/mongo.ts';
-import {JWT_SECRET} from '../config';
+import {defaultPORT, domain, JWT_SECRET} from '../config';
 import {UserStateMachine} from './stateMachines/userStateMachine';
 import type {ObjectId} from "mongoose";
 import {generateOneTimeToken, verifyOneTimeToken} from "../util/GenerateOneTimeToken.ts";
-import {sendVerificationEmail} from "./emailService.ts";
+import {sendEmail} from "./emailService.ts";
 import type {IUser} from "../util/types.ts";
 import {getGlobalVariable, setGlobalVariableWithExpiry} from "../util/globalVariables.ts";
 
@@ -47,8 +47,14 @@ export async function registerUser(username: string, password: string, phone_num
 export async function sendVerifyEmail(userId: ObjectId) {
     const user = await UserRoles.selectById(userId) as unknown as IUser;
     const {originalToken, token} = generateOneTimeToken(user.email);
-    await sendVerificationEmail(user.email, token);
+    await sendEmail(
+        user.email,
+        'Verify Email',
+        'Click the link below to verify your email: ' + `https://${domain}:${defaultPORT}/verifyEmail/` + token,
+        '<a href="' + `https://${domain}:${defaultPORT}/verifyEmail/` + token + '">Click here to verify your email</a>'
+    );
     await setGlobalVariableWithExpiry(token, originalToken, 86400);
+    return 'verifyEmailSent';
 }
 
 export async function verifyEmail(userId: ObjectId, token: string) {
@@ -62,6 +68,7 @@ export async function verifyEmail(userId: ObjectId, token: string) {
     } else {
         throw Object.assign(new Error('invalidToken'), {statusCode: 400});
     }
+    return 'emailVerified';
 }
 
 export async function editProfile(userId: ObjectId, operatorId: ObjectId, changes: any, avatar: Buffer) {

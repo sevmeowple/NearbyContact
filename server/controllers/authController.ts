@@ -58,14 +58,13 @@ export async function getSpecificProfileHandler(req: Request, res: Response) {
     }
 }
 
-export async function sendverifyEmailHandler(req: Request, res: Response) {
+export async function sendVerifyEmailHandler(req: Request, res: Response) {
     try {
         const {userId, language} = req.body;
         handleWorker('../workers/genericWorker.ts', {
             workerFunction: sendVerifyEmail,
             args: [userId]
         }, language, res);
-        res.status(200).json({message: i18n.t('verificationEmailSent', {lng: req.body.language})});
     } catch (error: any) {
         res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
@@ -79,7 +78,6 @@ export async function verifyEmailHandler(req: Request, res: Response) {
             workerFunction: verifyEmail,
             args: [userId, token]
         }, language, res);
-        res.status(200).json({message: i18n.t('emailVerified', {lng: req.body.language})});
     } catch (error: any) {
         res.status(error.statusCode).json({error: i18n.t(error.message, {lng: req.body.language})});
     }
