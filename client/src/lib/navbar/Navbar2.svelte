@@ -11,7 +11,6 @@
 </footer>
 
 
-
 <style>
     .navbar {
         position: fixed;

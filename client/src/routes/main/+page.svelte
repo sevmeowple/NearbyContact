@@ -32,7 +32,7 @@
         {id: 3, name: '失物招领', url: '/event/lost'},
         {id: 4, name: '二手交易', url: '/event/trade'}
     ];
-    
+
     let userInfo = [
         {id: 1, name: '个人信息', url: '/main/user/userInfo'},
         {id: 2, name: '我发起的事件', url: '/main/user/eventCreated'},
@@ -56,9 +56,9 @@
     }
 
 
-        function showEventOfCreate() {
-            goto('/main/create/event');
-        }
+    function showEventOfCreate() {
+        goto('/main/create/event');
+    }
 
     function showUserInfo() {
         p == 0 ? (p = 3) : (p = 0);

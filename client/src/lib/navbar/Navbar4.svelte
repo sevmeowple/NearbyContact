@@ -27,6 +27,7 @@
         overflow: hidden;
         z-index: 1000; /* 确保导航栏在其它内容之上 */
     }
+
     .create {
         transition: all 0.3s ease;
         text-align: center;

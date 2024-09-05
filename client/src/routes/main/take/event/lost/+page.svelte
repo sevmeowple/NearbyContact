@@ -5,7 +5,7 @@
     // 本地数据
     const cardData = [
         {
-            id:1,
+            id: 1,
             title: "卫生巾",
             price: "10",
             fee: "免费",

@@ -5,7 +5,7 @@
     // 本地数据
     const cardData = [
         {
-            id:1,
+            id: 1,
             title: "卫生巾",
             price: "10",
             fee: "免费",
@@ -32,7 +32,7 @@
             imageUrl: "https://via.placeholder.com/150",
             link: "https://example.com/2"
         }
-    ];   
+    ];
 </script>
 
 <Nav/>

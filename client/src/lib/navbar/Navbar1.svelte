@@ -42,6 +42,7 @@
         padding-bottom: 6%;
         border-radius: 100px;
     }
+
     .link {
         transition: all 0.3s ease;
         text-align: center;
