@@ -1,4 +1,4 @@
-import {FileRoles} from "../mongodb/mongo.ts";
+import {FileRoles} from "../mapper/mongodb/mongo.ts";
 import type {ObjectId} from "mongoose";
 
 export async function getImage(imageId: ObjectId, type: 'original' | 'thumbnail') {

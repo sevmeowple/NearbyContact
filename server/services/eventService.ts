@@ -1,4 +1,4 @@
-import {EventRoles, FileRoles} from "../mongodb/mongo.ts";
+import {EventRoles, FileRoles} from "../mapper/mongodb/mongo.ts";
 import type {EventState, IEvent, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 import type {ObjectId} from "mongoose";

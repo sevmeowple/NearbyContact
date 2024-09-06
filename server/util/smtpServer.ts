@@ -1,6 +1,6 @@
 import {SMTPServer} from 'smtp-server';
-import {log} from "./util/log.ts";
-import {smtpPORT} from "./config.ts";
+import {log} from "./log.ts";
+import {smtpPORT} from "../config.ts";
 
 const server = new SMTPServer({
     authOptional: true,

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {FileRoles, UserRoles} from '../mongodb/mongo.ts';
+import {FileRoles, UserRoles} from '../mapper/mongodb/mongo.ts';
 import {defaultPORT, domain, JWT_SECRET} from '../config';
 import {UserStateMachine} from './stateMachines/userStateMachine';
 import type {ObjectId} from "mongoose";

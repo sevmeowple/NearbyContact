@@ -1,5 +1,5 @@
 import type {IEvent, IUser} from "../../util/types.ts";
-import {EventRoles, UserRoles} from "../../mongodb/mongo.ts";
+import {EventRoles, UserRoles} from "../../mapper/mongodb/mongo.ts";
 import type {ObjectId} from "mongoose";
 
 export class EventStateMachine {

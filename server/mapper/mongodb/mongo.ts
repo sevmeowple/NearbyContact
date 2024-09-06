@@ -1,7 +1,7 @@
 import type {ObjectId} from "mongoose";
 import * as mongoose from "mongoose";
-import {log} from "../util/log.ts";
-import {generateThumbnail} from "../util/thumbnail.ts";
+import {log} from "../../util/log.ts";
+import {generateThumbnail} from "../../util/thumbnail.ts";
 
 mongoose.connect("mongodb://127.0.0.1:27017");
 

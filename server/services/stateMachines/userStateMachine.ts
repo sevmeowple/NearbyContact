@@ -1,5 +1,5 @@
 import type {IUser} from "../../util/types.ts";
-import {UserRoles} from "../../mongodb/mongo.ts";
+import {UserRoles} from "../../mapper/mongodb/mongo.ts";
 import type {ObjectId} from "mongoose";
 
 export class UserStateMachine {
