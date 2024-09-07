@@ -1,5 +1,5 @@
 import {SMTPServer} from 'smtp-server';
-import {log} from "./log.ts";
+import {log} from "../util/log.ts";
 import {smtpPORT} from "../config.ts";
 
 const server = new SMTPServer({

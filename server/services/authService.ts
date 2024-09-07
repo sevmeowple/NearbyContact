@@ -7,7 +7,7 @@ import type {ObjectId} from "mongoose";
 import {generateOneTimeToken, verifyOneTimeToken} from "../util/GenerateOneTimeToken.ts";
 import {sendEmail} from "./emailService.ts";
 import type {IUser} from "../util/types.ts";
-import {getGlobalVariable, setGlobalVariableWithExpiry} from "../util/globalVariables.ts";
+import {clearCacheToken, getCacheToken, setCacheToken} from "../mapper/data.ts";
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);
@@ -53,18 +53,19 @@ export async function sendVerifyEmail(userId: ObjectId) {
         'Click the link below to verify your email: ' + `https://${domain}:${defaultPORT}/verifyEmail/` + token,
         '<a href="' + `https://${domain}:${defaultPORT}/verifyEmail/` + token + '">Click here to verify your email</a>'
     );
-    await setGlobalVariableWithExpiry(token, originalToken, 86400);
+    await setCacheToken(token, originalToken);
     return 'verifyEmailSent';
 }
 
 export async function verifyEmail(userId: ObjectId, token: string) {
     const user = await UserRoles.selectById(userId) as unknown as IUser;
-    const originalToken = await getGlobalVariable(token);
+    const originalToken = await getCacheToken(token);
     if (!originalToken) {
         throw Object.assign(new Error('invalidToken'), {statusCode: 400});
     }
     if (verifyOneTimeToken(token, user.email, originalToken)) {
         await UserRoles.updateStatus(userId, 'active');
+        await clearCacheToken(token);
     } else {
         throw Object.assign(new Error('invalidToken'), {statusCode: 400});
     }

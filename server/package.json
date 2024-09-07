@@ -5,7 +5,8 @@
   "scripts": {
     "start": [
       "mongod --config mongod.conf",
-      "bun --bun run util/smtpServer.ts",
+      "bun --bun run util/redisServer.ts",
+      "bun --bun run mapper/smtpServer.ts",
       "bun --bun run index.ts"
     ]
   },
@@ -24,7 +25,6 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
-    "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",

@@ -1,5 +1,5 @@
 import {EventRoles, FileRoles} from "../mapper/mongodb/mongo.ts";
-import type {EventState, IEvent, IOperation} from "../util/types.ts";
+import type {IEvent, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 import type {ObjectId} from "mongoose";
 
@@ -62,7 +62,7 @@ export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: an
     await EventRoles.updateOperations(eventId, event.operations);
 }
 
-export async function changeEventStatus(eventId: ObjectId, userId: ObjectId, status: EventState) {
+export async function changeEventStatus(eventId: ObjectId, userId: ObjectId, status: 'open' | 'taken' | 'closed') {
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeStatus(status);
     await EventRoles.updateStatus(eventId, status);
