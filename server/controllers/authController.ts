@@ -8,7 +8,7 @@ import {
     verifyEmail
 } from '../services/authService';
 import {handleWorker} from "../workers/workerHandler.ts";
-import i18n from "../util/i18n.ts";
+import i18n from "i18next";
 
 export async function loginHandler(req: Request, res: Response) {
     try {

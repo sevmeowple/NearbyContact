@@ -1,6 +1,6 @@
 import type {Request, Response} from 'express';
 import si from 'systeminformation';
-import i18n from "../util/i18n.ts";
+import i18n from "i18next";
 
 export async function getSystemInformation(req: Request, res: Response) {
     try {

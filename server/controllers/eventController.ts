@@ -1,8 +1,8 @@
 import type {Request, Response} from 'express';
 import {changeEventStatus, createEvent, editEvent, getAllOpenEvents, getSpecificEvent} from '../services/eventService';
-import i18n from "../util/i18n.ts";
 import {handleWorker} from "../workers/workerHandler.ts";
 import {EventStateMachine} from "../services/stateMachines/eventStateMachine.ts";
+import i18n from "i18next";
 
 export async function createEventHandler(req: Request, res: Response) {
     try {

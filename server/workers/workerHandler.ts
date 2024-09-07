@@ -1,6 +1,6 @@
 import {Worker} from 'worker_threads';
 import path from 'path';
-import i18n from '../util/i18n.ts';
+import i18n from "i18next";
 
 export function handleWorker(workerPath: string, data: any, language: string, res: any) {
     const worker = new Worker(path.resolve(__dirname, workerPath));
