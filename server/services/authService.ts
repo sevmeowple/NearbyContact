@@ -1,9 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {FileRoles, UserRoles} from '../mapper/data.ts';
-import {indexPORT, domain, JWT_SECRET, tokenEX} from '../config';
+import {domain, indexPORT, JWT_SECRET, tokenEX} from '../config';
 import {UserStateMachine} from './stateMachines/userStateMachine';
-import type {ObjectId} from "mongoose";
 import {generateOneTimeToken, verifyOneTimeToken} from "../util/GenerateOneTimeToken.ts";
 import {sendEmail} from "./emailService.ts";
 import type {IUser} from "../util/types.ts";

@@ -1,8 +1,7 @@
-import {File, User, Event} from "./mongo.ts";
+import {Event, File, User} from "./mongo.ts";
 import {originalEX, thumbnailEX, thumbnailRS} from "../config.ts";
 import {cacheClear, cacheGet, cacheSet} from "./redisClient.ts";
 import * as sharp from "sharp";
-import type {ObjectId} from "mongoose";
 
 export const FileRoles = {
     insert: async (image: Buffer) => {
@@ -20,7 +19,7 @@ export const FileRoles = {
             await cacheSet.buffer('t' + imageId, thumbnail, thumbnailEX);
             return thumbnail;
         }
-        },
+    },
     getOriginal: async (imageId: string) => {
         const original = await cacheGet.buffer('o' + imageId) as Buffer;
         return original ? original : async () => {

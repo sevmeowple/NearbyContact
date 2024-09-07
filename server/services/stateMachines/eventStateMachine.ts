@@ -1,6 +1,5 @@
 import type {IEvent, IUser} from "../../util/types.ts";
 import {EventRoles, UserRoles} from "../../mapper/data.ts";
-import type {ObjectId} from "mongoose";
 
 export class EventStateMachine {
     private readonly event: IEvent;
