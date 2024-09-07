@@ -1,13 +1,14 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {FileRoles, UserRoles} from '../mapper/mongodb/mongo.ts';
-import {defaultPORT, domain, JWT_SECRET} from '../config';
+import {FileRoles, UserRoles} from '../mapper/data.ts';
+import {indexPORT, domain, JWT_SECRET, tokenEX} from '../config';
 import {UserStateMachine} from './stateMachines/userStateMachine';
 import type {ObjectId} from "mongoose";
 import {generateOneTimeToken, verifyOneTimeToken} from "../util/GenerateOneTimeToken.ts";
 import {sendEmail} from "./emailService.ts";
 import type {IUser} from "../util/types.ts";
-import {clearCacheToken, getCacheToken, setCacheToken} from "../mapper/data.ts";
+import {cacheClear, cacheGet, cacheSet} from "../mapper/redisClient.ts";
+
 
 export function verifyToken(token: string) {
     return jwt.verify(token, JWT_SECRET);
@@ -44,44 +45,44 @@ export async function registerUser(username: string, password: string, phone_num
     return user;
 }
 
-export async function sendVerifyEmail(userId: ObjectId) {
+export async function sendVerifyEmail(userId: string) {
     const user = await UserRoles.selectById(userId) as unknown as IUser;
     const {originalToken, token} = generateOneTimeToken(user.email);
     await sendEmail(
         user.email,
         'Verify Email',
-        'Click the link below to verify your email: ' + `https://${domain}:${defaultPORT}/verifyEmail/` + token,
-        '<a href="' + `https://${domain}:${defaultPORT}/verifyEmail/` + token + '">Click here to verify your email</a>'
+        'Click the link below to verify your email: ' + `https://${domain}:${indexPORT}/verifyEmail/` + token,
+        '<a href="' + `https://${domain}:${indexPORT}/verifyEmail/` + token + '">Click here to verify your email</a>'
     );
-    await setCacheToken(token, originalToken);
+    await cacheSet.string(token, originalToken, tokenEX);
     return 'verifyEmailSent';
 }
 
-export async function verifyEmail(userId: ObjectId, token: string) {
+export async function verifyEmail(userId: string, token: string) {
     const user = await UserRoles.selectById(userId) as unknown as IUser;
-    const originalToken = await getCacheToken(token);
+    const originalToken = await cacheGet.string(token);
     if (!originalToken) {
         throw Object.assign(new Error('invalidToken'), {statusCode: 400});
     }
     if (verifyOneTimeToken(token, user.email, originalToken)) {
         await UserRoles.updateStatus(userId, 'active');
-        await clearCacheToken(token);
+        await cacheClear.string(token);
     } else {
         throw Object.assign(new Error('invalidToken'), {statusCode: 400});
     }
     return 'emailVerified';
 }
 
-export async function editProfile(userId: ObjectId, operatorId: ObjectId, changes: any, avatar: Buffer) {
+export async function editProfile(userId: string, operatorId: string, changes: any, avatar: Buffer) {
     const stateMachine = new UserStateMachine(userId, operatorId);
     stateMachine.editProfile();
     if (avatar) {
-        await FileRoles.delete(((await UserRoles.selectById(userId))?.avatar as unknown as ObjectId));
+        await FileRoles.delete(((await UserRoles.selectById(userId))?.avatar as unknown as string));
         changes.avatar = await FileRoles.insert(avatar);
     }
     await UserRoles.editProfile(userId, changes);
 }
 
-export async function getSpecificProfile(userId: ObjectId) {
+export async function getSpecificProfile(userId: string) {
     return await UserRoles.selectById(userId);
 }

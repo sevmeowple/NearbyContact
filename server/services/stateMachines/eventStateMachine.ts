@@ -1,12 +1,12 @@
 import type {IEvent, IUser} from "../../util/types.ts";
-import {EventRoles, UserRoles} from "../../mapper/mongodb/mongo.ts";
+import {EventRoles, UserRoles} from "../../mapper/data.ts";
 import type {ObjectId} from "mongoose";
 
 export class EventStateMachine {
     private readonly event: IEvent;
     private readonly operator: IUser;
 
-    constructor(eventId: ObjectId, userId: ObjectId) {
+    constructor(eventId: string, userId: string) {
         this.event = EventRoles.selectById(eventId) as unknown as IEvent;
         this.operator = UserRoles.selectById(userId) as unknown as IUser;
     }

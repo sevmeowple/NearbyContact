@@ -1,10 +1,9 @@
-import {EventRoles, FileRoles} from "../mapper/mongodb/mongo.ts";
+import {EventRoles, FileRoles} from "../mapper/data.ts";
 import type {IEvent, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
-import type {ObjectId} from "mongoose";
 
-export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: ObjectId) {
-    let imageIds: ObjectId[] = [];
+export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: string) {
+    let imageIds: string[] = [];
     for (let image of images) {
         const imageId = await FileRoles.insert(image);
         if (!imageId) {
@@ -34,12 +33,12 @@ export async function createEvent(name: string, type: string, description: strin
     return event;
 }
 
-export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: any, images: Buffer[]) {
+export async function editEvent(eventId: string, userId: string, changes: any, images: Buffer[]) {
     const event = await EventRoles.selectById(eventId) as unknown as IEvent;
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeContents();
     if (images) {
-        let imageIds: ObjectId[] = [];
+        let imageIds: string[] = [];
         for (let imageId of event.imageIds) {
             await FileRoles.delete(imageId);
         }
@@ -62,7 +61,7 @@ export async function editEvent(eventId: ObjectId, userId: ObjectId, changes: an
     await EventRoles.updateOperations(eventId, event.operations);
 }
 
-export async function changeEventStatus(eventId: ObjectId, userId: ObjectId, status: 'open' | 'taken' | 'closed') {
+export async function changeEventStatus(eventId: string, userId: string, status: 'open' | 'taken' | 'closed') {
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeStatus(status);
     await EventRoles.updateStatus(eventId, status);
@@ -72,6 +71,6 @@ export async function getAllOpenEvents() {
     return await EventRoles.selectAllOpen();
 }
 
-export async function getSpecificEvent(eventId: ObjectId) {
+export async function getSpecificEvent(eventId: string) {
     return await EventRoles.selectById(eventId);
 }

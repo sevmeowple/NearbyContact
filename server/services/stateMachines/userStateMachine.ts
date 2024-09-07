@@ -1,12 +1,11 @@
 import type {IUser} from "../../util/types.ts";
-import {UserRoles} from "../../mapper/mongodb/mongo.ts";
-import type {ObjectId} from "mongoose";
+import {UserRoles} from "../../mapper/data.ts";
 
 export class UserStateMachine {
     private readonly user: IUser;
     private readonly operator: IUser;
 
-    constructor(userId: ObjectId, operatorId: ObjectId) {
+    constructor(userId: string, operatorId: string) {
         this.user = UserRoles.selectById(userId) as unknown as IUser;
         this.operator = UserRoles.selectById(operatorId) as unknown as IUser;
     }

@@ -6,7 +6,7 @@
     "start": [
       "mongod --config mongod.conf",
       "bun --bun run util/redisServer.ts",
-      "bun --bun run mapper/smtpServer.ts",
+      "bun --bun run util/smtpServer.ts",
       "bun --bun run index.ts"
     ]
   },

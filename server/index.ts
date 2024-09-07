@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import {authRoutes} from './routes/authRoutes';
 import {userRoutes} from './routes/userRoutes';
 import {eventRoutes} from './routes/eventRoutes.ts';
-import {defaultPORT} from './config.ts'
+import {indexPORT} from './config.ts'
 import {fileRoutes} from "./routes/fileRoutes.ts";
 import {log} from "./util/log.ts";
 
@@ -28,7 +28,7 @@ app.use('/api', userRoutes);
 app.use('/events', eventRoutes);
 app.use('/files', fileRoutes);
 
-const PORT = process.env.PORT || defaultPORT;
+const PORT = process.env.PORT || indexPORT;
 app.listen(PORT, () => {
     log('INFO', `Server is running on port ${PORT}`);
 });
