@@ -6,6 +6,7 @@ export const indexPORT = 8030
 export const smtpPORT = 1025
 export const redisPORT = 1026
 
+export const hashEX = 60
 export const tokenEX = 300
 export const thumbnailEX = 600
 export const originalEX = 600
