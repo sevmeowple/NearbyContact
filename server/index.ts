@@ -14,6 +14,7 @@ import Backend from "i18next-fs-backend";
 import path from "path";
 import {createClient} from "redis";
 import {antiShakeMiddleware} from "./middleware/antiShakeMiddleware.ts";
+import {errorMiddleware} from "./middleware/errorMiddleware.ts";
 
 i18n
     .use(Backend)
@@ -29,6 +30,11 @@ i18n
             order: ['querystring', 'cookie'],
             caches: ['cookie']
         }
+    }).then(() => {
+    log('INFO', 'i18n initialized');
+})
+    .catch((err) => {
+        log('WARN', 'i18n initialization failed' + err);
     });
 
 export default i18n;
@@ -47,7 +53,13 @@ export const redisClient = createClient({
 
 redisClient.on('error', (err) => log('ERROR', 'Redis Client Error' + err));
 
-redisClient.connect();
+redisClient.connect()
+    .then(() => {
+        log('INFO', 'Redis Client is connected');
+    })
+    .catch((err) => {
+        log('ERROR', 'Redis Client Error' + err);
+    });
 
 const app = express();
 
@@ -56,7 +68,7 @@ app.use(middleware.handle(i18n));
 
 // 允许所有来源的跨域请求（仅在开发环境中使用）
 app.use(cors({
-    origin: 'http://localhost:5173', // 假设你的前端在 3000 端口
+    origin: `http://localhost:${indexPORT}`, // 假设你的前端在 3000 端口
     credentials: true, // 允许发送Cookie等凭证信息
 }));
 
@@ -67,6 +79,8 @@ app.use('/auth', authRoutes);
 app.use('/api', userRoutes);
 app.use('/events', eventRoutes);
 app.use('/files', fileRoutes);
+
+app.use(errorMiddleware)
 
 const PORT = process.env.PORT || indexPORT;
 app.listen(PORT, () => {
