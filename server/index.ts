@@ -13,6 +13,7 @@ import {SMTPServer} from "smtp-server";
 import Backend from "i18next-fs-backend";
 import path from "path";
 import {createClient} from "redis";
+import {antiShakeMiddleware} from "./middleware/antiShakeMiddleware.ts";
 
 i18n
     .use(Backend)
@@ -50,6 +51,7 @@ redisClient.connect();
 
 const app = express();
 
+app.use(antiShakeMiddleware);
 app.use(middleware.handle(i18n));
 
 // 允许所有来源的跨域请求（仅在开发环境中使用）
