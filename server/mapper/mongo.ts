@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 import {log} from "../util/log.ts";
 
-mongoose.connect("mongodb://127.0.0.1:27017");
+mongoose.connect("mongodb://127.0.0.1:10002");
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));

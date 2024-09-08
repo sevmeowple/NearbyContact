@@ -2,35 +2,11 @@
   "name": "nearbycontact",
   "module": "index.ts",
   "type": "module",
-  "workspaces": [
-    "client",
-    "server"
-  ],
-  "devDependencies": {
-    "@eslint/js": "^9.9.0",
-    "@types/bcrypt": "^5.0.2",
-    "@types/bun": "latest",
-    "@types/jsonwebtoken": "^9.0.6",
-    "concurrently": "^8.2.2",
-    "globals": "^15.9.0",
-    "typescript-eslint": "^8.0.1"
-  },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.5.4"
   },
   "scripts": {
-    "dev:client": "bun --bun run --cwd client dev",
-    "dev:server": "bun --bun run --cwd server start",
-    "host:client": "bun --bun run --cwd client host",
-    "dev": "concurrently \"bun run dev:client\" \"bun run dev:server\"",
-    "host": "concurrently \"bun run host:client\" \"bun run dev:server\""
-  },
-  "dependencies": {
-    "@sveltejs/adapter-auto": "^3.2.4",
-    "@types/cors": "^2.8.17",
-    "@types/js-yaml": "^4.0.9",
-    "eslint": "^9.9.0",
-    "eslint-plugin": "^1.0.1",
-    "i18next-http-middleware": "^3.6.0"
+    "client": "cd client && npm run dev",
+    "server": "cd server && npm run start"
   }
 }
