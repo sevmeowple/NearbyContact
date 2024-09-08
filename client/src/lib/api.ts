@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { serverUrl } from './u';
-// import { Hash } from 'crypto';
-import * as crypto from 'crypto';
+import * as crypto from 'crypto-js';
 
 const axiosInstance = axios.create({
 	withCredentials: true,
@@ -16,10 +15,8 @@ interface RequestBody {
 // 给requestbody增加hash字段
 // 操作bson后做sha256，取前12位作为hash
 function hashBody(body: RequestBody): RequestBody {
-	const hash = crypto.createHash('sha256');
-	hash.update(JSON.stringify(body));
-	body.hash = hash.digest('hex').slice(0, 12);
-	return body;
+	const hash = crypto.SHA256(JSON.stringify(body)).toString(crypto.enc.Hex).slice(0, 12);
+	return { ...body, hash };
 }
 
 // 返回一个对象里面所有的key为[]方便填充filteredBody
@@ -28,13 +25,17 @@ function filter(body: RequestBody): string[] {
 }
 
 // 默认发送所有的key，如果不需要发送所有的key，可以传入expectedKeys
-function sendRequest(endpoint: string, body: RequestBody, expectedKeys: string[] = filter(hashBody(body))) {
+function sendRequest(
+	endpoint: string,
+	body: RequestBody,
+	expectedKeys: string[] = filter(hashBody(body))
+) {
 	const HashBody = hashBody(body);
-    const filteredBody: RequestBody = {};
+	const filteredBody: RequestBody = {};
 
 	expectedKeys.forEach((key) => {
 		if (Object.prototype.hasOwnProperty.call(HashBody, key)) {
-			filteredBody[key] =HashBody[key];
+			filteredBody[key] = HashBody[key];
 		}
 	});
 	return axiosInstance.post(endpoint, filteredBody);
