@@ -101,4 +101,4 @@ function getAllOpen() {
     return axiosInstance.post('/event/getAllOpen');
 }
 
-export {Login, Register, Create, Close, Reopen};
+export { Login, Register, Create, Close, Reopen, getAllOpen };

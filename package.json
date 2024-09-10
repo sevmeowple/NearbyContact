@@ -8,5 +8,9 @@
   "scripts": {
     "client": "cd client && npm run dev",
     "server": "cd server && npm run start"
+  },
+  "dependencies": {
+    "@sveltejs/adapter-auto": "^3.2.4",
+    "crypto-js": "^4.2.0"
   }
 }

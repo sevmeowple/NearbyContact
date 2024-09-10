@@ -9,10 +9,10 @@
         type: string;  //类型
         description: string; //描述
         images: FileList; //图片
-        fee: number;  //代取费
+        fee: string;  //代取费
         location: string;  //代取点
         destination: string;  //送达点
-        distance: number;  //距离
+        distance: string;  //距离
         time: string;    //截止时间
         info: string;    //其他信息
     };
@@ -23,10 +23,10 @@
         type: '',  //类型
         description: '', //描述
         images: [] as unknown as FileList, //图片
-        fee: 0, //代取费
+        fee: '', //代取费
         location: '',  //;  //代取点
         destination: '',    //送达点
-        distance: 0,  //距离
+        distance: '',  //距离
         time: '',    //截止时间
         info: '',    //其他信息
     };
@@ -46,6 +46,7 @@
           其他信息: ${eventCreate.info}
         `;
         }
+        return '';
     }
 
     async function createEvent(eventCreate: EventCreate) {

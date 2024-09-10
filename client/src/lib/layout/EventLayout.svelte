@@ -46,23 +46,13 @@
         z-index: 1;
     }
 
-    <
-    <
-    <
-    <
-    <
-    <
-    <
-    HEAD
-    header {
-        display: flex;
-    = = = = = = = header {
-    >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae height: 10 %;
+    .header h1 {
+        height: 10%;
         border-radius: 20px 20px 0 0;
         position: absolute;
         top: 0;
         left: 0;
-        background-color: #5e8449
+        background-color: #5e8449;
     }
 
         .return {
@@ -80,31 +70,21 @@
         }
 
 
-    < < < < < < < HEAD footer {
+    .footer {
         display: flex;
         flex-direction: column;
-    = = = = = = = footer {
-    >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae height: 10 %;
         border-radius: 0 0 20px 20px;
         position: absolute;
         bottom: 0;
         left: 0;
         background-color: #5e8449;
-    } < < < < < < < HEAD . footer {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-bottom: 1rem;
-        margin-top: 1rem;
-    }
+    }  
 
-        main {
-        = = = = = = = main {
-        >>> >>> > 6 dfbe78be80c720ee8a285192883a888c682c4ae flex: 1;
-            width: 100%;
-            overflow-y: auto;
-            padding: 10% 0px 10% 0px;
-            background-color: #6b9654;
-        }
+    .main {
+        width: 100%;
+        overflow-y: auto;
+        padding: 10% 0px 10% 0px;
+        background-color: #6b9654;
+    }
 
 </style>
