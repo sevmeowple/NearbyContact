@@ -1,13 +1,14 @@
 import * as mongoose from "mongoose";
 import {log} from "../util/log.ts";
+import { mongoPORT } from '../config.ts';
 
-mongoose.connect("mongodb://127.0.0.1:10002");
+mongoose.connect(`mongodb://127.0.0.1:${mongoPORT}`)
+  .then(() => log('INFO', 'Connected to MongoDB'))
+  .catch((err: any) => log('ERROR', 'Failed to connect to MongoDB' + err));
 
 const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => {
-    log('INFO', 'Connected to MongoDB');
-});
+db.on('error', (err: any) => {log('ERROR', 'MongoDB connection error' + err)});
+db.once('open', () => {log('INFO', 'Connected to MongoDB')});
 
 const fileSchema = new mongoose.Schema({
     thumbnail: {type: Buffer, required: true},
@@ -25,6 +26,9 @@ const userSchema = new mongoose.Schema({
     gender: {type: String},
     email: {type: String, required: true, unique: true},
     avatar: {type: Number},
+    createdEvents: {type: [String]},
+    takenEvents: {type: [String]},
+    finishedEvents: {type: [String]},
 });
 
 const eventSchema = new mongoose.Schema({

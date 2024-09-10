@@ -44,6 +44,9 @@ export const UserRoles = {
     selectById: async (id: string) => await User.findById(id),
     updateStatus: async (id: string, status: 'active' | 'unverified' | 'banned') => await User.findByIdAndUpdate(id, {status: status}, {new: true}),
     editProfile: async (id: string, userData: any) => await User.findByIdAndUpdate(id, userData, {new: true}),
+    appendCreatedEvents: async (id: string, eventId: string) => await User.findByIdAndUpdate(id, {$push: {createdEvents: eventId}}, {new: true}),
+    appendTakenEvents: async (id: string, eventId: string) => await User.findByIdAndUpdate(id, {$push: {takenEvents: eventId}}, {new: true}),
+    appendFinishedEvents: async (id: string, eventId: string) => await User.findByIdAndUpdate(id, {$push: {finishedEvents: eventId}}, {new: true}),
 };
 
 export const EventRoles = {

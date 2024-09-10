@@ -1,4 +1,4 @@
-import {EventRoles, FileRoles} from "../mapper/data.ts";
+import { EventRoles, FileRoles, UserRoles } from '../mapper/data.ts';
 import type {IEvent, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 
@@ -29,7 +29,8 @@ export async function createEvent(name: string, type: string, description: strin
         imageIds: imageIds,
         operations: [operation]
     }
-    await EventRoles.insert(event);
+    const eventId = await EventRoles.insert(event);
+    await UserRoles.appendCreatedEvents(creator, eventId);
     return event;
 }
 

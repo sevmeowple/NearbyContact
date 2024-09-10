@@ -4,6 +4,7 @@ export const domain = 'localhost'
 
 export const indexPORT = 10000
 export const redisPORT = 10001
+export const mongoPORT = 10002
 export const smtpPORT = 10003
 
 export const hashEX = 60

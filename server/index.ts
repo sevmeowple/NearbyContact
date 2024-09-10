@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import {authRoutes} from './routes/authRoutes';
 import {userRoutes} from './routes/userRoutes';
 import {eventRoutes} from './routes/eventRoutes.ts';
-import {indexPORT, redisPORT, smtpPORT} from './config.ts'
+import { indexPORT, mongoPORT, redisPORT, smtpPORT } from './config.ts';
 import {fileRoutes} from "./routes/fileRoutes.ts";
 import {log} from "./util/log.ts";
 import {SMTPServer} from "smtp-server";
@@ -15,6 +15,30 @@ import path from "path";
 import {createClient} from "redis";
 import {antiShakeMiddleware} from "./middleware/antiShakeMiddleware.ts";
 import {errorMiddleware} from "./middleware/errorMiddleware.ts";
+import Docker from 'dockerode';
+
+const docker = new Docker();
+
+async function startContainer(image: string, containerName: string, ports: { [key: string]: string }) {
+    await docker.pull(image, {});
+
+    const container = await docker.createContainer({
+        Image: image,
+        name: containerName,
+        HostConfig: {
+            PortBindings: ports
+        }
+    });
+    await container.start();
+}
+
+startContainer('redis:latest', 'redis-server', {'10001/tcp': redisPORT.toString()})
+  .then(() => log('INFO', 'Redis container started'))
+  .catch((err: any) => log('ERROR', 'Failed to start Redis container' + err));
+
+startContainer('mongo:latest', 'mongo-server', {'10002/tcp': mongoPORT.toString()})
+  .then(() => log('INFO', 'Mongo container started'))
+  .catch((err: any) => log('ERROR', 'Failed to start Mongo container' + err));
 
 i18n
     .use(Backend)
@@ -51,13 +75,13 @@ export const redisClient = createClient({
     url: `redis://127.0.0.1:${redisPORT}`
 });
 
-redisClient.on('error', (err) => log('ERROR', 'Redis Client Error' + err));
+redisClient.on('error', (err: any) => log('ERROR', 'Redis Client Error' + err));
 
 redisClient.connect()
     .then(() => {
         log('INFO', 'Redis Client is connected');
     })
-    .catch((err) => {
+    .catch((err: any) => {
         log('ERROR', 'Redis Client Error' + err);
     });
 

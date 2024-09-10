@@ -18,10 +18,13 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/dockerode": "^3.3.31",
     "@types/uuid": "^10.0.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "dockerode": "^4.0.2",
     "express": "^4.19.2",
     "gridfs-stream": "^1.1.1",
     "i18next": "^23.14.0",

@@ -14,6 +14,9 @@ export class EventStateMachine {
         if (this.operator.role === 'admin') {
             return;
         }
+        if (Date.now() - this.event.operations[length-1].timestamp < 60) {
+            throw Object.assign(new Error('cannotSwitchStateTooFast'), {statusCode: 400});
+        }
         switch (this.event.status) {
             case 'open':
                 switch (targetState) {
@@ -23,6 +26,7 @@ export class EventStateMachine {
                         if (this.event.operations[0].userId === this.operator.id) {
                             throw Object.assign(new Error('cannotTakeSelfEvent'), {statusCode: 400});
                         }
+                        UserRoles.appendTakenEvents(this.operator.id, this.event.id);
                         break;
                     case 'closed':
                         if (this.event.operations[0].userId !== this.operator.id) {
@@ -52,7 +56,10 @@ export class EventStateMachine {
                         }
                         break;
                     case 'taken':
-                        throw Object.assign(new Error('cannotTakeClosedEvent'), {statusCode: 400});
+                        if (this.event.operations[0].userId !== this.operator.id && this.event.operations[length - 1].userId === this.operator.id) {
+                            throw Object.assign(new Error('cannotTakeOthersEvent'), {statusCode: 400});
+                        }
+                        break;
                     case 'closed':
                         throw Object.assign(new Error('cannotSwitchToSameState'), {statusCode: 400});
                 }
