@@ -1,5 +1,5 @@
 import { EventRoles, FileRoles, UserRoles } from '../mapper/data.ts';
-import type {IEvent, IOperation} from "../util/types.ts";
+import type {IOffer, IOperation} from "../util/types.ts";
 import {EventStateMachine} from "./stateMachines/eventStateMachine.ts";
 
 export async function createEvent(name: string, type: string, description: string, images: Buffer[], creator: string) {
@@ -35,7 +35,7 @@ export async function createEvent(name: string, type: string, description: strin
 }
 
 export async function editEvent(eventId: string, userId: string, changes: any, images: Buffer[]) {
-    const event = await EventRoles.selectById(eventId) as unknown as IEvent;
+    const event = await EventRoles.selectById(eventId) as unknown as IOffer;
     const stateMachine = new EventStateMachine(eventId, userId);
     stateMachine.changeContents();
     if (images) {

@@ -1,12 +1,12 @@
-import type {IEvent, IUser} from "../../util/types.ts";
+import type {IOffer, IUser} from "../../util/types.ts";
 import {EventRoles, UserRoles} from "../../mapper/data.ts";
 
 export class EventStateMachine {
-    private readonly event: IEvent;
+    private readonly event: IOffer;
     private readonly operator: IUser;
 
     constructor(eventId: string, userId: string) {
-        this.event = EventRoles.selectById(eventId) as unknown as IEvent;
+        this.event = EventRoles.selectById(eventId) as unknown as IOffer;
         this.operator = UserRoles.selectById(userId) as unknown as IUser;
     }
 

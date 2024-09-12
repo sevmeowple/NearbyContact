@@ -20,12 +20,19 @@ export interface IOperation {
     after: any;
 }
 
-export interface IEvent {
-    id: string;
+export interface IEventBase {
     name: string;
     status: 'open' | 'taken' | 'closed';
     type: string;
     description: string;
+}
+
+export interface IOffer extends IEventBase {
+    id: string;
     imageIds: string[];
     operations: IOperation[];
+}
+
+export interface ICommission extends IEventBase {
+    hash: string;
 }
