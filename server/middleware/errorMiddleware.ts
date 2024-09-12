@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
 import { log } from '../util/log.ts';
-import i18n from '../index.ts';
+import {i18n} from '../index.ts';
 
 export function errorMiddleware(error: any, req: Request, res: Response, next: NextFunction) {
 	log('WARN', 'handling request with error' + error.message);

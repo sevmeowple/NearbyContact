@@ -41,7 +41,6 @@ startContainer('mongo:latest', 'mongo-server', { '10002/tcp': mongoPORT.toString
 	.then(() => log('INFO', 'Mongo container started'))
 	.catch((err: any) => log('ERROR', 'Failed to start Mongo container' + err));
 
-log('INFO', 'Containers initialized');
 log('INFO', 'Initializing i18n');
 
 i18n
@@ -67,7 +66,6 @@ i18n
 
 export { i18n };
 
-log('INFO', 'i18n initialized');
 log('INFO', 'Initializing ElasticSearch client');
 
 const client = new Client({ node: `http://127.0.0.1:${elasticPORT}` });
@@ -108,9 +106,37 @@ client.indices.create({
 	.then(() => log('INFO', 'Index created'))
 	.catch((err: any) => log('ERROR', 'Failed to create index: ' + err));
 
+client.ilm.putLifecycle({
+	name: 'delete-after-10-min',
+	policy: {
+		phases: {
+			delete: {
+				min_age: '10m',
+				actions: {
+					delete: {}
+				}
+			}
+		}
+	}
+})
+	.then(() =>{
+	client.indices.create({
+		index: '10min',
+		settings: {
+			'index.lifecycle.name': 'delete-after-10-min',
+			'index.lifecycle.rollover_alias': '10min',
+		},
+		mappings: {
+			properties: {
+				value: {type: 'text'}
+			}
+		}
+	}).then(() => log('INFO', '10minEX created'))
+})
+	.catch((err: any) => log('ERROR', 'Failed to create 10minEX: ' + err));
+
 export { client };
 
-log('INFO', 'ElasticSearch client initialized');
 log('INFO', 'Initializing Express server');
 
 const app = express();

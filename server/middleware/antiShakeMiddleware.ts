@@ -1,19 +1,16 @@
 import type { NextFunction, Request, Response } from 'express';
-import { cacheGet, cacheSet } from '../mapper/redisClient.ts';
-import { hashEX } from '../config.ts';
+import { addDocument, searchDocument } from '../mapper/elastic.ts';
+import { log } from '../util/log.ts';
 
 export async function antiShakeMiddleware(req: Request, res: Response, next: NextFunction) {
-	try {
 		const { hash } = req.body;
 		if (!hash) {
 			throw new Error('invalidRequest');
 		}
-		if (await cacheGet.hash(hash)) {
+		if (await searchDocument('10min', hash)) {
 			throw new Error('doNotSubmitAgain');
 		}
-		cacheSet.hash(hash, hashEX);
+		addDocument('10min', hash, { hash, timestamp: Date.now() })
+			.catch((err: any) => log('WARN', 'Failed to load cache with error' + err));
 		next();
-	} catch (error: any) {
-		res.status(403).json({ error: error.message });
-	}
 }
