@@ -31,13 +31,6 @@ export async function changeEventStatusHandler(req: Request, res: Response) {
     }, res);
 }
 
-export async function getAllOpenEventHandler(req: Request, res: Response) {
-    handleWorker('../workers/genericWorker.ts', {
-        workerFunction: getAllOpenEvents,
-        args: []
-    }, res);
-}
-
 export async function getSpecificEventHandler(req: Request, res: Response) {
     const {eventId} = req.params;
     handleWorker('../workers/genericWorker.ts', {

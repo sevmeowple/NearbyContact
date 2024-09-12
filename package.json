@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@sveltejs/adapter-auto": "^3.2.4",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.6",
     "crypto-js": "^4.2.0"
   }
 }

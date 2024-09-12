@@ -13,7 +13,6 @@ const router = Router();
 router.post('/create', authenticateToken, createEventHandler);
 router.post('/edit', authenticateToken, editEventHandler);
 router.post('/changeStatus', authenticateToken, changeEventStatusHandler);
-router.get('/allEvents', getAllOpenEventHandler);
 router.get('/:eventId', getSpecificEventHandler);
 
 export const eventRoutes = router;

@@ -68,10 +68,6 @@ export async function changeEventStatus(eventId: string, userId: string, status:
     await EventRoles.updateStatus(eventId, status);
 }
 
-export async function getAllOpenEvents() {
-    return await EventRoles.selectAllOpen();
-}
-
 export async function getSpecificEvent(eventId: string) {
     return await EventRoles.selectById(eventId);
 }
