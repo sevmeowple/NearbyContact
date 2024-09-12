@@ -1,13 +1,13 @@
-import type {Request, Response} from "express";
-import {handleWorker} from "../workers/workerHandler.ts";
+import type { Request, Response } from 'express';
+import { handleWorker } from '../workers/workerHandler.ts';
 
-import {getImage} from "../services/fileService.ts";
+import { getImage } from '../services/fileService.ts';
 
 export async function getImageHandler(req: Request, res: Response, type: 'original' | 'thumbnail') {
-    const {imageId} = req.body;
-    handleWorker('../workers/genericWorker.ts', {
-        workerFunction: getImage,
-        args: [imageId, type]
-    }, res);
+	const { imageId } = req.body;
+	handleWorker('../workers/genericWorker.ts', {
+		workerFunction: getImage,
+		args: [imageId, type]
+	}, res);
 }
 

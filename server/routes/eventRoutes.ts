@@ -1,12 +1,11 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import {
-    changeEventStatusHandler,
-    createEventHandler,
-    editEventHandler,
-    getAllOpenEventHandler,
-    getSpecificEventHandler,
+	changeEventStatusHandler,
+	createEventHandler,
+	editEventHandler,
+	getSpecificEventHandler
 } from '../controllers/eventController';
-import {authenticateToken} from "../middleware/authMiddleware.ts";
+import { authenticateToken } from '../middleware/authMiddleware.ts';
 
 const router = Router();
 

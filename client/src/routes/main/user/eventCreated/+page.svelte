@@ -4,17 +4,17 @@
 </script>
 
 <EventLayout switchTo="/main/user/eventTaken" title="我发起的事件">
-    <div class="sort">
-        <span>筛选方式</span>
-    </div>
-    <div class="cards">
-        <Card description="事件描述" title="事件标题"/>
-        <Card description="事件描述" title="事件标题"/>
-        <Card description="事件描述" title="事件标题"/>
-        <Card description="事件描述" title="事件标题"/>
-        <Card description="事件描述" title="事件标题"/>
-        <Card description="事件描述" title="事件标题"/>
-    </div>
+	<div class="sort">
+		<span>筛选方式</span>
+	</div>
+	<div class="cards">
+		<Card description="事件描述" title="事件标题" />
+		<Card description="事件描述" title="事件标题" />
+		<Card description="事件描述" title="事件标题" />
+		<Card description="事件描述" title="事件标题" />
+		<Card description="事件描述" title="事件标题" />
+		<Card description="事件描述" title="事件标题" />
+	</div>
 </EventLayout>
 
 <style>

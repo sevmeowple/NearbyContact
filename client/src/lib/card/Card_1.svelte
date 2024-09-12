@@ -1,47 +1,47 @@
 <script>
-    export let title;
-    export let fee;
-    export let location;
-    export let destination;
-    export let distance;
-    export let time;
-    export let sex;
-    export let description;
-    export let imageUrl;
-    export let link;
-    import {slide} from "svelte/transition";
+	export let title;
+	export let fee;
+	export let location;
+	export let destination;
+	export let distance;
+	export let time;
+	export let sex;
+	export let description;
+	export let imageUrl;
+	export let link;
+  import { slide } from 'svelte/transition';
 </script>
 
 <div class="card" transition:slide>
-    <div class="card-top">
-        <div class="card-content1">
-            <img alt="{title}" src="{imageUrl}">
-            <div class="card-title">
-                <h2>{title}</h2>
-            </div>
-        </div>
+	<div class="card-top">
+		<div class="card-content1">
+			<img alt="{title}" src="{imageUrl}">
+			<div class="card-title">
+				<h2>{title}</h2>
+			</div>
+		</div>
 
-        <div class="card-content2">
-            <div class="card-insider">
-                <p class="card-fee">代取费:<br> {fee}</p>
-                <p class="card-location">出发地：<br>{location}</p>
-            </div>
-            <div class="card-insider">
-                <p class="card-distance">距离:<br> {distance}</p>
-                <p class="card-destination">目的地: <br>{destination}</p>
-            </div>
-            <div class="card-insider">
-                <p class="card-time">发起时间: <br>{time}</p>
-                <p class="card-sex">性别要求:<br> {sex}</p>
-            </div>
+		<div class="card-content2">
+			<div class="card-insider">
+				<p class="card-fee">代取费:<br> {fee}</p>
+				<p class="card-location">出发地：<br>{location}</p>
+			</div>
+			<div class="card-insider">
+				<p class="card-distance">距离:<br> {distance}</p>
+				<p class="card-destination">目的地: <br>{destination}</p>
+			</div>
+			<div class="card-insider">
+				<p class="card-time">发起时间: <br>{time}</p>
+				<p class="card-sex">性别要求:<br> {sex}</p>
+			</div>
 
 
-        </div>
-    </div>
-    <div class="card-bottom">
-        <p class="card-description">具体描述：{description}</p>
-        <a class="card-link" href="{link}">接收</a>
-    </div>
+		</div>
+	</div>
+	<div class="card-bottom">
+		<p class="card-description">具体描述：{description}</p>
+		<a class="card-link" href="{link}">接收</a>
+	</div>
 </div>
 
 <style>

@@ -1,26 +1,26 @@
 <!-- 我创建的事件和我承接的事件布局模板 -->
 <script>
-    export let title = "默认的事件标题";
-    export let className = "Layout"
+	export let title = '默认的事件标题';
+	export let className = 'Layout';
 
-    export let switchTo = "/main";
+	export let switchTo = '/main';
 
 </script>
 
 <div class="{className}">
-    <header>
-        <a class="return" href="/main">返回主页</a>
-        <h1>{title}</h1>
-        <a class="switch" href="{switchTo}">切换</a>
-    </header>
+	<header>
+		<a class="return" href="/main">返回主页</a>
+		<h1>{title}</h1>
+		<a class="switch" href="{switchTo}">切换</a>
+	</header>
 
-    <main>
-        <slot></slot>
-        //显示具体的内容
-    </main>
-    <footer>
-        <p>©2024 NearbyContact</p>
-    </footer>
+	<main>
+		<slot></slot>
+		//显示具体的内容
+	</main>
+	<footer>
+		<p>©2024 NearbyContact</p>
+	</footer>
 </div>
 
 <style>
@@ -55,19 +55,19 @@
         background-color: #5e8449;
     }
 
-        .return {
-            position: absolute;
-            left: 1rem;
-            font-size: small;
-            pointer: cursor;
-        }
+    .return {
+        position: absolute;
+        left: 1rem;
+        font-size: small;
+        pointer: cursor;
+    }
 
-        .switch {
-            position: absolute;
-            right: 1rem;
-            font-size: small;
-            pointer: cursor;
-        }
+    .switch {
+        position: absolute;
+        right: 1rem;
+        font-size: small;
+        pointer: cursor;
+    }
 
 
     .footer {
@@ -78,7 +78,7 @@
         bottom: 0;
         left: 0;
         background-color: #5e8449;
-    }  
+    }
 
     .main {
         width: 100%;

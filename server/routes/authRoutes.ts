@@ -1,12 +1,12 @@
-import {Router} from 'express';
+import { Router } from 'express';
 import {
-    editProfileHandler,
-    loginHandler,
-    registerHandler,
-    sendVerifyEmailHandler,
-    verifyEmailHandler
+	editProfileHandler,
+	loginHandler,
+	registerHandler,
+	sendVerifyEmailHandler,
+	verifyEmailHandler
 } from '../controllers/authController';
-import {authenticateToken} from "../middleware/authMiddleware.ts";
+import { authenticateToken } from '../middleware/authMiddleware.ts';
 
 const router = Router();
 

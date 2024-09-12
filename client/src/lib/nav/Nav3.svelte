@@ -1,8 +1,8 @@
 <script>
-    import {fly} from "svelte/transition";
+    import { fly } from 'svelte/transition';
 </script>
 <head class="nav">
-    <h1 transition:fly={{ x: 1000 }}>失物招领</h1>
+	<h1 transition:fly={{ x: 1000 }}>失物招领</h1>
 </head>
 <style>
 

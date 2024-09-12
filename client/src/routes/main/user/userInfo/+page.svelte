@@ -1,89 +1,89 @@
 <script lang="ts">
-    import type {User} from '$lib/stores/userStore';
+    import type { User } from '$lib/stores/userStore';
     //sth
-    import {userStore} from '$lib/stores/userStore';
-    import {onDestroy, onMount} from 'svelte';
-    import {slide} from 'svelte/transition';
+    import { userStore } from '$lib/stores/userStore';
+    import { onDestroy, onMount } from 'svelte';
+    import { slide } from 'svelte/transition';
 
-    let userH: User = {username: '', email: '', password: ''};
+    let userH: User = { username: '', email: '', password: '' };
 
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
+	onMount(() => {
+		const user = $userStore;
+		userH.username = user.username;
+		userH.email = user.email;
+		userH.password = user.password;
+	});
+	onDestroy(() => {
+		userStore.set({
+			username: userH.username,
+			email: userH.email,
+			password: userH.password
+		});
+	});
 
-    function Edit() {
-        //sth 不知道怎麽实现将两个页面的数据同步，这里仅仅是实现了页面跳转
-        window.location.href = "/main/user/userInfo/edit";
-    }
+	function Edit() {
+		//sth 不知道怎麽实现将两个页面的数据同步，这里仅仅是实现了页面跳转
+		window.location.href = '/main/user/userInfo/edit';
+	}
 
-    let activeTab = "发起"//默认显示发起的事件
-    let eventUrl = "/main/user/eventCreated"
+	let activeTab = '发起';//默认显示发起的事件
+	let eventUrl = '/main/user/eventCreated';
 
-    function changeTab(tab: string) {
-        activeTab = tab;
-        if (activeTab == "发起") {
-            eventUrl = "/main/user/eventCreated"
-        } else {
+	function changeTab(tab: string) {
+		activeTab = tab;
+		if (activeTab == '发起') {
+			eventUrl = '/main/user/eventCreated';
+		} else {
 
-            eventUrl = "/main/user/eventTaken"
-        }
-    }
+			eventUrl = '/main/user/eventTaken';
+		}
+	}
 </script>
 
 <div class="container" transition:slide>
-    <div class="commonInfo">
-        <img alt="Avatar" class="avatar" src="https://via.placeholder.com/150">
-        <div class="user">
-            <span class="username">USERNAME{userH.username}</span>
-            <span class="email">example@Program.com{userH.email}</span>
-        </div>
-        <button class="editButton" on:click={Edit}>Edit</button>
-    </div>
+	<div class="commonInfo">
+		<img alt="Avatar" class="avatar" src="https://via.placeholder.com/150">
+		<div class="user">
+			<span class="username">USERNAME{userH.username}</span>
+			<span class="email">example@Program.com{userH.email}</span>
+		</div>
+		<button class="editButton" on:click={Edit}>Edit</button>
+	</div>
 
-    <div class="detailInfo">
-        <div class="infoI">
-            <span>学号:PB2311697</span>
-            <span>QQ:123456789</span>
-            <span>电话:13812345678</span>
-        </div>
-        <div class="infoII">
-            <span>性别:男</span>
-            <span>地址:中区五号楼618宿舍</span>
-        </div>
-    </div>
+	<div class="detailInfo">
+		<div class="infoI">
+			<span>学号:PB2311697</span>
+			<span>QQ:123456789</span>
+			<span>电话:13812345678</span>
+		</div>
+		<div class="infoII">
+			<span>性别:男</span>
+			<span>地址:中区五号楼618宿舍</span>
+		</div>
+	</div>
 
-    <div class="event">
-        <div class="eventTitle">
+	<div class="event">
+		<div class="eventTitle">
             <span
-                    class:active="{activeTab == '发起'}" on:click={() => changeTab("发起")}>
+							class:active="{activeTab == '发起'}" on:click={() => changeTab("发起")}>
             我发起的事件
             </span>
 
-            <span
-                    class:active="{activeTab == '承接'}" on:click={() => changeTab("承接")}>
+			<span
+				class:active="{activeTab == '承接'}" on:click={() => changeTab("承接")}>
                 我承接的事件
             </span>
-        </div>
-        <div class="eventContent">
-            <iframe class="eventUrl" frameborder="0" src="{eventUrl}">Event</iframe>
-        </div>
-    </div>
+		</div>
+		<div class="eventContent">
+			<iframe class="eventUrl" frameborder="0" src="{eventUrl}">Event</iframe>
+		</div>
+	</div>
 
-    <div class="footer">
-        <span><a href="/main">Home</a></span>
-        <span><a href="/main/user/eventCreated">Event Created</a></span>
-        <span><a href="/main/user/eventTaken">Event Taken</a></span>
-    </div>
+	<div class="footer">
+		<span><a href="/main">Home</a></span>
+		<span><a href="/main/user/eventCreated">Event Created</a></span>
+		<span><a href="/main/user/eventTaken">Event Taken</a></span>
+	</div>
 </div>
 
 <style>

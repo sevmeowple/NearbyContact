@@ -1,40 +1,40 @@
 <script>
-    export let title;
-    export let price;
-    export let destination;
-    export let time;
-    export let description;
-    export let imageUrl;
-    export let link;
-    export let contact;
+	export let title;
+	export let price;
+	export let destination;
+	export let time;
+	export let description;
+	export let imageUrl;
+	export let link;
+	export let contact;
 </script>
 
 <div class="card">
-    <div class="card-top">
-        <div class="card-content1">
-            <img alt="{title}" src="{imageUrl}">
-            <div class="card-title">
-                <h2>{title}</h2>
-            </div>
-        </div>
+	<div class="card-top">
+		<div class="card-content1">
+			<img alt="{title}" src="{imageUrl}">
+			<div class="card-title">
+				<h2>{title}</h2>
+			</div>
+		</div>
 
-        <div class="card-content2">
-            <div class="card-insider">
-                <p class="card-price">价格：<br> {price}</p>
-                <p class="card-location">地址：<br>{destination}</p>
-            </div>
-            <div class="card-insider">
-                <p class="card-time">发起时间: <br>{time}</p>
-                <p class="card-sex">联系方式:<br> {contact}</p>
-            </div>
+		<div class="card-content2">
+			<div class="card-insider">
+				<p class="card-price">价格：<br> {price}</p>
+				<p class="card-location">地址：<br>{destination}</p>
+			</div>
+			<div class="card-insider">
+				<p class="card-time">发起时间: <br>{time}</p>
+				<p class="card-sex">联系方式:<br> {contact}</p>
+			</div>
 
 
-        </div>
-    </div>
-    <div class="card-bottom">
-        <p class="card-description">具体描述：{description}</p>
-        <a class="card-link" href="{link}">接收</a>
-    </div>
+		</div>
+	</div>
+	<div class="card-bottom">
+		<p class="card-description">具体描述：{description}</p>
+		<a class="card-link" href="{link}">接收</a>
+	</div>
 </div>
 
 <style>

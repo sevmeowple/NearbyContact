@@ -1,164 +1,164 @@
 <script lang="ts">
-    import type {User} from '$lib/stores/userStore';
-    import {userStore} from '$lib/stores/userStore';
-    import {onDestroy, onMount} from 'svelte';
-    import {slide} from 'svelte/transition';
-    import {goto} from '$app/navigation';
+    import type { User } from '$lib/stores/userStore';
+    import { userStore } from '$lib/stores/userStore';
+    import { onDestroy, onMount } from 'svelte';
+    import { slide } from 'svelte/transition';
+    import { goto } from '$app/navigation';
 
-    let userH: User = {username: '', email: '', password: ''};
+    let userH: User = { username: '', email: '', password: '' };
 
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
+	onMount(() => {
+		const user = $userStore;
+		userH.username = user.username;
+		userH.email = user.email;
+		userH.password = user.password;
+	});
+	onDestroy(() => {
+		userStore.set({
+			username: userH.username,
+			email: userH.email,
+			password: userH.password
+		});
+	});
 
-    function Logout() {
-        //logout logic here
-    }
+	function Logout() {
+		//logout logic here
+	}
 
-    // let events = ["代取服务","代买服务","失物招领","二手交易"];
-    let events = [
-        {id: 1, name: '代取服务', url: '/event/fetch'},
-        {id: 2, name: '代买服务', url: '/event/buy'},
-        {id: 3, name: '失物招领', url: '/event/lost'},
-        {id: 4, name: '二手交易', url: '/event/trade'}
-    ];
+	// let events = ["代取服务","代买服务","失物招领","二手交易"];
+	let events = [
+		{ id: 1, name: '代取服务', url: '/event/fetch' },
+		{ id: 2, name: '代买服务', url: '/event/buy' },
+		{ id: 3, name: '失物招领', url: '/event/lost' },
+		{ id: 4, name: '二手交易', url: '/event/trade' }
+	];
 
-    let userInfo = [
-        {id: 1, name: '个人信息', url: '/main/user/userInfo'},
-        {id: 2, name: '我发起的事件', url: '/main/user/eventCreated'},
-        {id: 3, name: '我承接的事件', url: '/main/user/eventTaken'},
-    ];
+	let userInfo = [
+		{ id: 1, name: '个人信息', url: '/main/user/userInfo' },
+		{ id: 2, name: '我发起的事件', url: '/main/user/eventCreated' },
+		{ id: 3, name: '我承接的事件', url: '/main/user/eventTaken' }
+	];
 
-    let show = true;
-    let i = 0;
-    let j = 0;
-    let p = 0;
+	let show = true;
+	let i = 0;
+	let j = 0;
+	let p = 0;
 
-    function showEventOfTake() {
-        i == 0 ? (i = 4) : (i = 0);
-        if (j == 4) {
-            j = 0;
-        }
+	function showEventOfTake() {
+		i == 0 ? (i = 4) : (i = 0);
+		if (j == 4) {
+			j = 0;
+		}
 
-        if (p == 3) {
-            p = 0;
-        }
-    }
+		if (p == 3) {
+			p = 0;
+		}
+	}
 
 
-    function showEventOfCreate() {
-        goto('/main/create/event');
-    }
+	function showEventOfCreate() {
+		goto('/main/create/event');
+	}
 
-    function showUserInfo() {
-        p == 0 ? (p = 3) : (p = 0);
-        if (i == 4) {
-            i = 0;
-        }
+	function showUserInfo() {
+		p == 0 ? (p = 3) : (p = 0);
+		if (i == 4) {
+			i = 0;
+		}
 
-        if (j == 4) {
-            j = 0;
-        }
-    }
+		if (j == 4) {
+			j = 0;
+		}
+	}
 </script>
 
 <div class="main" transition:slide>
-    <div class="header">
-        <!-- <span>{userH.username}</span><br />
-        <span>{userH.email}</span><br />
-        <span>{userH.password}</span><br /> -->
-        <img alt="Avatar" class="avatar" src="https://via.placeholder.com/150">
-        <div class="header-user">
-            <span class="username">{userH.username}</span>
-            <span class="email">{userH.email}</span>
-        </div>
-        <button class="logout" on:click={Logout}>Logout</button>
-    </div>
+	<div class="header">
+		<!-- <span>{userH.username}</span><br />
+		<span>{userH.email}</span><br />
+		<span>{userH.password}</span><br /> -->
+		<img alt="Avatar" class="avatar" src="https://via.placeholder.com/150">
+		<div class="header-user">
+			<span class="username">{userH.username}</span>
+			<span class="email">{userH.email}</span>
+		</div>
+		<button class="logout" on:click={Logout}>Logout</button>
+	</div>
 
-    <div class="createEvent">
-        <h1 on:click={showEventOfCreate}>Create Event</h1>
-        <input
-                bind:value={j}
-                id=""
-                max="4"
-                min="0"
-                name=""
-                step="4"
-                style="width: 5%; display: none;"
-                type="range"
-        />
-        <div style="text-align: center;">
-            {#if show}
-                {#each events.slice(0, j) as event}
-                    <div class="showEvent" transition:slide style="cursor:pointer;">
-                        <a href="/main/create{event.url}">{event.name}</a>
-                    </div>
-                {/each}
-            {/if}
-        </div>
-    </div>
+	<div class="createEvent">
+		<h1 on:click={showEventOfCreate}>Create Event</h1>
+		<input
+			bind:value={j}
+			id=""
+			max="4"
+			min="0"
+			name=""
+			step="4"
+			style="width: 5%; display: none;"
+			type="range"
+		/>
+		<div style="text-align: center;">
+			{#if show}
+				{#each events.slice(0, j) as event}
+					<div class="showEvent" transition:slide style="cursor:pointer;">
+						<a href="/main/create{event.url}">{event.name}</a>
+					</div>
+				{/each}
+			{/if}
+		</div>
+	</div>
 
-    <div class="takeEvent">
-        <h1 on:click={showEventOfTake}>Take Event</h1>
-        <input
-                bind:value={i}
-                id=""
-                max="4"
-                min="0"
-                name=""
-                step="4"
-                style="width: 5%; display: none;"
-                type="range"
-        />
-        <div style="text-align: center;">
-            {#if show}
-                {#each events.slice(0, i) as event}
-                    <div class="showEvent" transition:slide style="pointer: cursor;">
-                        <a href="/main/take{event.url}">{event.name}</a>
-                    </div>
-                {/each}
-            {/if}
-        </div>
-    </div>
+	<div class="takeEvent">
+		<h1 on:click={showEventOfTake}>Take Event</h1>
+		<input
+			bind:value={i}
+			id=""
+			max="4"
+			min="0"
+			name=""
+			step="4"
+			style="width: 5%; display: none;"
+			type="range"
+		/>
+		<div style="text-align: center;">
+			{#if show}
+				{#each events.slice(0, i) as event}
+					<div class="showEvent" transition:slide style="pointer: cursor;">
+						<a href="/main/take{event.url}">{event.name}</a>
+					</div>
+				{/each}
+			{/if}
+		</div>
+	</div>
 
-    <div class="userInfo">
-        <h1 on:click={showUserInfo}>User Info</h1>
-        <input
-                bind:value={p}
-                id=""
-                max="3"
-                min="0"
-                name=""
-                step="3"
-                style="width: 5%; display: none;"
-                type="range"
-        />
-        <div style="text-align: center;">
-            {#if show}
-                {#each userInfo.slice(0, p) as info}
-                    <div class="showEvent" transition:slide style="pointer: cursor;">
-                        <a href={info.url}>{info.name}</a>
-                    </div>
-                {/each}
-            {/if}
-        </div>
-    </div>
+	<div class="userInfo">
+		<h1 on:click={showUserInfo}>User Info</h1>
+		<input
+			bind:value={p}
+			id=""
+			max="3"
+			min="0"
+			name=""
+			step="3"
+			style="width: 5%; display: none;"
+			type="range"
+		/>
+		<div style="text-align: center;">
+			{#if show}
+				{#each userInfo.slice(0, p) as info}
+					<div class="showEvent" transition:slide style="pointer: cursor;">
+						<a href={info.url}>{info.name}</a>
+					</div>
+				{/each}
+			{/if}
+		</div>
+	</div>
 
-    <div class="bottom">
-        <h1>
-            sth
-        </h1>
-    </div>
+	<div class="bottom">
+		<h1>
+			sth
+		</h1>
+	</div>
 </div>
 
 <style lang="postcss">

@@ -1,28 +1,28 @@
 <script lang="ts">
-    import type {User} from '$lib/stores/userStore';
-    import {userStore} from '$lib/stores/userStore';
-    import {onDestroy, onMount} from 'svelte';
+    import type { User } from '$lib/stores/userStore';
+    import { userStore } from '$lib/stores/userStore';
+    import { onDestroy, onMount } from 'svelte';
 
-    let userH: User = {username: '', email: '', password: ''};
-    onMount(() => {
-        const user = $userStore;
-        userH.username = user.username;
-        userH.email = user.email;
-        userH.password = user.password;
-    });
-    onDestroy(() => {
-        userStore.set({
-            username: userH.username,
-            email: userH.email,
-            password: userH.password
-        });
-    });
+    let userH: User = { username: '', email: '', password: '' };
+	onMount(() => {
+		const user = $userStore;
+		userH.username = user.username;
+		userH.email = user.email;
+		userH.password = user.password;
+	});
+	onDestroy(() => {
+		userStore.set({
+			username: userH.username,
+			email: userH.email,
+			password: userH.password
+		});
+	});
 </script>
 
 <div class="main">
-    <span>{userH.username}</span>
-    <span>{userH.email}</span>
-    <span>{userH.password}</span>
+	<span>{userH.username}</span>
+	<span>{userH.email}</span>
+	<span>{userH.password}</span>
 </div>
 
 <style lang="postcss">

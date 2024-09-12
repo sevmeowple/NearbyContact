@@ -1,14 +1,14 @@
 <script>
-    import {fly} from "svelte/transition";
+    import { fly } from 'svelte/transition';
 </script>
 
 <footer class="navbar">
 
-    <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
-    <a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>代取服务</a>
-    <a class="create" href="/main/create/event" transition:fly={{ x: 1000 }}>+</a>
-    <a class="link" href="/main/take/event/buy" transition:fly={{ x: 1000 }}>代买服务</a>
-    <a class="link" href="/main/take/event/lost" transition:fly={{ x: 1000 }}>失物招领</a>
+	<a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
+	<a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>代取服务</a>
+	<a class="create" href="/main/create/event" transition:fly={{ x: 1000 }}>+</a>
+	<a class="link" href="/main/take/event/buy" transition:fly={{ x: 1000 }}>代买服务</a>
+	<a class="link" href="/main/take/event/lost" transition:fly={{ x: 1000 }}>失物招领</a>
 </footer>
 
 <style>

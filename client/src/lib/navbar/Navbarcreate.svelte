@@ -1,12 +1,12 @@
 <script>
-    import {fly} from "svelte/transition";
+    import { fly } from 'svelte/transition';
 </script>
 
 <footer class="navbar">
 
-    <a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
-    <a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>承接事件</a>
-    <a class="link" href="/main/user/userInfo" transition:fly={{ x: 1000 }}>个人信息</a>
+	<a class="link" href="/main" transition:fly={{ x: 1000 }}>首页</a>
+	<a class="link" href="/main/take/event/fetch" transition:fly={{ x: 1000 }}>承接事件</a>
+	<a class="link" href="/main/user/userInfo" transition:fly={{ x: 1000 }}>个人信息</a>
 </footer>
 
 <style>

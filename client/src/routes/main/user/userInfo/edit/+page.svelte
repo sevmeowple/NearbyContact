@@ -1,15 +1,15 @@
 <div class="container">
-    <header>
-        <div>编辑用户信息</div>
-    </header>
+	<header>
+		<div>编辑用户信息</div>
+	</header>
 
-    <main>
-        <div>sth here</div>
-    </main>
+	<main>
+		<div>sth here</div>
+	</main>
 
-    <footer>
-        <button type="submit">保存</button>
-    </footer>
+	<footer>
+		<button type="submit">保存</button>
+	</footer>
 
 </div>
 

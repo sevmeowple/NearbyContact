@@ -1,136 +1,136 @@
 <script lang="ts">
-    import type {User} from '$lib/stores/userStore';
-    import {userStore} from '$lib/stores/userStore';
+    import type { User } from '$lib/stores/userStore';
+    import { userStore } from '$lib/stores/userStore';
 
-    import {Tab, TabGroup} from '@skeletonlabs/skeleton';
+    import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 
-    import {onMount} from 'svelte';
+    import { onMount } from 'svelte';
 
-    import {goto} from '$app/navigation';
+    import { goto } from '$app/navigation';
     import * as instance from '$lib/api';
 
-    let userH: User = {username: '', email: '', password: ''};
-    let tabSet = 0;
+    let userH: User = { username: '', email: '', password: '' };
+	let tabSet = 0;
 
-    // 初始化输入框的值
-    onMount(() => {
-        const user = $userStore;
-        userH['username'] = user['username'];
-        userH['email'] = user['email'];
-        userH['password'] = user['password'];
-    });
+	// 初始化输入框的值
+	onMount(() => {
+		const user = $userStore;
+		userH['username'] = user['username'];
+		userH['email'] = user['email'];
+		userH['password'] = user['password'];
+	});
 
-    async function Login() {
-        userStore.set({
-            username: userH['username'],
-            email: userH['email'],
-            password: userH['password']
-        });
-        let res = await instance.Login(userH);
-        // 检查返回状态码
-        if (res.status === 200) {
-            console.log('登录成功');
-            goto('/main');
-        }
-    }
+	async function Login() {
+		userStore.set({
+			username: userH['username'],
+			email: userH['email'],
+			password: userH['password']
+		});
+		let res = await instance.Login(userH);
+		// 检查返回状态码
+		if (res.status === 200) {
+			console.log('登录成功');
+			goto('/main');
+		}
+	}
 
-    async function Register() {
-        userStore.set({
-            username: userH['username'],
-            email: userH['email'],
-            password: userH['password']
-        });
-        let res = await instance.Register(userH);
-        // 检查返回状态码
-        if (res.status === 201) {
-            goto('/board');
-        }
-    }
+	async function Register() {
+		userStore.set({
+			username: userH['username'],
+			email: userH['email'],
+			password: userH['password']
+		});
+		let res = await instance.Register(userH);
+		// 检查返回状态码
+		if (res.status === 201) {
+			goto('/board');
+		}
+	}
 
-    //适配移动端
-    function adapt() {
-        document.documentElement.style.fontSize = Math.min(screen.width / 20, 20) + 'px';
-    }
+	//适配移动端
+	function adapt() {
+		document.documentElement.style.fontSize = Math.min(screen.width / 20, 20) + 'px';
+	}
 
-    onMount(adapt);
+	onMount(adapt);
 
 </script>
 
 
 <div class="main">
-    <h1 class="h1">Nearby Contact</h1>
-    <div class="tab">
-        <TabGroup
-                active="border-b-2 bg-gray-200"
-                hover="black hover:bg-gray-100"
-                justify="justify-center"
-        >
-            <Tab bind:group={tabSet} name="login" value={0}><span> 登录 </span></Tab>
-            <Tab bind:group={tabSet} name="register" value={1}><span> 注册 </span></Tab>
-            <svelte:fragment slot="panel">
-                {#if tabSet === 0}
-                    <form class="login" on:submit={Login}>
-                        <label class="label">
-                            <span>用户名:</span>
-                            <input
-                                    required
-                                    minlength="2"
-                                    type="text"
-                                    bind:value={userH.username}
-                                    placeholder="用户名"
-                            />
-                        </label>
-                        <label class="label">
-                            <span>密码:</span>
-                            <input
-                                    required
-                                    minlength="3"
-                                    type="password"
-                                    bind:value={userH.password}
-                                    placeholder="密码"
-                            />
-                        </label>
-                        <button type="submit">登陆</button>
-                    </form>
-                {:else if tabSet === 1}
-                    <form class="register" on:submit={Register}>
-                        <label class="label">
-                            <span>用户名:</span>
-                            <input
-                                    required
-                                    minlength="2"
-                                    type="text"
-                                    bind:value={userH.username}
-                                    placeholder="用户名"
-                            />
-                        </label>
-                        <label class="label">
-                            <span>邮箱:</span>
-                            <input
-                                    required
-                                    type="email"
-                                    bind:value={userH.email}
-                                    placeholder="邮箱"
-                                    autocomplete="email"
-                                    minlength="3"
-                            />
-                        </label>
-                        <label class="label">
-                            <span>密码:</span>
-                            <input
-                                    required
-                                    minlength="3"
-                                    type="password"
-                                    bind:value={userH.password}
-                                    placeholder="密码"
-                            />
-                        </label>
-                        <button type="submit">注册</button>
-                    </form>
-                {/if}
-            </svelte:fragment>
-        </TabGroup>
-    </div>
+	<h1 class="h1">Nearby Contact</h1>
+	<div class="tab">
+		<TabGroup
+			active="border-b-2 bg-gray-200"
+			hover="black hover:bg-gray-100"
+			justify="justify-center"
+		>
+			<Tab bind:group={tabSet} name="login" value={0}><span> 登录 </span></Tab>
+			<Tab bind:group={tabSet} name="register" value={1}><span> 注册 </span></Tab>
+			<svelte:fragment slot="panel">
+				{#if tabSet === 0}
+					<form class="login" on:submit={Login}>
+						<label class="label">
+							<span>用户名:</span>
+							<input
+								required
+								minlength="2"
+								type="text"
+								bind:value={userH.username}
+								placeholder="用户名"
+							/>
+						</label>
+						<label class="label">
+							<span>密码:</span>
+							<input
+								required
+								minlength="3"
+								type="password"
+								bind:value={userH.password}
+								placeholder="密码"
+							/>
+						</label>
+						<button type="submit">登陆</button>
+					</form>
+				{:else if tabSet === 1}
+					<form class="register" on:submit={Register}>
+						<label class="label">
+							<span>用户名:</span>
+							<input
+								required
+								minlength="2"
+								type="text"
+								bind:value={userH.username}
+								placeholder="用户名"
+							/>
+						</label>
+						<label class="label">
+							<span>邮箱:</span>
+							<input
+								required
+								type="email"
+								bind:value={userH.email}
+								placeholder="邮箱"
+								autocomplete="email"
+								minlength="3"
+							/>
+						</label>
+						<label class="label">
+							<span>密码:</span>
+							<input
+								required
+								minlength="3"
+								type="password"
+								bind:value={userH.password}
+								placeholder="密码"
+							/>
+						</label>
+						<button type="submit">注册</button>
+					</form>
+				{/if}
+			</svelte:fragment>
+		</TabGroup>
+	</div>
 </div>
 
 <style lang="postcss">

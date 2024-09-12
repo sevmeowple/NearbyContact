@@ -1,5 +1,5 @@
-import {Router} from "express";
-import {getImageHandler} from "../controllers/fileController.ts";
+import { Router } from 'express';
+import { getImageHandler } from '../controllers/fileController.ts';
 
 const router = Router();
 
