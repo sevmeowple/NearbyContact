@@ -66,9 +66,21 @@ function Register(body: ProfileBody) {
 }
 
 function editProfile(body: ProfileBody) {
-	return sendRequest('/auth/editProfile', body);
+    const formData = new FormData();
+    Object.keys(body).forEach((key) => {
+        const value = body[key as keyof ProfileBody];
+        if (key === 'avatar') {
+            formData.append(key, value as File);
+        } else {
+            formData.append(key, value.toString());
+        }
+    });
+    return axiosInstance.post('/auth/editProfile', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
 }
-
 interface EventBody {
 	name: string;
 	date: string;
@@ -101,4 +113,6 @@ function getAllOpen() {
 	return axiosInstance.post('/event/getAllOpen');
 }
 
-export { Login, Register, Create, Close, Reopen, getAllOpen };
+export { Login, Register, Create, Close, Reopen, getAllOpen,editProfile };
+
+export type { LoginBody, ProfileBody, EventBody, EventIdBody };
