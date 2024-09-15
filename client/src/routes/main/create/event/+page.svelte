@@ -46,6 +46,29 @@
           其他信息: ${eventCreate.info}
         `;
 		}
+		else if (eventCreate.type === '代买服务') {
+			return `
+          代买费: ${eventCreate.fee}
+          代买点: ${eventCreate.location}
+          送达点: ${eventCreate.destination}
+          距离: ${eventCreate.distance}
+          截止时间: ${eventCreate.time}
+          其他信息: ${eventCreate.info}
+        `;
+		}
+		else if (eventCreate.type === '二手市场') {
+			return `
+          价格: ${eventCreate.fee}
+          地点: ${eventCreate.location}
+          其他信息: ${eventCreate.info}
+        `;
+		}
+		else if (eventCreate.type === '失物招领') {
+			return `
+          地点: ${eventCreate.location}
+          其他信息: ${eventCreate.info}
+        `;
+		}
 		return '';
 	}
 
