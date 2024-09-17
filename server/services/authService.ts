@@ -6,7 +6,7 @@ import { UserStateMachine } from './stateMachines/userStateMachine';
 import { generateOneTimeToken, verifyOneTimeToken } from '../util/GenerateOneTimeToken.ts';
 import { sendEmail } from './emailService.ts';
 import type { IUser } from '../util/types.ts';
-import { cacheClear, cacheGet, cacheSet } from '../mapper/redisClient.ts';
+import { addDocument, deleteDocument, searchDocument } from '../mapper/elastic.ts';
 
 
 export function verifyToken(token: string) {
@@ -53,19 +53,19 @@ export async function sendVerifyEmail(userId: string) {
 		'Click the link below to verify your email: ' + `https://${domain}:${indexPORT}/verifyEmail/` + token,
 		'<a href="' + `https://${domain}:${indexPORT}/verifyEmail/` + token + '">Click here to verify your email</a>'
 	);
-	await cacheSet.string(token, originalToken, tokenEX);
+	await addDocument("10min", token, {originalToken});
 	return 'verifyEmailSent';
 }
 
 export async function verifyEmail(userId: string, token: string) {
 	const user = await UserRoles.selectById(userId) as unknown as IUser;
-	const originalToken = await cacheGet.string(token);
+	const {originalToken} = await searchDocument("10min", token) as { originalToken: string };
 	if (!originalToken) {
 		throw Object.assign(new Error('invalidToken'), { statusCode: 400 });
 	}
 	if (verifyOneTimeToken(token, user.email, originalToken)) {
 		await UserRoles.updateStatus(userId, 'active');
-		await cacheClear.string(token);
+		await deleteDocument("10min", token);
 	} else {
 		throw Object.assign(new Error('invalidToken'), { statusCode: 400 });
 	}

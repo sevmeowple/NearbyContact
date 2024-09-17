@@ -6,6 +6,8 @@ export const indexPORT = 10000;
 export const elasticPORT = 10001;
 export const mongoPORT = 10002;
 
+export const smtpPORT = 10003;
+
 export const hashEX = 60;
 export const tokenEX = 300;
 export const thumbnailEX = 600;
