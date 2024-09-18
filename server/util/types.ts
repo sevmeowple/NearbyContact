@@ -1,4 +1,3 @@
-import type { ObjectId } from 'mongoose';
 
 export interface IUser {
 	id: string;
@@ -11,7 +10,7 @@ export interface IUser {
 	address: string;
 	gender: 'M' | 'F';
 	email: string;
-	avatarId: ObjectId;
+	avatarId: string;
 }
 
 export interface IOperation {
