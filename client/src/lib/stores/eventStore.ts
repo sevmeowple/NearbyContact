@@ -7,6 +7,8 @@ interface Event {
 	id: string;
 	name: string;
 	date: string;
+	distance: number;
+	fee: number;
 	type: string;
 	description: string;
 }
@@ -43,5 +45,5 @@ const eventStore = {
 	}
 };
 
-export { eventStore };
+export { eventStore,events };
 export type { Event };
