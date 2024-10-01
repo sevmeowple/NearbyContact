@@ -3,10 +3,9 @@ import cors from 'cors';
 import i18n from 'i18next';
 import middleware from 'i18next-http-middleware';
 import cookieParser from 'cookie-parser';
-import { authRoutes } from './routes/authRoutes';
 import { userRoutes } from './routes/userRoutes';
 import { eventRoutes } from './routes/eventRoutes.ts';
-import { elasticPORT, indexPORT, mongoPORT } from './config.ts';
+import { CAS_SECRET, CAS_URL, domain, elasticPORT, indexPORT, mongoPORT } from './config.ts';
 import { fileRoutes } from './routes/fileRoutes.ts';
 import { log } from './util/log.ts';
 import Backend from 'i18next-fs-backend';
@@ -15,6 +14,10 @@ import { antiShakeMiddleware } from './middleware/antiShakeMiddleware.ts';
 import { errorMiddleware } from './middleware/errorMiddleware.ts';
 import Docker from 'dockerode';
 import { Client } from '@elastic/elasticsearch';
+import session from 'express-session';
+import { authenticateToken } from './middleware/authMiddleware.ts';
+
+const CAS = require('cas-authentication');
 
 log('INFO', 'Initializing containers');
 
@@ -119,20 +122,20 @@ client.ilm.putLifecycle({
 		}
 	}
 })
-	.then(() =>{
-	client.indices.create({
-		index: '10min',
-		settings: {
-			'index.lifecycle.name': 'delete-after-10-min',
-			'index.lifecycle.rollover_alias': '10min',
-		},
-		mappings: {
-			properties: {
-				value: {type: 'text'}
+	.then(() => {
+		client.indices.create({
+			index: '10min',
+			settings: {
+				'index.lifecycle.name': 'delete-after-10-min',
+				'index.lifecycle.rollover_alias': '10min'
+			},
+			mappings: {
+				properties: {
+					value: { type: 'text' }
+				}
 			}
-		}
-	}).then(() => log('INFO', '10minEX created'))
-})
+		}).then(() => log('INFO', '10minEX created'));
+	})
 	.catch((err: any) => log('ERROR', 'Failed to create 10minEX: ' + err));
 
 export { client };
@@ -144,6 +147,19 @@ const app = express();
 app.use(antiShakeMiddleware);
 app.use(middleware.handle(i18n));
 
+app.use(session({
+	secret: CAS_SECRET,
+	resave: false,
+	saveUninitialized: true
+}));
+
+export const cas = new CAS({
+	cas_url: CAS_URL,
+	service_url: domain
+});
+
+app.use(authenticateToken);
+
 // 允许所有来源的跨域请求（仅在开发环境中使用）
 app.use(cors({
 	origin: `http://localhost:${indexPORT}`, // 假设你的前端在 3000 端口
@@ -153,8 +169,7 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/auth', authRoutes);
-app.use('/api', userRoutes);
+app.use('/user', userRoutes);
 app.use('/events', eventRoutes);
 app.use('/files', fileRoutes);
 

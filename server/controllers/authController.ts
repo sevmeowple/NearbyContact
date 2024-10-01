@@ -1,11 +1,11 @@
 import type { Request, Response } from 'express';
 import {
-    authenticate,
-    editProfile,
-    getSpecificProfile,
-    registerUser,
-    sendVerifyEmail,
-    verifyEmail
+	authenticate,
+	editProfile,
+	getSpecificProfile,
+	registerUser,
+	sendVerifyEmail,
+	verifyEmail
 } from '../services/authService';
 import { handleWorker } from '../workers/workerHandler.ts';
 

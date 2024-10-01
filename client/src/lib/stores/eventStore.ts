@@ -45,5 +45,5 @@ const eventStore = {
 	}
 };
 
-export { eventStore,events };
+export { eventStore, events };
 export type { Event };

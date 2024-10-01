@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type { User } from '$lib/stores/userStore';
-    import { userStore } from '$lib/stores/userStore';
+	import type { User } from '$lib/stores/userStore';
+	import { userStore } from '$lib/stores/userStore';
 
-    import { Tab, TabGroup } from '@skeletonlabs/skeleton';
+	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 
-    import { onMount } from 'svelte';
+	import { onMount } from 'svelte';
 
-    import { goto } from '$app/navigation';
-    import * as instance from '$lib/api';
+	import { goto } from '$app/navigation';
+	import * as instance from '$lib/api';
 
-    let userH: User = { username: '', email: '', password: '' };
+	let userH: User = { username: '', email: '', password: '' };
 	let tabSet = 0;
 
 	// 初始化输入框的值

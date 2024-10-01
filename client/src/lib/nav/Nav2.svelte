@@ -1,5 +1,5 @@
 <script>
-    import { fly } from 'svelte/transition';
+	import { fly } from 'svelte/transition';
 </script>
 <head class="nav">
 	<h1 transition:fly={{ x: 1000 }}>代买服务</h1>

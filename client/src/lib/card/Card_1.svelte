@@ -9,7 +9,7 @@
 	export let description;
 	export let imageUrl;
 	export let link;
-  import { slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 </script>
 
 <div class="card" transition:slide>

@@ -1,6 +1,6 @@
 <script>
-    import EventLayout from '$lib/layout/EventLayout.svelte';
-    import Card from '$lib/card/Card_1.svelte';
+	import EventLayout from '$lib/layout/EventLayout.svelte';
+	import Card from '$lib/card/Card_1.svelte';
 </script>
 
 <EventLayout switchTo="/main/user/eventTaken" title="我发起的事件">

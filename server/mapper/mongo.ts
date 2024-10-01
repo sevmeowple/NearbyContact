@@ -20,8 +20,7 @@ const fileSchema = new mongoose.Schema({
 });
 
 const userSchema = new mongoose.Schema({
-	username: { type: String, required: true, unique: true },
-	password: { type: String, required: true },
+	user: { type: String, required: true, unique: true },
 	role: { type: String, required: true },
 	status: { type: String, required: true },
 	phone_number: { type: String },

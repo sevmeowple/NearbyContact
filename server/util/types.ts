@@ -1,8 +1,6 @@
-
 export interface IUser {
 	id: string;
-	username: string;
-	password: string;
+	user: string;
 	role: 'user' | 'admin';
 	status: 'active' | 'unverified' | 'banned';
 	phone_number: string;

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { User } from '$lib/stores/userStore';
-    import { userStore } from '$lib/stores/userStore';
-    import { onDestroy, onMount } from 'svelte';
+	import type { User } from '$lib/stores/userStore';
+	import { userStore } from '$lib/stores/userStore';
+	import { onDestroy, onMount } from 'svelte';
 
-    let userH: User = { username: '', email: '', password: '' };
+	let userH: User = { username: '', email: '', password: '' };
 	onMount(() => {
 		const user = $userStore;
 		userH.username = user.username;

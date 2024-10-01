@@ -29,7 +29,7 @@ export const UserRoles = {
 		const user = new User(userData);
 		return (await user.save())._id.toString();
 	},
-	selectByUsername: async (username: string) => await User.findOne({ username }),
+	selectByUsername: async (user: string) => await User.findOne({ user }),
 	selectById: async (id: string) => await User.findById(id),
 	updateStatus: async (id: string, status: 'active' | 'unverified' | 'banned') => await User.findByIdAndUpdate(id, { status: status }, { new: true }),
 	editProfile: async (id: string, userData: any) => await User.findByIdAndUpdate(id, userData, { new: true }),

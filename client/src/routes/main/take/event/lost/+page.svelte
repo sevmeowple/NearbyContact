@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Card from '$lib/card/Card_3.svelte';
-    import Navbar from '$lib/navbar/Navbar3.svelte';
-    import Nav from '$lib/nav/Nav3.svelte';
-    // 本地数据
+	import Card from '$lib/card/Card_3.svelte';
+	import Navbar from '$lib/navbar/Navbar3.svelte';
+	import Nav from '$lib/nav/Nav3.svelte';
+	// 本地数据
 	const cardData = [
 		{
 			id: 1,
