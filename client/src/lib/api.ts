@@ -85,6 +85,8 @@ interface EventBody {
 	name: string;
 	date: string;
 	type: string;
+	distance: number;
+	fee: number;
 	description: string;
 	images: File[];
 }

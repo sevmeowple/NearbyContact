@@ -4,6 +4,8 @@
     import Navbarcreate from '$lib/navbar/Navbarcreate.svelte';
     import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 
+
+	//还有点小问题
     type EventCreate = {
 		name: string;  //名称
 		date: string;  //日期
