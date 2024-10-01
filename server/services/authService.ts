@@ -16,7 +16,7 @@ export function verifyToken(token: string) {
 export async function authenticate(username: string, password: string) {
 	const user = await UserRoles.selectByUsername(username);
 	if (user && bcrypt.compareSync(password, user.password)) {
-		return { token: jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '12h' }) };
+		return { cookie: jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '12h' }) };
 	}
 	throw Object.assign(new Error('invalidCredentials'), { statusCode: 401 });
 }
@@ -41,7 +41,7 @@ export async function registerUser(username: string, password: string, phone_num
 		avatarId: avatarId
 	};
 	await UserRoles.insert(user);
-	return user;
+	return { body: user };
 }
 
 export async function sendVerifyEmail(userId: string) {
@@ -54,7 +54,7 @@ export async function sendVerifyEmail(userId: string) {
 		'<a href="' + `https://${domain}:${indexPORT}/verifyEmail/` + token + '">Click here to verify your email</a>'
 	);
 	await addDocument("10min", token, {originalToken});
-	return 'verifyEmailSent';
+	return { body: 'verifyEmailSent'};
 }
 
 export async function verifyEmail(userId: string, token: string) {
@@ -69,7 +69,7 @@ export async function verifyEmail(userId: string, token: string) {
 	} else {
 		throw Object.assign(new Error('invalidToken'), { statusCode: 400 });
 	}
-	return 'emailVerified';
+	return { body: 'emailVerified'};
 }
 
 export async function editProfile(userId: string, operatorId: string, changes: any, avatar: Buffer) {
@@ -80,8 +80,9 @@ export async function editProfile(userId: string, operatorId: string, changes: a
 		changes.avatar = await FileRoles.insert(avatar);
 	}
 	await UserRoles.editProfile(userId, changes);
+	return { body: 'profileEdited'};
 }
 
 export async function getSpecificProfile(userId: string) {
-	return await UserRoles.selectById(userId);
+	return { body: (await UserRoles.selectById(userId))};
 }

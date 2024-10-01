@@ -31,7 +31,7 @@ export async function createEvent(name: string, type: string, description: strin
 	};
 	const eventId = await EventRoles.insert(event);
 	await UserRoles.appendCreatedEvents(creator, eventId);
-	return event;
+	return { body: event };
 }
 
 export async function editEvent(eventId: string, userId: string, changes: any, images: Buffer[]) {
@@ -60,14 +60,16 @@ export async function editEvent(eventId: string, userId: string, changes: any, i
 	};
 	event.operations.push(operation);
 	await EventRoles.updateOperations(eventId, event.operations);
+	return { body: 'eventEdited' };
 }
 
 export async function changeEventStatus(eventId: string, userId: string, status: 'open' | 'taken' | 'closed') {
 	const stateMachine = new EventStateMachine(eventId, userId);
 	stateMachine.changeStatus(status);
 	await EventRoles.updateStatus(eventId, status);
+	return { body: 'eventStatusChanged' };
 }
 
 export async function getSpecificEvent(eventId: string) {
-	return await EventRoles.selectById(eventId);
+	return { body: (await EventRoles.selectById(eventId)) };
 }

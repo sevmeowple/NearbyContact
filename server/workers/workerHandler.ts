@@ -6,12 +6,9 @@ export function handleWorker(workerPath: string, data: any, res: any) {
 
 	worker.on('message', (result) => {
 		res.status(result.statusCode || 200);
-		if (result.token) {
-			res.cookies = result.token;
-		} else {
-			res.body = result;
-		}
-
+		res.cookies = result.cookies;
+		res.body = result.body;
+		res.file = result.file;
 	});
 
 	worker.postMessage(data);
